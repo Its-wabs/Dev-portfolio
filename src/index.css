@@ -9,7 +9,7 @@
 body {
   width: 100dvw;
   overflow-x: hidden;
-  background-color: #dfdff0;
+  background-color: #181010;
   font-family: "General Sans", sans-serif;
 }
 
@@ -70,7 +70,7 @@ body {
   }
 
   .hero-heading {
-    @apply uppercase font-zen font-black text-5xl sm:right-10 sm:text-7xl md:text-9xl lg:text-[12rem];
+    @apply uppercase font-zen font-black text-5xl sm:right-10 sm:text-7xl md:text-9xl lg:text-[6rem];
   }
 
   .about-subtext {
