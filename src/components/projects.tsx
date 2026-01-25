@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { Github, ArrowUpRight } from "lucide-react"; // Install lucide-react or use SVGs
+import { Github, ArrowUpRight, Lock } from "lucide-react"; 
 
 const projectData = [
   {
@@ -9,7 +9,7 @@ const projectData = [
     description: "A focused writing and thinking tool exploring frictionless input, structure, and clarity. Early foundation for Kahf Notes.",
     tech: ["Next.js", "TypeScript", "Tailwind"],
     link: "https://github.com/Its-wabs/nextJs-noteapp",
-    demo : "https://fikra-flow.vercel.app/"
+    demo: "https://fikra-flow.vercel.app/"
   },
   {
     id: "02",
@@ -17,7 +17,7 @@ const projectData = [
     description: "An authentication playground to understand manual auth flows, sessions, and OAuth trade-offs through experimentation.",
     tech: ["Next.js", "Prisma", "NextAuth", "PostgreSQL"],
     link: "https://github.com/Its-wabs/auth-playground",
-    demo : "https://authplay-v1.vercel.app/"
+    demo: "https://authplay-v1.vercel.app/"
   },
   {
     id: "03",
@@ -25,19 +25,19 @@ const projectData = [
     description: "A system-driven portfolio blending engineering, interaction design, and visual storytelling.",
     tech: ["Vite.js", "GSAP", "Tailwind"],
     link: "https://github.com/Its-wabs/Dev-portfolio",
-    demo : "comingsoon"
+    demo: "comingsoon" // Special case handling
   },
 ];
 
 const Projects = () => {
+  // We only need global coordinates for a fixed cursor
   const [cursorPos, setCursorPos] = useState({ x: 0, y: 0 });
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
-  const handleMouseMove = (e: React.MouseEvent, container: HTMLDivElement) => {
-    const rect = container.getBoundingClientRect();
+  const handleMouseMove = (e: React.MouseEvent) => {
     setCursorPos({
-      x: e.clientX - rect.left,
-      y: e.clientY - rect.top,
+      x: e.clientX,
+      y: e.clientY,
     });
   };
 
@@ -55,7 +55,7 @@ const Projects = () => {
           {/* THE FOLDER CARD */}
           <div className="relative w-[95%] md:w-[90%] h-[90vh] bg-white border-t border-x border-black/10 shadow-[0_-20px_50px_-10px_rgba(0,0,0,0.1)] overflow-hidden flex flex-col md:flex-row ">
             
-            {/* LEFT SIDE: CONTENT (50%) */}
+            {/* LEFT SIDE: CONTENT */}
             <div className="w-full md:w-[55%] h-full p-8 md:p-16 flex flex-col justify-between border-r border-black/5">
               {/* Top: Archive ID */}
               <div>
@@ -96,32 +96,47 @@ const Projects = () => {
                 </a>
               </div>
 
-              {/* Bottom: Footer Meta */}
               <div className="text-[9px] font-mono text-black/40 uppercase">
                 System_Status: Stable // Source_Available: True
               </div>
             </div>
 
-            {/* RIGHT SIDE: SHOWCASE (50%) */}
-            <div 
-              className="w-full md:w-[45%] h-full bg-neutral-50 relative overflow-hidden cursor-none group/frame"
-              onMouseMove={(e) => handleMouseMove(e, e.currentTarget)}
+            {/* RIGHT SIDE: SHOWCASE LINK */}
+            <a 
+              href={project.demo === "comingsoon" ? undefined : project.demo}
+              target={project.demo === "comingsoon" ? undefined : "_blank"}
+              rel="noopener noreferrer"
+              className={`w-full md:w-[45%] h-full bg-neutral-50 relative overflow-hidden group/frame ${project.demo === "comingsoon" ? 'cursor-not-allowed' : 'cursor-none'}`}
+              onMouseMove={handleMouseMove}
               onMouseEnter={() => setHoveredIndex(index)}
               onMouseLeave={() => setHoveredIndex(null)}
+              onClick={(e) => project.demo === "comingsoon" && e.preventDefault()}
             >
-              {/* Custom Cursor Overlay */}
+              {/* Custom Cursor Overlay (Fixed Position) */}
               {hoveredIndex === index && (
                 <div 
-                  className="fixed pointer-events-none z-[200] flex items-center justify-center mix-blend-difference"
+                  className="fixed pointer-events-none z-[9999]"
                   style={{
-                    left: cursorPos.x + (window.innerWidth - (window.innerWidth * 0.9)) / 2 + (window.innerWidth * 0.45), // Centering logic for the split
-                    top: cursorPos.y + (window.innerHeight * 0.1), 
-                    transform: 'translate(-50%, -50%)'
+                    left: cursorPos.x, 
+                    top: cursorPos.y,
+                    transform: 'translate(-50%, -50%)' // Centers the badge on cursor
                   }}
                 >
-                  <div className="bg-white text-black px-4 py-2 rounded-full flex items-center gap-2 shadow-xl">
-                    <span className="text-[10px] font-bold uppercase tracking-widest">Open</span>
-                    <ArrowUpRight size={14} />
+                  <div className={`
+                    px-4 py-2 rounded-full flex items-center gap-2 shadow-2xl backdrop-blur-sm transition-all duration-300
+                    ${project.demo === "comingsoon" 
+                      ? "bg-neutral-700 text-white/80" 
+                      : "bg-neutral-900 text-white"
+                    }
+                  `}>
+                    <span className="text-[10px] font-bold uppercase tracking-widest whitespace-nowrap">
+                      {project.demo === "comingsoon" ? "Coming Soon" : "View Live"}
+                    </span>
+                    {project.demo === "comingsoon" ? (
+                      <Lock size={12} />
+                    ) : (
+                      <ArrowUpRight size={14} />
+                    )}
                   </div>
                 </div>
               )}
@@ -144,7 +159,7 @@ const Projects = () => {
                   <div className="w-12 h-[1px] bg-black/20" />
                 </div>
               </div>
-            </div>
+            </a>
 
           </div>
         </div>
