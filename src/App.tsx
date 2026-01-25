@@ -178,7 +178,7 @@ const toggleMode = () => {
 
     scene2.fromTo(
       techSceneRef.current,
-      { opacity: 1, scale: 0.95 },
+      { opacity: 1, scale: 0.8 },
       { opacity: 1, scale: 1, ease: "power3.out" }
     );
 

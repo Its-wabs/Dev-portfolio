@@ -13,47 +13,71 @@ interface ProjectModalProps {
 const projectData = [
   {
     id: "01",
-    title: "Project Alpha",
-    intent: "High-performance system architecture for real-time scalability.",
+    title: "FikraFlow (Kahf v0)",
+    intent: "Exploring frictionless writing, thought capture, and minimal structure without overwhelming the user.",
     screens: [
-      "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=800",
-      "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=800"
+      "/images/fikraflow-01.png",
+      "/images/fikraflow-02.png"
     ],
-    problem: "Existing solutions couldn't handle 10k+ concurrent socket connections without significant latency spikes.",
-    decision: "Implemented a distributed message broker with Go to decouple data processing from the client-facing API.",
-    outcome: "Reduced interaction latency by 60% and stabilized uptime during peak traffic bursts.",
-    tech: ["Go", "Next.js", "Redis", "PostgreSQL"],
+    problem: "Most writing tools introduce too much structure too early, disrupting flow and creative momentum.",
+    decision: "Designed a minimal editor with deliberate constraints, focusing on speed, clarity, and mental offloading.",
+    outcome: "A lightweight foundation that validates core interaction ideas before expanding into Kahf Notes v1.",
+    tech: ["Next.js", "TypeScript", "Tailwind", "convex"],
     deepTech: [
-      { category: "Engine", tools: ["Go", "gRPC", "Protobuf"] },
-      { category: "Data", tools: ["PostgreSQL", "Redis", "Kafka"] },
-      { category: "Edge", tools: ["Next.js", "Vercel", "Tailwind"] }
+      { category: "Frontend", tools: ["Next.js", "React", "TypeScript"] },
+      { category: "UI", tools: ["Tailwind", "Custom Layout Logic"] },
+      { category: "Philosophy", tools: ["Low-friction UX", "Constraint-based Design"] }
     ],
-    github: "https://github.com/yourusername/alpha",
-    live: "https://alpha-demo.com",
-    previewImg: "https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1740&auto=format&fit=crop",
-    videoShowcase: "https://assets.mixkit.co/videos/preview/mixkit-software-developer-working-on-code-screen-close-up-1728-large.mp4"
+    github: "https://github.com/Its-wabs/nextJs-noteapp",
+    live: "https://fikraflow.vercel.app",
+    previewImg: "/images/fikraflow-preview.png",
+    videoShowcase: "/videos/fikraflow-preview.mp4"
   },
+
   {
     id: "02",
-    title: "Project Beta",
-    intent: "Physics-based UI experiment exploring spatial navigation.",
+    title: "AuthPlay v1",
+    intent: "Understanding authentication systems by building, breaking, and comparing manual and abstracted approaches.",
     screens: [
-      "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=800",
-      "https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=800"
+      "/images/authplay-01.png",
+      "/images/authplay-02.png"
     ],
-    problem: "Standard web interfaces felt static and disconnected from human tactile expectations.",
-    decision: "Integrated a custom physics engine with Three.js to give every DOM element mass, friction, and inertia.",
-    outcome: "Created a 'tactile web' model that increased user session duration by 40% through organic exploration.",
-    tech: ["Three.js", "React", "GSAP", "Cannon.js"],
+    problem: "Authentication libraries abstract critical concepts, making it harder to reason about real-world trade-offs.",
+    decision: "Implemented a manual auth flow first, then explored OAuth and NextAuth separately to compare control vs convenience.",
+    outcome: "Clear mental models around sessions, tokens, OAuth flows, and when abstraction is appropriate.",
+    tech: ["Next.js", "JWT", "NextAuth", "PostgreSQL"],
     deepTech: [
-      { category: "Graphics", tools: ["Three.js", "WebGL", "GLSL"] },
-      { category: "Physics", tools: ["Cannon.js", "Custom Math"] },
-      { category: "UI", tools: ["React", "GSAP", "Framer Motion"] }
+      { category: "Auth", tools: ["JWT", "Sessions", "Cookies"] },
+      { category: "OAuth", tools: ["NextAuth", "Providers", "Callbacks"] },
+      { category: "Data", tools: ["PostgreSQL", "Prisma"] }
     ],
-    github: "https://github.com/yourusername/beta",
-    live: "https://beta-demo.com",
-    previewImg: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1664&auto=format&fit=crop",
-    videoShowcase: "https://assets.mixkit.co/videos/preview/mixkit-tech-animation-of-futuristic-interface-9074-large.mp4"
+    github: "https://github.com/Its-wabs/auth-playground",
+    live: "https://fikra-flow.vercel.app/",
+    previewImg: "/images/authplay-preview.png",
+    videoShowcase: "/videos/authplay-preview.mp4"
+  },
+
+  {
+    id: "03",
+    title: "Developer Portfolio",
+    intent: "Presenting work as systems, decisions, and outcomes rather than static screenshots.",
+    screens: [
+      "/images/portfolio-01.png",
+      "/images/portfolio-02.png"
+    ],
+    problem: "Most portfolios fail to communicate how developers think, not just what they build.",
+    decision: "Designed the portfolio as an interactive system using modals, motion, and narrative hierarchy.",
+    outcome: "A flexible platform that communicates problem-solving, taste, and technical judgment.",
+    tech: ["Next.js", "GSAP", "Tailwind"],
+    deepTech: [
+      { category: "Motion", tools: ["GSAP", "Scroll-based Transitions"] },
+      { category: "Architecture", tools: ["Component-driven Design", "Modal Navigation"] },
+      { category: "Design", tools: ["Typography", "Visual Rhythm"] }
+    ],
+    github: "https://github.com/Its-wabs/Dev-portfolio",
+    live: "comingsoon",
+    previewImg: "/images/portfolio-preview.png",
+    videoShowcase: "/videos/portfolio-preview.mp4"
   }
 ];
 

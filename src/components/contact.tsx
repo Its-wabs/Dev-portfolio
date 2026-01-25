@@ -107,9 +107,9 @@ const Contact = () => {
 
         <a 
           href="mailto:cherfi.m.abdelwahab@gmail.com" 
-          className="email-link relative group text-3xl md:text-5xl font-mono text-[#63938C] hover:text-white transition-colors duration-500 mb-10"
+          className="email-link relative group text-3xl md:text-5xl font-mono text-[#63938C] uppercase hover:text-white transition-colors duration-500 mb-10"
         >
-          send an email
+          Email
           <span className="absolute -bottom-2 left-0 w-0 h-[2px] bg-white transition-all duration-300 group-hover:w-full"></span>
         </a>
 

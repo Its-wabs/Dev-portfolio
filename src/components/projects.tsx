@@ -5,24 +5,27 @@ import { Github, ArrowUpRight } from "lucide-react"; // Install lucide-react or 
 const projectData = [
   {
     id: "01",
-    title: "Project Alpha",
-    description: "A high-performance system architecture focused on scalability and real-time data processing.",
-    tech: ["Next.js", "Go", "PostgreSQL"],
-    link: "https://github.com/yourusername/alpha",
+    title: "FikraFlow",
+    description: "A focused writing and thinking tool exploring frictionless input, structure, and clarity. Early foundation for Kahf Notes.",
+    tech: ["Next.js", "TypeScript", "Tailwind"],
+    link: "https://github.com/Its-wabs/nextJs-noteapp",
+    demo : "https://fikra-flow.vercel.app/"
   },
   {
     id: "02",
-    title: "Project Beta",
-    description: "An experimental interaction model using physics-based UI and spatial navigation.",
-    tech: ["React", "Three.js", "GSAP"],
-    link: "https://github.com/yourusername/beta",
+    title: "AuthPlay",
+    description: "An authentication playground to understand manual auth flows, sessions, and OAuth trade-offs through experimentation.",
+    tech: ["Next.js", "Prisma", "NextAuth", "PostgreSQL"],
+    link: "https://github.com/Its-wabs/auth-playground",
+    demo : "https://authplay-v1.vercel.app/"
   },
   {
     id: "03",
-    title: "Project Gamma",
-    description: "Designing a clean, minimal interface for complex financial data visualization.",
-    tech: ["TypeScript", "D3.js", "Tailwind"],
-    link: "https://github.com/yourusername/gamma",
+    title: "Developer Portfolio",
+    description: "A system-driven portfolio blending engineering, interaction design, and visual storytelling.",
+    tech: ["Vite.js", "GSAP", "Tailwind"],
+    link: "https://github.com/Its-wabs/Dev-portfolio",
+    demo : "comingsoon"
   },
 ];
 
