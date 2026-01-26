@@ -1,6 +1,6 @@
 "use client";
 
-import  { useRef } from "react";
+import { useRef } from "react";
 import Matter from "matter-js";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
@@ -37,6 +37,8 @@ const FloatingStack = () => {
     Composite.add(world, [...walls, centerBox]);
 
     const allItems = gsap.utils.toArray<HTMLDivElement>(".main-item");
+    itemsRef.current = []; // Clear previous refs on re-run
+
     allItems.forEach((el) => {
       const rectWidth = el.offsetWidth || 120;
       const rectHeight = el.offsetHeight || 40;
@@ -58,14 +60,12 @@ const FloatingStack = () => {
 
     const mouse = Mouse.create(sceneRef.current!);
 
-    // FIX: Bridge global mouse movement to Matter.js
+    // FIXED MOUSE HANDLER
     const handleGlobalMouseMove = (e: MouseEvent) => {
       const rect = sceneRef.current?.getBoundingClientRect();
       if (rect) {
-        Mouse.setPosition(mouse, {
-          x: e.clientX - rect.left,
-          y: e.clientY - rect.top
-        });
+        mouse.position.x = e.clientX - rect.left;
+        mouse.position.y = e.clientY - rect.top;
       }
     };
     window.addEventListener("mousemove", handleGlobalMouseMove);
@@ -102,6 +102,8 @@ const FloatingStack = () => {
     const runner = Runner.create();
     Runner.run(runner, engine);
 
+    // SETUP TICKER WITH CLEANUP
+    let requestId: number;
     const update = () => {
       itemsRef.current.forEach(({ body, element }) => {
         gsap.set(element, {
@@ -110,12 +112,13 @@ const FloatingStack = () => {
           rotation: body.angle * (180 / Math.PI),
         });
       });
-      requestAnimationFrame(update);
+      requestId = requestAnimationFrame(update);
     };
     update();
 
     return () => {
       window.removeEventListener("mousemove", handleGlobalMouseMove);
+      cancelAnimationFrame(requestId);
       Runner.stop(runner);
       Engine.clear(engine);
     };

@@ -16,7 +16,7 @@ const NavBar = forwardRef<HTMLDivElement, NavBarProps>(({
   resumeButtonRef: externalResumeButtonRef,
   onAboutClick,
   onProjectClick,
-}, ref) => {
+}) => {
   const internalNavRef = useRef<HTMLDivElement>(null);
   const internalMenuIconRef = useRef<HTMLElement>(null);
   const internalResumeButtonRef = useRef<HTMLAnchorElement>(null);
@@ -26,8 +26,10 @@ const NavBar = forwardRef<HTMLDivElement, NavBarProps>(({
   const menuIconRef = externalMenuIconRef || internalMenuIconRef;
   const resumeButtonRef = externalResumeButtonRef || internalResumeButtonRef;
   
-  const aboutButtonRef = useRef<HTMLAnchorElement>(null);
-  const projectsButtonRef = useRef<HTMLAnchorElement>(null);
+  
+const aboutButtonRef = useRef<HTMLAnchorElement | null>(null);
+const projectsButtonRef = useRef<HTMLAnchorElement | null>(null);
+
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   // Toggle menu animation

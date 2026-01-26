@@ -2,7 +2,7 @@
 
 import  { forwardRef } from "react";
 
-const BackToTop = forwardRef<HTMLButtonElement>((props, ref) => {
+const BackToTop = forwardRef<HTMLButtonElement>((_props, ref) => {
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };

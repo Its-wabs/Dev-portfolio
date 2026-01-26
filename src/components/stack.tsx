@@ -3,7 +3,7 @@ import { forwardRef, useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 
-const Stack = forwardRef<HTMLDivElement>((props, ref) => {
+const Stack = forwardRef<HTMLDivElement>((_props, ref) => {
   const containerRef = useRef<HTMLDivElement>(null);
 
   const mainStack = [

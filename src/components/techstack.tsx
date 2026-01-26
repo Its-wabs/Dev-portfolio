@@ -1,6 +1,6 @@
 "use client";
 
-import  { useRef } from "react";
+import { useRef } from "react";
 import Matter from "matter-js";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
@@ -9,17 +9,19 @@ const TechStack = () => {
   const sceneRef = useRef<HTMLDivElement>(null);
   const itemsRef = useRef<{ body: Matter.Body; element: HTMLDivElement }[]>([]);
 
-  const secondaryStack = [ "HTML", "CSS", "JavaScript", "Node.js", "SQL", "Zod", "REST APIs", "Git", "Vercel", "GSAP"];
+  const secondaryStack = ["HTML", "CSS", "JavaScript", "Node.js", "SQL", "Zod", "REST APIs", "Git", "Vercel", "GSAP"];
 
   useGSAP(() => {
-    const width = sceneRef.current?.clientWidth || window.innerWidth;
-    const height = sceneRef.current?.clientHeight || window.innerHeight;
+    if (!sceneRef.current) return;
+
+    const width = sceneRef.current.clientWidth;
+    const height = sceneRef.current.clientHeight;
 
     const { Engine, Runner, Bodies, Composite, MouseConstraint, Mouse, Events, Body, Vector } = Matter;
     const engine = Engine.create();
     const world = engine.world;
     
-    engine.gravity.y = 1; 
+    engine.gravity.y = 1; // Gravity enabled for the "piling" effect
 
     const wallOptions = { isStatic: true, render: { visible: false } };
     const ground = Bodies.rectangle(width / 2, height + 25, width * 2, 50, wallOptions);
@@ -29,6 +31,10 @@ const TechStack = () => {
     Composite.add(world, [ground, leftWall, rightWall]);
 
     const allItems = gsap.utils.toArray<HTMLDivElement>(".secondary-item");
+    
+    // Clear refs to prevent duplicates on re-render
+    itemsRef.current = [];
+
     allItems.forEach((el) => {
       const rectWidth = el.offsetWidth || 100;
       const rectHeight = el.offsetHeight || 30;
@@ -46,16 +52,14 @@ const TechStack = () => {
       Composite.add(world, body);
     });
 
-    const mouse = Mouse.create(sceneRef.current!);
+    const mouse = Mouse.create(sceneRef.current);
     
-    // FIX: Bridge global mouse movement to Matter.js so repel works while container is pointer-events-none
+    // FIXED: Directly updating mouse position properties
     const handleGlobalMouseMove = (e: MouseEvent) => {
       const rect = sceneRef.current?.getBoundingClientRect();
       if (rect) {
-        Mouse.setPosition(mouse, {
-          x: e.clientX - rect.left,
-          y: e.clientY - rect.top
-        });
+        mouse.position.x = e.clientX - rect.left;
+        mouse.position.y = e.clientY - rect.top;
       }
     };
     window.addEventListener("mousemove", handleGlobalMouseMove);
@@ -84,6 +88,8 @@ const TechStack = () => {
     const runner = Runner.create();
     Runner.run(runner, engine);
 
+    // FIXED: Cleanup for requestAnimationFrame
+    let requestId: number;
     const update = () => {
       itemsRef.current.forEach(({ body, element }) => {
         gsap.set(element, {
@@ -92,24 +98,23 @@ const TechStack = () => {
           rotation: body.angle * (180 / Math.PI),
         });
       });
-      requestAnimationFrame(update);
+      requestId = requestAnimationFrame(update);
     };
     update();
 
     return () => {
       window.removeEventListener("mousemove", handleGlobalMouseMove);
+      cancelAnimationFrame(requestId); // Stop the loop
       Runner.stop(runner);
       Engine.clear(engine);
     };
   }, { scope: sceneRef });
 
   return (
-    // Changed to pointer-events-none to allow scrolling through the container
     <div ref={sceneRef} className="absolute inset-0 w-full h-full pointer-events-none">
       {secondaryStack.map((name) => (
         <div
           key={name}
-          // pointer-events-auto ensures the items can still be grabbed/dragged
           className="secondary-item absolute top-0 left-0 cursor-grab active:cursor-grabbing select-none px-6 py-2 rounded-full border shadow-sm whitespace-nowrap bg-white/90 backdrop-blur-md text-gray-500 border-gray-200 text-sm font-medium z-10 pointer-events-auto"
         >
           {name}
