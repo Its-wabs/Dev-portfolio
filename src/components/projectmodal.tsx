@@ -139,7 +139,7 @@ const ProjectModal = ({ isOpen, onClose }: ProjectModalProps) => {
       <div ref={contentRef} className="h-full w-full overflow-y-auto font-sans selection:bg-[#63938C] selection:text-white" style={{ overscrollBehavior: "contain" }}>
         <div className="fixed inset-0 pointer-events-none opacity-[0.03] bg-[url('https://www.transparenttextures.com/patterns/graphy.png')]" />
 
-        <div className="relative max-w-7xl mx-auto px-6 py-24">
+        <div className="relative max-w-7xl mx-auto px-5 sm:px-10 md:px-20 lg:px-32 py-24 md:py-32">
           <header className="flex flex-col md:flex-row justify-between items-end border-b border-black pb-12 mb-12">
             <div>
               <span className="font-mono text-[10px] tracking-[0.5em] uppercase text-black/40 mb-4 block">File_003 // Projects</span>

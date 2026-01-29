@@ -70,7 +70,6 @@ body {
   background-repeat: no-repeat;
 }
 
-
   .hero,
 .about{
   overflow: hidden;
@@ -271,13 +270,13 @@ body {
 }
 
 
-/* Add a subtle 3D/bevel effect to make it feel more Lego-like */
+
 .lego-button {
   position: relative;
   
 }
 
-/* Add a subtle top highlight to simulate Lego brick edge */
+
 .lego-button::before {
   content: '';
   position: absolute;
@@ -288,7 +287,7 @@ body {
  
 }
 
-/* Add a subtle bottom shadow for depth */
+
 .lego-button::after {
   content: '';
   position: absolute;

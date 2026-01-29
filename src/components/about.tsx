@@ -40,7 +40,7 @@ const About = ({ onOpenModal }: { onOpenModal: () => void }) => {
       <div className="max-w-4xl mx-auto px-6 text-center">
         <div className="p-8">
           <p className="text-[#000] text-3xl leading-relaxed mb-6 uppercase font-semibold">
-            Hi, i’m wabs a full stack engineer with a creative side, who love to turn messy systems into visually pleasing human experiences
+            Hi, i’m wabs a creative full stack engineer , who love to turn messy systems into visually pleasing human experiences
           </p>
         </div>
 
