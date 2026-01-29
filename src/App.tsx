@@ -262,14 +262,10 @@ export default function App() {
   menuIconRef={menuIconRef}
   resumeButtonRef={resumeButtonRef}
   onAboutClick={() => setShowAboutModal(true)}
-  // UPDATED HANDLER
   onProjectClick={() => {
     if (contactSceneRef.current) {
-      // 1. Get the absolute position of the section relative to the document
-      const sectionTop = contactSceneRef.current.getBoundingClientRect().top + window.scrollY;
       
-      // 2. Add an offset (e.g., 20% of screen height) to "fast forward" the animation
-      // You can tweak '0.2' to '0.3' if you want it to scroll deeper
+      const sectionTop = contactSceneRef.current.getBoundingClientRect().top + window.scrollY;
       const offset = window.innerHeight * 1; 
       
       window.scrollTo({
