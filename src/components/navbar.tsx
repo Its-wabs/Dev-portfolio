@@ -21,7 +21,7 @@ const NavBar = forwardRef<HTMLDivElement, NavBarProps>(({
   const internalMenuIconRef = useRef<HTMLElement>(null);
   const internalResumeButtonRef = useRef<HTMLAnchorElement>(null);
   
-  // Use external refs if provided, otherwise use internal ones
+  
   const navContainerRef = externalNavRef || internalNavRef;
   const menuIconRef = externalMenuIconRef || internalMenuIconRef;
   const resumeButtonRef = externalResumeButtonRef || internalResumeButtonRef;
@@ -37,7 +37,7 @@ const projectsButtonRef = useRef<HTMLAnchorElement | null>(null);
     setIsMenuOpen(!isMenuOpen);
   };
 
-  // Animate menu items sliding out and pushing resume button
+  // Animate menu items 
   useEffect(() => {
     if (!menuIconRef.current || !resumeButtonRef.current) return;
 
@@ -74,7 +74,7 @@ const projectsButtonRef = useRef<HTMLAnchorElement | null>(null);
           if (onAboutClick) onAboutClick();
         });
 
-        // Add hover event listener for the bouncy effect
+        // hover effect
         aboutButton.addEventListener("mouseenter", () => {
           gsap.to(aboutButton, {
             y: -5,
@@ -89,7 +89,7 @@ const projectsButtonRef = useRef<HTMLAnchorElement | null>(null);
             y: 0,
             scale: 1,
             duration: 0.2,
-            ease: "elastic.out(1, 0.5)" // This gives the bounce back effect
+            ease: "elastic.out(1, 0.5)" 
           });
         });
         
@@ -112,7 +112,7 @@ const projectsButtonRef = useRef<HTMLAnchorElement | null>(null);
           if (onProjectClick) onProjectClick();
         });
 
-        // Add hover event listener for the bouncy effect
+        // hover effect
         projectsButton.addEventListener("mouseenter", () => {
           gsap.to(projectsButton, {
             y: -5,
@@ -127,7 +127,7 @@ const projectsButtonRef = useRef<HTMLAnchorElement | null>(null);
             y: 0,
             scale: 1,
             duration: 0.2,
-            ease: "elastic.out(1, 0.5)" // This gives the bounce back effect
+            ease: "elastic.out(1, 0.5)" 
           });
         });
         

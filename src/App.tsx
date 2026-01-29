@@ -4,7 +4,6 @@ import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-
 import Hero from "./components/hero";
 import About from "./components/about";
 import NavBar from "./components/navbar";
@@ -43,21 +42,21 @@ export default function App() {
   const [showProjectModal, setShowProjectModal] = useState(false);
 
   // Warp Animation Toggle
-const toggleMode = () => {
+  const toggleMode = () => {
     if (isTransitioning) return;
     setIsTransitioning(true);
 
     const tl = gsap.timeline({
       onComplete: () => {
         setIsPlayMode(!isPlayMode);
-        
-        gsap.fromTo(contentWrapperRef.current, 
+
+        gsap.fromTo(contentWrapperRef.current,
           { scale: 0, rotation: -180, opacity: 0 },
-          { 
-            scale: 1, 
-            rotation: 0, 
-            opacity: 1, 
-            duration: 0.7, 
+          {
+            scale: 1,
+            rotation: 0,
+            opacity: 1,
+            duration: 0.7,
             ease: "back.out(1.2)",
             onComplete: () => {
               setIsTransitioning(false);
@@ -66,11 +65,11 @@ const toggleMode = () => {
             }
           }
         );
-        
-        gsap.to(warpOverlayRef.current, { 
-          scale: 0, 
-          opacity: 0, 
-          duration: 0.5, 
+
+        gsap.to(warpOverlayRef.current, {
+          scale: 0,
+          opacity: 0,
+          duration: 0.5,
           ease: "power2.in",
         });
       }
@@ -84,7 +83,7 @@ const toggleMode = () => {
       ease: "power2.in",
     });
 
-    tl.fromTo(warpOverlayRef.current, 
+    tl.fromTo(warpOverlayRef.current,
       { scale: 0, opacity: 0 },
       { scale: 2, opacity: 1, duration: 0.5, backgroundColor: "#000", ease: "power2.out" },
       "-=0.3"
@@ -99,8 +98,8 @@ const toggleMode = () => {
       if (backToTopRef.current) {
         const scrolled = window.scrollY;
         const viewportHeight = window.innerHeight;
-        
-        
+
+
         if (scrolled > viewportHeight * 0.8) {
           gsap.to(backToTopRef.current, {
             opacity: 1,
@@ -121,11 +120,11 @@ const toggleMode = () => {
 
     // Initial check
     showBackToTop();
-    
+
     // Listen to scroll
     window.addEventListener("scroll", showBackToTop);
 
-     
+
     // 1. SET INITIAL STATE IMMEDIATELY
     gsap.set(".nav-icon", { color: "#ffffff", backgroundColor: "transparent" });
     gsap.set(".resume-button", { backgroundColor: "#63938C", color: "#000" });
@@ -135,7 +134,7 @@ const toggleMode = () => {
       "--nav-icon-color": "#ffffff",
     });
 
-    // 2. MAIN TIMELINE (Hero -> About)
+    // 2. MAIN TIMELINE (Hero to About)
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: sceneRef.current,
@@ -164,7 +163,7 @@ const toggleMode = () => {
       ease: "power3.out",
     }, 0.5);
 
-    // ===== SCENE 2: TECH STACK =====
+    // SCENE 2: TECH STACK 
     const scene2 = gsap.timeline({
       scrollTrigger: {
         trigger: techSceneRef.current,
@@ -188,7 +187,7 @@ const toggleMode = () => {
         scrollTrigger: {
           trigger: contactSceneRef.current,
           start: "top top",
-          end: "+=400%", 
+          end: "+=400%",
           scrub: 1,
           pin: true,
           anticipatePin: 1,
@@ -197,7 +196,7 @@ const toggleMode = () => {
 
       // First Project slides 
       masterTl.to(".project-card:nth-child(1)", {
-        yPercent: -75, 
+        yPercent: -75,
         ease: "none"
       });
 
@@ -205,8 +204,8 @@ const toggleMode = () => {
       masterTl.to(".project-card:nth-child(2)", {
         yPercent: -95,
         ease: "none",
-        
-      },"+=0.2");
+
+      }, "+=0.2");
 
       //  Third Project slides up on top
       masterTl.to(".project-card:nth-child(3)", {
@@ -215,32 +214,32 @@ const toggleMode = () => {
       }, "+=0.2");
 
 
-  // Contact Section slides up (Mirroring About entry)
- masterTl.fromTo(
-    contactRef.current,
-    { yPercent: 100, scale: 0.85, opacity: 1, filter: "blur(6px)" },
-    { 
-      yPercent: 0, 
-      scale: 1, 
-      opacity: 1, 
-      filter: "blur(0px)", 
-      ease: "power2.out" 
-    } , "+=0.2" 
-  );
+      // Contact Section mirroring About entry
+      masterTl.fromTo(
+        contactRef.current,
+        { yPercent: 100, scale: 0.85, opacity: 1, filter: "blur(6px)" },
+        {
+          yPercent: 0,
+          scale: 1,
+          opacity: 1,
+          filter: "blur(0px)",
+          ease: "power2.out"
+        }, "+=0.2"
+      );
 
-  // Navbar color restoration
-  masterTl.to(".nav-icon", { color: "#ffffff", backgroundColor: "transparent", ease: "power3.out" }, "<0.2");
-  masterTl.to(".resume-button", { backgroundColor: "#63938C", color: "#000", ease: "power3.out" }, "<");
-  masterTl.to(document.documentElement, {
-    "--nav-accent-bg": "#63938C",
-    "--nav-accent-text": "#000",
-    "--nav-icon-color": "#ffffff",
-    ease: "power3.out",
-  }, "<");
+      // Navbar color restoration
+      masterTl.to(".nav-icon", { color: "#ffffff", backgroundColor: "transparent", ease: "power3.out" }, "<0.2");
+      masterTl.to(".resume-button", { backgroundColor: "#63938C", color: "#000", ease: "power3.out" }, "<");
+      masterTl.to(document.documentElement, {
+        "--nav-accent-bg": "#63938C",
+        "--nav-accent-text": "#000",
+        "--nav-icon-color": "#ffffff",
+        ease: "power3.out",
+      }, "<");
     }
 
     return () => {
-       window.removeEventListener("scroll", showBackToTop); // Cleanup
+      window.removeEventListener("scroll", showBackToTop); 
       ScrollTrigger.getAll().forEach((t) => t.kill());
     }
   }, []);
@@ -251,81 +250,97 @@ const toggleMode = () => {
 
       <AboutModal isOpen={showAboutModal} onClose={() => setShowAboutModal(false)} />
 
-        <ProjectModal isOpen={showProjectModal} onClose={() => setShowProjectModal(false)} />
+      {/* Note: Kept ProjectModal here i will change it to case studies in the future */}
+      <ProjectModal isOpen={showProjectModal} onClose={() => setShowProjectModal(false)} />
 
-        <div className={showAboutModal || showProjectModal ? "opacity-0 pointer-events-none" : "opacity-100"}
+      <div className={showAboutModal || showProjectModal ? "opacity-0 pointer-events-none" : "opacity-100"}
         style={{ transition: "opacity 0.5s ease" }}>
 
 
-      <NavBar
-        navRef={navContainerRef}
-        menuIconRef={menuIconRef}
-        resumeButtonRef={resumeButtonRef}
-        onAboutClick={() => setShowAboutModal(true)}
-        onProjectClick={() => setShowProjectModal(true)}
-      />
-
+        <NavBar
+  navRef={navContainerRef}
+  menuIconRef={menuIconRef}
+  resumeButtonRef={resumeButtonRef}
+  onAboutClick={() => setShowAboutModal(true)}
+  // UPDATED HANDLER
+  onProjectClick={() => {
+    if (contactSceneRef.current) {
+      // 1. Get the absolute position of the section relative to the document
+      const sectionTop = contactSceneRef.current.getBoundingClientRect().top + window.scrollY;
       
-      <BackToTop ref={backToTopRef} />
-
-      {/* SCENE 1: HERO → ABOUT */}
-      <div ref={sceneRef} className="relative h-screen overflow-hidden">
-        <Hero />
-        <div ref={aboutRef} className="absolute inset-0 z-10">
-          {!showAboutModal && <About onOpenModal={() => setShowAboutModal(true)} />}
+      // 2. Add an offset (e.g., 20% of screen height) to "fast forward" the animation
+      // You can tweak '0.2' to '0.3' if you want it to scroll deeper
+      const offset = window.innerHeight * 1; 
       
+      window.scrollTo({
+        top: sectionTop + offset, 
+        behavior: "smooth"
+      });
+    }
+  }}
+/>
+
+
+        <BackToTop ref={backToTopRef} />
+
+        {/* SCENE 1: HERO → ABOUT */}
+        <div ref={sceneRef} className="relative h-screen overflow-hidden">
+          <Hero />
+          <div ref={aboutRef} className="absolute inset-0 z-10">
+            {!showAboutModal && <About onOpenModal={() => setShowAboutModal(true)} />}
+
+          </div>
         </div>
-      </div>
 
-      {/* SCENE 2: TECH STACK */}
-      <div className="relative">
-        <div className="fixed inset-0 -z-10 bg-shared-stack" />
-        <div ref={techSceneRef} className="relative h-screen overflow-hidden">
-          
-          <div className="absolute top-24 left-1/2 -translate-x-1/2 z-[100] flex flex-col items-center gap-2">
-            <button 
-              onClick={toggleMode}
-              disabled={isTransitioning}
-              className="px-8 py-3 bg-black text-white font-bold text-xs uppercase tracking-[0.2em] shadow-2xl disabled:opacity-50"
+        {/* SCENE 2: TECH STACK */}
+        <div className="relative">
+          <div className="fixed inset-0 -z-10 bg-shared-stack" />
+          <div ref={techSceneRef} className="relative h-screen overflow-hidden">
+
+            <div className="absolute top-24 left-1/2 -translate-x-1/2 z-[100] flex flex-col items-center gap-2">
+              <button
+                onClick={toggleMode}
+                disabled={isTransitioning}
+                className="px-8 py-3 bg-black text-white font-bold text-xs uppercase tracking-[0.2em] shadow-2xl disabled:opacity-50"
+              >
+                {isPlayMode ? "Back to Info" : "Enable Physics"}
+              </button>
+              <span className="text-[10px] uppercase font-bold text-black/40">
+                {isPlayMode ? "Physics: ON" : "Physics: OFF"}
+              </span>
+            </div>
+
+            <div ref={warpOverlayRef} className="..." />
+
+            {/* pointer-events-none during transition to prevent scroll hijacking */}
+            <div
+              ref={contentWrapperRef}
+              className={`relative w-full h-full ${isTransitioning ? 'pointer-events-none' : ''}`}
             >
-              {isPlayMode ? "Back to Info" : "Enable Physics"}
-            </button>
-            <span className="text-[10px] uppercase font-bold text-black/40">
-              {isPlayMode ? "Physics: ON" : "Physics: OFF"}
-            </span>
-          </div>
-
-          <div ref={warpOverlayRef} className="..." />
-
-          {/* pointer-events-none during transition to prevent scroll hijacking */}
-          <div 
-            ref={contentWrapperRef} 
-            className={`relative w-full h-full ${isTransitioning ? 'pointer-events-none' : ''}`}
-          >
-            {isPlayMode ? (
-              <>
-                <div className="absolute inset-0 z-10"><TechStack /></div>
-                <div className="absolute inset-0 z-20 pointer-events-none"><FloatingStack /></div>
-              </>
-            ) : (
-              <Stack />
-            )}
+              {isPlayMode ? (
+                <>
+                  <div className="absolute inset-0 z-10"><TechStack /></div>
+                  <div className="absolute inset-0 z-20 pointer-events-none"><FloatingStack /></div>
+                </>
+              ) : (
+                <Stack />
+              )}
+            </div>
           </div>
         </div>
-      </div>
 
-     {/* SCENE 4: PROJECTS AND CONTACT */}
-      <div ref={contactSceneRef} className="relative h-screen overflow-hidden ">
-        <Projects />
-        
-        
-        <div ref={contactRef} className="absolute inset-0 z-[100]">
-          <Contact />
+        {/* SCENE 4: PROJECTS AND CONTACT */}
+        <div ref={contactSceneRef} className="relative h-screen overflow-hidden ">
+          <Projects />
+
+
+          <div ref={contactRef} className="absolute inset-0 z-[100]">
+            <Contact />
+          </div>
         </div>
+
+
       </div>
-
-
-        </div>
 
     </main>
   );

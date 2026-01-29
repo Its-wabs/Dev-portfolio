@@ -97,49 +97,52 @@ const AboutModal = ({ isOpen, onClose }: AboutModalProps) => {
 
   return (
     <div className="fixed inset-0 z-[9999] bg-modal text-[#0a0a0a] isolate">
-      
-      <BackToLanding onClose={handleExit} />
+        <BackToLanding onClose={handleExit} />
+        
+        {/* Scrollable Content Wrapper */}
+        <div 
+            ref={contentRef} 
+            className="h-full w-full overflow-y-auto font-sans selection:bg-[#63938C] selection:text-white"
+            style={{ overscrollBehavior: "contain" }}
+        >
+            {/* CHANGED: Added tighter padding on small screens, increased max-width */}
+            <div className="relative w-full max-w-[90rem] mx-auto px-4 sm:px-6 md:px-10 lg:px-20 xl:px-32 py-16 md:py-24 lg:py-32">
+                
+                {/* HEADER - COMPLETELY REWORKED FOR MOBILE */}
+                <header className="flex flex-col lg:flex-row justify-between items-start border-b border-black pb-8 md:pb-12 mb-12 md:mb-20 gap-6 md:gap-0">
+                    <div className="max-w-2xl lg:max-w-3xl">
+                        <span className="font-mono text-[0.65rem] sm:text-[0.7rem] tracking-[0.3em] md:tracking-[0.5em] uppercase text-black/40 mb-2 md:mb-4 block">
+                            File_002 // Deep_Dive
+                        </span>
+                        {/* CHANGED: Drastically reduced text size on mobile, better line handling */}
+                        <h1 className="text-[2.5rem] xs:text-[3rem] sm:text-5xl md:text-7xl lg:text-8xl xl:text-9xl font-black uppercase tracking-tighter leading-[0.9] md:leading-[0.85]">
+                            Full Stack <br className="hidden sm:block" />
+                            <span className="text-[#63938C]">Engineer</span> 
+                            <br className="hidden xs:block" /> & Artist.
+                        </h1>
+                    </div>
+                    {/* CHANGED: Better spacing and text sizing for the right column */}
+                    <div className="mt-4 lg:mt-0 lg:text-right font-mono text-[0.7rem] sm:text-[0.8rem] md:text-[11px] uppercase tracking-widest leading-relaxed space-y-1">
+                        <p>Based in Algeria</p>
+                        <p>Status: Available for Craft</p>
+                        <p className="mt-3 md:mt-4 text-[#63938C]">2026_edition</p>
+                    </div>
+                </header>
 
-      {/* Scrollable Content Wrapper */}
-      <div 
-        ref={contentRef} 
-        className="h-full w-full overflow-y-auto font-sans selection:bg-[#63938C] selection:text-white"
-        style={{ overscrollBehavior: "contain" }}
-      >
-       
-        <div className="relative w-full max-w-[1600px] mx-auto px-5 sm:px-10 md:px-20 lg:px-32 py-24 md:py-32">
-          
-          {/* HEADER */}
-          <header className="flex flex-col md:flex-row justify-between items-start border-b border-black pb-12 mb-20">
-            <div className="max-w-3xl"> {/* Increased max-width for better text wrap */}
-              <span className="font-mono text-[10px] tracking-[0.5em] uppercase text-black/40 mb-4 block">
-                File_002 // Deep_Dive
-              </span>
-              <h1 className="text-6xl md:text-8xl lg:text-9xl font-black uppercase tracking-tighter leading-[0.85]">
-                Full Stack <br /> <span className="text-[#63938C]">Engineer</span> <br /> & Artist.
-              </h1>
-            </div>
-            <div className="mt-8 md:mt-0 md:text-right font-mono text-[11px] uppercase tracking-widest leading-relaxed">
-              <p>Based in Algeria</p>
-              <p>Status: Available for Craft</p>
-              <p className="mt-4 text-[#63938C]">2026_edition</p>
-            </div>
-          </header>
-
-          {/* BIO */}
-          <section className="grid grid-cols-1 md:grid-cols-12 gap-12 mb-32">
-            <div className="md:col-span-5 lg:col-span-4 italic font-serif text-2xl md:text-3xl border-l-2 border-[#63938C] pl-6 leading-tight">
-              "I found out that App systems and blank canvases share the same DNA: they both require a vision for order."
-            </div>
-            <div className="md:col-span-7 lg:col-span-8 text-lg md:text-xl leading-relaxed text-black/80">
-              <p className="mb-6">
-                My journey started with a pencil, not a keyboard. The world of illustration taught me how to see light and color interacts with surfaces, and how composition guides the eye. 
-              </p>
-              <p>
-                Transitioning into engineering wasn't a pivot, but an expansion. Now, I use TypeScript and React as my brushes to build high-performance systems that don't just work, but feel right. I treat every project like an art piece: clean, optimized, and built to last.
-              </p>
-            </div>
-          </section>
+                {/* BIO SECTION - Improved grid for mobile */}
+                <section className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12 mb-20 md:mb-32">
+                    <div className="md:col-span-5 lg:col-span-4 italic font-serif text-xl sm:text-2xl md:text-3xl border-l-2 border-[#63938C] pl-4 md:pl-6 leading-snug md:leading-tight">
+                        "I found out that App systems and blank canvases share the same DNA: they both require a vision for order."
+                    </div>
+                    <div className="md:col-span-7 lg:col-span-8 text-base sm:text-lg md:text-xl leading-relaxed text-black/80 space-y-4 md:space-y-6">
+                        <p>
+                            My journey started with a pencil, not a keyboard. The world of illustration taught me how to see light and color interacts with surfaces, and how composition guides the eye. 
+                        </p>
+                        <p>
+                            Transitioning into engineering wasn't a pivot, but an expansion. Now, I use TypeScript and React as my brushes to build high-performance systems that don't just work, but feel right. I treat every project like an art piece: clean, optimized, and built to last.
+                        </p>
+                    </div>
+                </section>
 
           {/* PRINCIPLES */}
           <section className="mb-32">
