@@ -16,6 +16,7 @@ import Stack from "./components/stack";
 import BackToTop from "./components/backToTop";
 import AboutModal from "./components/aboutmodal";
 import ProjectModal from "./components/projectmodal";
+import { useGSAP } from "@gsap/react";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -40,6 +41,51 @@ export default function App() {
 
   const [showAboutModal, setShowAboutModal] = useState(false);
   const [showProjectModal, setShowProjectModal] = useState(false);
+
+  const physicsBtnRef = useRef<HTMLButtonElement>(null);
+
+  useGSAP(() => {
+  // Constant "Zero-G" floating animation
+  gsap.to(physicsBtnRef.current, {
+    y: -6,
+    duration: 2,
+    repeat: -1,
+    yoyo: true,
+    ease: "power1.inOut",
+  });
+}, { scope: physicsBtnRef });
+
+// 3. Physics hover handler
+const handleMouseMove = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const btn = physicsBtnRef.current;
+  if (!btn) return;
+
+  const rect = btn.getBoundingClientRect();
+  const x = e.clientX - rect.left - rect.width / 2;
+  const y = e.clientY - rect.top - rect.height / 2;
+
+  // Moves button slightly towards mouse (Magnetic) and tilts it
+  gsap.to(btn, {
+    x: x * 0.2,
+    y: y * 0.2,
+    rotationX: -y * 0.1,
+    rotationY: x * 0.1,
+    duration: 0.4,
+    ease: "power2.out",
+  });
+};
+
+const handleMouseLeave = () => {
+  // Reset position with a slight "bounce" to feel like weight
+  gsap.to(physicsBtnRef.current, {
+    x: 0,
+    y: 0,
+    rotationX: 0,
+    rotationY: 0,
+    duration: 0.7,
+    ease: "elastic.out(1, 0.5)",
+  });
+};
 
   // Warp Animation Toggle
   const toggleMode = () => {
@@ -294,13 +340,19 @@ export default function App() {
           <div ref={techSceneRef} className="relative h-screen overflow-hidden">
 
             <div className="absolute top-24 left-1/2 -translate-x-1/2 z-[100] flex flex-col items-center gap-2">
-              <button
-                onClick={toggleMode}
-                disabled={isTransitioning}
-                className="px-8 py-3 bg-black text-white font-bold text-xs uppercase tracking-[0.2em] shadow-2xl disabled:opacity-50"
-              >
-                {isPlayMode ? "Back to Info" : "Enable Physics"}
-              </button>
+             <button
+  ref={physicsBtnRef}
+  onClick={toggleMode}
+  onMouseMove={handleMouseMove}
+  onMouseLeave={handleMouseLeave}
+  disabled={isTransitioning}
+  style={{ transformStyle: "preserve-3d" }} // Required for 3D tilt
+  className="px-8 py-3 bg-black text-white font-bold text-xs uppercase tracking-[0.2em] shadow-2xl disabled:opacity-50 transition-colors duration-300 hover:bg-[#63938C] hover:text-black will-change-transform"
+>
+  <span style={{ transform: "translateZ(20px)", display: "block" }}>
+    {isPlayMode ? "Back to Info" : "Enable Physics"}
+  </span>
+</button>
               <span className="text-[10px] uppercase font-bold text-black/40">
                 {isPlayMode ? "Physics: ON" : "Physics: OFF"}
               </span>

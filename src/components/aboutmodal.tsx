@@ -215,9 +215,9 @@ const AboutModal = ({ isOpen, onClose }: AboutModalProps) => {
                 Available for Freelance & Partnerships
               </p>
               <div className="flex gap-6 font-mono text-xs uppercase tracking-widest">
-                <a href="#" className="hover:text-[#63938C] transition-colors underline underline-offset-4">Email</a>
-                <a href="#" className="hover:text-[#63938C] transition-colors underline underline-offset-4">LinkedIn</a>
-                <a href="#" className="hover:text-[#63938C] transition-colors underline underline-offset-4">X / Twitter</a>
+                <a href="https://x.com/its_wabs" target="empty" className="hover:text-[#63938C] transition-colors underline underline-offset-4">Email</a>
+                <a href="https://www.linkedin.com/in/itswabs" target="empty" className="hover:text-[#63938C] transition-colors underline underline-offset-4">LinkedIn</a>
+                <a href="https://x.com/its_wabs" target="empty" className="hover:text-[#63938C] transition-colors underline underline-offset-4">X / Twitter</a>
               </div>
             </div>
             <div className="text-right">

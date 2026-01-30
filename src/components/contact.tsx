@@ -15,15 +15,15 @@ const Contact = () => {
   const socials = [
     {
       name: "LinkedIn",
-      url: "https://www.linkedin.com/in/your-profile",
+      url: "https://www.linkedin.com/in/itswabs",
     },
     {
       name: "Twitter",
-      url: "https://x.com/your-handle",
+      url: "https://x.com/its_wabs",
     },
     {
       name: "Github",
-      url: "https://github.com/Its-wabs",
+      url: "https://github.com/Its-wabs/",
     },
   ];
 

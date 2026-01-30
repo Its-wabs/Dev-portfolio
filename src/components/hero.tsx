@@ -78,13 +78,13 @@ const Hero = () => {
             <span className="justify-self-start cursor-default sm:hidden">Dev</span>
 
             <div className="flex justify-center gap-6 text-[#EBE5D0]/70">
-              <a href="#" className="hover:text-[#63938C] transition hover:scale-105 cursor-pointer">
+              <a href="https://x.com/its_wabs" target="empty" className="hover:text-[#63938C] transition hover:scale-105 cursor-pointer">
                 <FaXTwitter size={14} />
               </a>
-              <a href="#" className="hover:text-[#63938C] transition hover:scale-105 cursor-pointer">
+              <a href="https://www.linkedin.com/in/itswabs" target="empty" className="hover:text-[#63938C] transition hover:scale-105 cursor-pointer">
                 <FaLinkedinIn size={14} />
               </a>
-              <a href="#" className="hover:text-[#63938C] transition hover:scale-105 cursor-pointer">
+              <a href="https://github.com/Its-wabs/" target="empty" className="hover:text-[#63938C] transition hover:scale-105 cursor-pointer">
                 <FaGithub size={14} />
               </a>
             </div>
