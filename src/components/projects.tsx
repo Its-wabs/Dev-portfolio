@@ -1,23 +1,27 @@
 "use client";
-import React, { useState } from "react";
-import { Github, ArrowUpRight, Lock } from "lucide-react"; 
+import React, { useEffect, useRef, useState } from "react";
+import { Github, ArrowUpRight } from "lucide-react"; 
 
 const projectData = [
   {
     id: "01",
     title: "FikraFlow",
     description: "A focused writing and thinking tool exploring frictionless input, structure, and clarity. Early foundation for Kahf Notes.",
-    tech: ["Next.js", "TypeScript", "Tailwind"],
+    tech: ["Next.js", "TypeScript", "Tailwind","Convex", "clerk"],
     link: "https://github.com/Its-wabs/nextJs-noteapp",
-    demo: "https://fikra-flow.vercel.app/"
+    demo: "https://fikra-flow.vercel.app/",
+    preview: "/img/fikra-static.png", 
+    active: "/videos/typeflow.mp4"    
   },
   {
     id: "02",
     title: "AuthPlay",
     description: "An authentication playground to understand manual auth flows, sessions, and OAuth trade-offs through experimentation.",
-    tech: ["Next.js", "Prisma", "NextAuth", "PostgreSQL"],
+    tech: ["Next.js", "Prisma", "NextAuth", "Supabase", "PostgreSQL"],
     link: "https://github.com/Its-wabs/auth-playground",
-    demo: "https://authplay-v1.vercel.app/"
+    demo: "https://authplay-v1.vercel.app/",
+    preview: "/img/authplay.png", 
+    active: "/img/projects/fikra-demo.gif" 
   },
   {
     id: "03",
@@ -25,14 +29,18 @@ const projectData = [
     description: "A system-driven portfolio blending engineering, interaction design, and visual storytelling.",
     tech: ["Vite.js", "GSAP", "Tailwind"],
     link: "https://github.com/Its-wabs/Dev-portfolio",
-    demo: "comingsoon" // Special case handling
+    demo: "https://itswabs.vercel.app/",
+    preview: "/img/dev.png", 
+    active: "/img/projects/fikra-demo.gif" 
   },
 ];
 
 const Projects = () => {
-  // We only need global coordinates for a fixed cursor
+  
   const [cursorPos, setCursorPos] = useState({ x: 0, y: 0 });
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+
+  const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
 
   const handleMouseMove = (e: React.MouseEvent) => {
     setCursorPos({
@@ -40,6 +48,21 @@ const Projects = () => {
       y: e.clientY,
     });
   };
+
+
+  // Play/Pause logic based on hover
+  useEffect(() => {
+    videoRefs.current.forEach((video, index) => {
+      if (!video) return;
+      if (hoveredIndex === index) {
+        video.play().catch(() => {}); // Catch prevents errors if user hasn't interacted yet
+      } else {
+        video.pause();
+        video.currentTime = 0; // Optional: Reset video to start when leaving
+      }
+    });
+  }, [hoveredIndex]);
+  
 
   return (
     <div className="relative w-full h-full projects bg-neutral-100">
@@ -103,61 +126,56 @@ const Projects = () => {
 
             {/* RIGHT SIDE: SHOWCASE LINK */}
             <a 
-              href={project.demo === "comingsoon" ? undefined : project.demo}
-              target={project.demo === "comingsoon" ? undefined : "_blank"}
+              href={project.demo}
+              target="_blank"
               rel="noopener noreferrer"
-              className={`w-full md:w-[45%] h-full bg-neutral-50 relative overflow-hidden group/frame ${project.demo === "comingsoon" ? 'cursor-not-allowed' : 'cursor-none'}`}
+              className="w-full md:w-[45%] h-full relative overflow-hidden group/frame cursor-none"
               onMouseMove={handleMouseMove}
               onMouseEnter={() => setHoveredIndex(index)}
               onMouseLeave={() => setHoveredIndex(null)}
-              onClick={(e) => project.demo === "comingsoon" && e.preventDefault()}
             >
-              {/* Custom Cursor Overlay (Fixed Position) */}
+              {/* Custom Cursor Overlay */}
               {hoveredIndex === index && (
-                <div 
-                  className="fixed pointer-events-none z-[9999]"
-                  style={{
-                    left: cursorPos.x, 
-                    top: cursorPos.y,
-                    transform: 'translate(-50%, -50%)' // Centers the badge on cursor
-                  }}
+                <div className="fixed pointer-events-none z-[9999]"
+                  style={{ left: cursorPos.x, top: cursorPos.y, transform: 'translate(-50%, -50%)' }}
                 >
-                  <div className={`
-                    px-4 py-2 rounded-full flex items-center gap-2 shadow-2xl backdrop-blur-sm transition-all duration-300
-                    ${project.demo === "comingsoon" 
-                      ? "bg-neutral-700 text-white/80" 
-                      : "bg-neutral-900 text-white"
-                    }
-                  `}>
-                    <span className="text-[10px] font-bold uppercase tracking-widest whitespace-nowrap">
-                      {project.demo === "comingsoon" ? "Coming Soon" : "View Live"}
-                    </span>
-                    {project.demo === "comingsoon" ? (
-                      <Lock size={12} />
-                    ) : (
-                      <ArrowUpRight size={14} />
-                    )}
+                  <div className="px-4 py-2 rounded-full flex items-center gap-2 shadow-2xl backdrop-blur-md bg-white/90 text-black border border-black/10 transition-all duration-300">
+                    <span className="text-[10px] font-bold uppercase tracking-widest whitespace-nowrap">Open Demo</span>
+                    <ArrowUpRight size={14} />
                   </div>
                 </div>
               )}
 
-              {/* Visual Frame */}
-              <div className="absolute inset-12 border border-black/5 flex items-center justify-center group-hover/frame:scale-[1.02] transition-transform duration-700">
-                <div className="absolute inset-0 bg-black/[0.02] -z-10" />
-                
-                {/* ID Background Watermark */}
-                <div className="absolute inset-0 flex items-center justify-center text-[20vw] font-black opacity-[0.02] select-none">
-                  {project.id}
-                </div>
+              {/* MEDIA CONTAINER */}
+              <div className="absolute inset-0 w-full h-full bg-neutral-200 overflow-hidden">
+                {/* 1. The Static Image */}
+                <img 
+                  src={project.preview} 
+                  alt={project.title}
+                  className={`absolute inset-0 w-full h-full object-cover transition-all duration-700 ease-out group-hover/frame:scale-110 group-hover/frame:blur-sm ${hoveredIndex === index ? 'opacity-0' : 'opacity-100'}`}
+                />
 
-                {/* Placeholder Content */}
-                <div className="flex flex-col items-center gap-4">
-                  <div className="w-12 h-[1px] bg-black/20" />
-                  <span className="text-[10px] font-mono text-black/30 uppercase tracking-[0.5em]">
-                    Render_Sequence
-                  </span>
-                  <div className="w-12 h-[1px] bg-black/20" />
-                </div>
+                {/* 2. The Active Media (Checks for .mp4) */}
+                {project.active.endsWith('.mp4') ? (
+                  <video
+                    ref={(el) => (videoRefs.current[index] = el)}
+                    src={project.active}
+                    muted
+                    loop
+                    playsInline
+                    className={`absolute inset-0 w-full h-full object-cover transition-all duration-700 ease-out group-hover/frame:scale-110 ${hoveredIndex === index ? 'opacity-100' : 'opacity-0'}`}
+                  />
+                ) : (
+                  <img 
+                    src={project.active} 
+                    alt={project.title}
+                    className={`absolute inset-0 w-full h-full object-cover transition-all duration-700 ease-out group-hover/frame:scale-110 ${hoveredIndex === index ? 'opacity-100' : 'opacity-0'}`}
+                  />
+                )}
+
+                {/* Overlays */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent pointer-events-none" />
+                <div className="absolute inset-0 border-[20px] border-white pointer-events-none z-10" />
               </div>
             </a>
 

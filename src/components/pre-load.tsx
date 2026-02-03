@@ -26,7 +26,7 @@ const PreLoad = () => {
             loadedCount++;
             const percentage = Math.round((loadedCount / totalImages) * 100);
             
-            // Smoothly animate the state number using GSAP
+            
             gsap.to({ val: progress }, {
                 val: percentage,
                 duration: 0.5,
@@ -50,39 +50,50 @@ const PreLoad = () => {
         });
     }, []);
 
-    useEffect(() => {
+   useEffect(() => {
         if (!imagesLoaded) return;
 
         const tl = gsap.timeline();
 
         tl
+            // Initial burst (Small dot)
             .to(revealerRef.current, { 
                 scale: 0.1, 
                 duration: 0.6, 
                 opacity: 1,
                 ease: "power2.out" 
             }, 0.5)
+
+            //  Expand to second phase
             .to(revealerRef.current, { 
                 scale: 0.25, 
                 duration: 0.8, 
                 ease: "expo.out" 
             })
+
+            
             .to(textContainerRef.current, {
                 opacity: 1,
                 y: 0,
-                duration: 0.6,
+                duration: 0.5,
                 ease: "power3.out"
-            }, "-=0.6")
+            }, "-=0.2") 
+
+            // 4. Continue expansion
             .to(revealerRef.current, { 
                 scale: 0.4, 
                 duration: 0.6, 
                 ease: "power3.out" 
-            })
+            }, "+=0.2") // Added a tiny pause so user can actually read "Hello"
+
+            // 5. Final Scale to cover everything
             .to(revealerRef.current, { 
                 scale: 1.5, 
                 duration: 1.2, 
                 ease: "power4.inOut" 
             })
+            
+            // 6. FINAL EXIT
             .to(preloaderRef.current, {
                 clipPath: "polygon(0% 0%, 100% 0%, 100% 0%, 0% 0%)",
                 duration: 1.1,

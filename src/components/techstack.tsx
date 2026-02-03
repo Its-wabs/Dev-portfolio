@@ -21,7 +21,7 @@ const TechStack = () => {
     const engine = Engine.create();
     const world = engine.world;
     
-    engine.gravity.y = 1; // Gravity enabled for the "piling" effect
+    engine.gravity.y = 1; 
 
     const wallOptions = { isStatic: true, render: { visible: false } };
     const ground = Bodies.rectangle(width / 2, height + 25, width * 2, 50, wallOptions);
@@ -54,7 +54,7 @@ const TechStack = () => {
 
     const mouse = Mouse.create(sceneRef.current);
     
-    // FIXED: Directly updating mouse position properties
+    // Directly updating mouse position properties
     const handleGlobalMouseMove = (e: MouseEvent) => {
       const rect = sceneRef.current?.getBoundingClientRect();
       if (rect) {
@@ -88,7 +88,7 @@ const TechStack = () => {
     const runner = Runner.create();
     Runner.run(runner, engine);
 
-    // FIXED: Cleanup for requestAnimationFrame
+    // Cleanup for requestAnimationFrame
     let requestId: number;
     const update = () => {
       itemsRef.current.forEach(({ body, element }) => {
@@ -104,7 +104,7 @@ const TechStack = () => {
 
     return () => {
       window.removeEventListener("mousemove", handleGlobalMouseMove);
-      cancelAnimationFrame(requestId); // Stop the loop
+      cancelAnimationFrame(requestId); 
       Runner.stop(runner);
       Engine.clear(engine);
     };

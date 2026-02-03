@@ -5,17 +5,17 @@ import { useGSAP } from "@gsap/react";
 
 const About = ({ onOpenModal }: { onOpenModal: () => void }) => {
   const sectionRef = useRef<HTMLDivElement>(null);
-  const textRef = useRef<HTMLSpanElement>(null); // Ref for the breathing text
+  const textRef = useRef<HTMLSpanElement>(null); 
 
   // Infinite breathing animation
   useGSAP(() => {
     gsap.to(textRef.current, {
-      opacity: 0.7,           // Barely drops from the 100% (of its 0.4 start)
-      y: -2,                  // Tiny upward drift
-      duration: 2.5,          // Slow and calm
-      repeat: -1,             // Infinite
-      yoyo: true,             // Reverse back
-      ease: "sine.inOut",     // Smooth as a breath
+      opacity: 0.7,           
+      y: -2,                  
+      duration: 2.5,          
+      repeat: -1,             
+      yoyo: true,             
+      ease: "sine.inOut",     
     });
   }, { scope: sectionRef });
 
@@ -49,7 +49,7 @@ const About = ({ onOpenModal }: { onOpenModal: () => void }) => {
             className="group relative flex flex-col items-center justify-center p-8"
             onClick={handleDive}
           >
-            {/* Added ref={textRef} here */}
+            
             <span 
               ref={textRef}
               className="relative z-10 font-mono text-[10px] tracking-[0.5em] uppercase text-black/40 group-hover:text-black group-hover:scale-110 transition-all duration-500 ease-out"
@@ -57,7 +57,7 @@ const About = ({ onOpenModal }: { onOpenModal: () => void }) => {
               [ Read Full Story ]
             </span>
 
-            {/* THE DEPTH ZOOM ANIMATION (Keep exactly as is) */}
+           
             <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
               <div className="w-4 h-4 border border-black/20 scale-100 invisible group-hover:visible group-hover:scale-[10] group-hover:opacity-0 transition-all duration-700 ease-in-out" />
               <div className="absolute w-4 h-4 border border-black/10 scale-100 invisible group-hover:visible group-hover:scale-[15] group-hover:opacity-0 transition-all duration-1000 delay-75 ease-in-out" />
@@ -65,7 +65,7 @@ const About = ({ onOpenModal }: { onOpenModal: () => void }) => {
               <div className="absolute w-1 h-1 bg-black/40 rounded-full opacity-0 group-hover:opacity-100 group-hover:scale-0 transition-all duration-300" />
             </div>
 
-            {/* Corners (Keep exactly as is) */}
+            {/* Corners*/}
             <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-black/0 group-hover:border-black/40 transition-all duration-500" />
             <div className="absolute top-0 right-0 w-2 h-2 border-t border-r border-black/0 group-hover:border-black/40 transition-all duration-500" />
             <div className="absolute bottom-0 left-0 w-2 h-2 border-b border-l border-black/0 group-hover:border-black/40 transition-all duration-500" />

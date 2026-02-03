@@ -31,7 +31,7 @@ const AboutModal = ({ isOpen, onClose }: AboutModalProps) => {
     
     gsap.to(contentRef.current, {
       opacity: 0,
-      scale: 0.95, // Changed from 0.9 to 0.95 for subtler exit
+      scale: 0.95, 
       filter: "blur(10px)",
       duration: 0.6,
       ease: "power4.in",
@@ -99,29 +99,29 @@ const AboutModal = ({ isOpen, onClose }: AboutModalProps) => {
     <div className="fixed inset-0 z-[9999] bg-modal text-[#0a0a0a] isolate">
         <BackToLanding onClose={handleExit} />
         
-        {/* Scrollable Content Wrapper */}
+        {/*  Content Wrapper */}
         <div 
             ref={contentRef} 
             className="h-full w-full overflow-y-auto font-sans selection:bg-[#63938C] selection:text-white"
             style={{ overscrollBehavior: "contain" }}
         >
-            {/* CHANGED: Added tighter padding on small screens, increased max-width */}
+           
             <div className="relative w-full max-w-[90rem] mx-auto px-4 sm:px-6 md:px-10 lg:px-20 xl:px-32 py-16 md:py-24 lg:py-32">
                 
-                {/* HEADER - COMPLETELY REWORKED FOR MOBILE */}
+                {/* HEADER  */}
                 <header className="flex flex-col lg:flex-row justify-between items-start border-b border-black pb-8 md:pb-12 mb-12 md:mb-20 gap-6 md:gap-0">
                     <div className="max-w-2xl lg:max-w-3xl">
                         <span className="font-mono text-[0.65rem] sm:text-[0.7rem] tracking-[0.3em] md:tracking-[0.5em] uppercase text-black/40 mb-2 md:mb-4 block">
                             File_002 // Deep_Dive
                         </span>
-                        {/* CHANGED: Drastically reduced text size on mobile, better line handling */}
+                        
                         <h1 className="text-[2.5rem] xs:text-[3rem] sm:text-5xl md:text-7xl lg:text-8xl xl:text-9xl font-black uppercase tracking-tighter leading-[0.9] md:leading-[0.85]">
                             Full Stack <br className="hidden sm:block" />
                             <span className="text-[#63938C]">Engineer</span> 
                             <br className="hidden xs:block" /> & Artist.
                         </h1>
                     </div>
-                    {/* CHANGED: Better spacing and text sizing for the right column */}
+                    
                     <div className="mt-4 lg:mt-0 lg:text-right font-mono text-[0.7rem] sm:text-[0.8rem] md:text-[11px] uppercase tracking-widest leading-relaxed space-y-1">
                         <p>Based in Algeria</p>
                         <p>Status: Available for Craft</p>
@@ -129,7 +129,7 @@ const AboutModal = ({ isOpen, onClose }: AboutModalProps) => {
                     </div>
                 </header>
 
-                {/* BIO SECTION - Improved grid for mobile */}
+                {/* BIO SECTION  */}
                 <section className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12 mb-20 md:mb-32">
                     <div className="md:col-span-5 lg:col-span-4 italic font-serif text-xl sm:text-2xl md:text-3xl border-l-2 border-[#63938C] pl-4 md:pl-6 leading-snug md:leading-tight">
                         "I found out that App systems and blank canvases share the same DNA: they both require a vision for order."
@@ -150,7 +150,7 @@ const AboutModal = ({ isOpen, onClose }: AboutModalProps) => {
               <h2 className="text-sm font-mono uppercase tracking-[0.4em] font-bold">Execution_Principles</h2>
               <div className="h-[1px] flex-grow bg-black/10" />
             </div>
-            {/* Added auto-rows to ensure equal height */}
+            
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-[1px] bg-black/10 border border-black/10">
               {principles.map((p, i) => (
                 <div key={i} className="bg-[#ebe5d0] p-8 lg:p-10 hover:bg-white transition-colors duration-500 group flex flex-col h-full">
@@ -215,7 +215,7 @@ const AboutModal = ({ isOpen, onClose }: AboutModalProps) => {
                 Available for Freelance & Partnerships
               </p>
               <div className="flex gap-6 font-mono text-xs uppercase tracking-widest">
-                <a href="https://x.com/its_wabs" target="empty" className="hover:text-[#63938C] transition-colors underline underline-offset-4">Email</a>
+                <a href="mailto:your.email@example.com?subject=Portfolio Inquiry" className="hover:text-[#63938C] transition-colors underline underline-offset-4">Email</a>
                 <a href="https://www.linkedin.com/in/itswabs" target="empty" className="hover:text-[#63938C] transition-colors underline underline-offset-4">LinkedIn</a>
                 <a href="https://x.com/its_wabs" target="empty" className="hover:text-[#63938C] transition-colors underline underline-offset-4">X / Twitter</a>
               </div>

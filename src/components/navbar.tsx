@@ -32,6 +32,19 @@ const projectsButtonRef = useRef<HTMLAnchorElement | null>(null);
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
+  
+
+   const openResume = () => {
+
+    const pdfUrl = '/resume.pdf';
+    // Open in new tab
+    window.open(pdfUrl, '_blank', 'noopener,noreferrer');
+    
+   
+  };
+
+
+
   // Toggle menu animation
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -189,6 +202,8 @@ const projectsButtonRef = useRef<HTMLAnchorElement | null>(null);
     }
   }, [isMenuOpen, menuIconRef, resumeButtonRef, onAboutClick, onProjectClick]);
 
+
+
   return (
     <div
       ref={navContainerRef}
@@ -212,6 +227,7 @@ const projectsButtonRef = useRef<HTMLAnchorElement | null>(null);
                 backgroundColor: "var(--nav-accent-bg)",
                 color: "var(--nav-accent-text)",
               }}
+              onClick={openResume}
             >
               {/* The North Star Icon */}
               <i className="ri-shining-2-fill text-[0px] opacity-0 transition-all duration-300 ease-out group-hover:text-[1rem] group-hover:opacity-100 group-hover:rotate-[135deg] group-hover:animate-[star-pulse_2s_infinite_ease-in-out]"></i>

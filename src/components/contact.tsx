@@ -91,7 +91,7 @@ const Contact = () => {
 
       <div className="flex-grow flex flex-col items-center justify-center z-10 w-full px-6 text-center">
         
-        {/* Updated Title */}
+        {/* Title */}
         <h1 className="contact-title text-5xl md:text-[7rem] font-black text-[#EBE5D0] uppercase leading-[0.90] tracking-tight italic mb-8">
           Let's <br /> 
           <span className="not-italic">work together</span>
@@ -99,7 +99,7 @@ const Contact = () => {
 
         <div className="principle-line w-full max-w-lg h-[1px] bg-[#63938C]/30 mb-8 origin-center" />
 
-        {/* NEW: Professional Description */}
+        {/*  Description */}
         <p className="contact-description max-w-md text-[11px] md:text-xs font-mono uppercase tracking-[0.2em] text-white/50 leading-relaxed mb-10">
           Currently available for project collaborations or a simple chat. 
           Reach out via email or LinkedIn—I’d love to hear your ideas.

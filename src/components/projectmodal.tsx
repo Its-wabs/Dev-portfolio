@@ -83,6 +83,7 @@ const projectData = [
 
 const ProjectModal = ({ isOpen, onClose }: ProjectModalProps) => {
   const contentRef = useRef<HTMLDivElement>(null);
+  
   // Ref array to store each project container
   const itemsRef = useRef<(HTMLDivElement | null)[]>([]);
   

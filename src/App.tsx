@@ -55,7 +55,7 @@ export default function App() {
   });
 }, { scope: physicsBtnRef });
 
-// 3. Physics hover handler
+// Physics hover handler
 const handleMouseMove = (e: React.MouseEvent<HTMLButtonElement>) => {
   const btn = physicsBtnRef.current;
   if (!btn) return;
@@ -76,7 +76,7 @@ const handleMouseMove = (e: React.MouseEvent<HTMLButtonElement>) => {
 };
 
 const handleMouseLeave = () => {
-  // Reset position with a slight "bounce" to feel like weight
+  // Reset position with a slight bounce 
   gsap.to(physicsBtnRef.current, {
     x: 0,
     y: 0,
@@ -136,11 +136,27 @@ const handleMouseLeave = () => {
     );
   };
 
+  const scrollToProjects = () => {
+    
+    const trigger = ScrollTrigger.getById("project-section");
+
+    if (trigger) {
+     
+      const targetPosition = trigger.start + window.innerHeight;
+      
+      window.scrollTo({
+        top: targetPosition,
+        behavior: "smooth"
+      });
+    }
+  };
+
   useEffect(() => {
     if (!sceneRef.current || !aboutRef.current) return;
 
     // BACK TO TOP LOGIC 
     const showBackToTop = () => {
+      /* the old way
       if (backToTopRef.current) {
         const scrolled = window.scrollY;
         const viewportHeight = window.innerHeight;
@@ -162,6 +178,12 @@ const handleMouseLeave = () => {
           });
         }
       }
+      */
+      ScrollTrigger.create({
+  start: "top -80%", 
+  onEnter: () => gsap.to(backToTopRef.current, { opacity: 1, visibility: "visible" }),
+  onLeaveBack: () => gsap.to(backToTopRef.current, { opacity: 0, visibility: "hidden" }),
+});
     };
 
     // Initial check
@@ -171,7 +193,7 @@ const handleMouseLeave = () => {
     window.addEventListener("scroll", showBackToTop);
 
 
-    // 1. SET INITIAL STATE IMMEDIATELY
+    //  SET INITIAL STATE IMMEDIATELY
     gsap.set(".nav-icon", { color: "#ffffff", backgroundColor: "transparent" });
     gsap.set(".resume-button", { backgroundColor: "#63938C", color: "#000" });
     gsap.set(document.documentElement, {
@@ -180,7 +202,7 @@ const handleMouseLeave = () => {
       "--nav-icon-color": "#ffffff",
     });
 
-    // 2. MAIN TIMELINE (Hero to About)
+    //  MAIN TIMELINE (Hero to About)
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: sceneRef.current,
@@ -199,7 +221,7 @@ const handleMouseLeave = () => {
       { yPercent: 0, scale: 1, opacity: 1, filter: "blur(0px)", ease: "power3.out" }
     );
 
-    // 3. NAVBAR COLOR CHANGE
+    //  NAVBAR COLOR CHANGE
     tl.to(".nav-icon", { color: "#151414", backgroundColor: "rgba(0,0,0,0.05)", ease: "power3.out" }, 0.5);
     tl.to(".resume-button", { backgroundColor: "#151414", color: "#fff", ease: "power3.out" }, 0.5);
     tl.to(document.documentElement, {
@@ -231,6 +253,7 @@ const handleMouseLeave = () => {
     if (contactSceneRef.current && contactRef.current) {
       const masterTl = gsap.timeline({
         scrollTrigger: {
+          id: "project-section",
           trigger: contactSceneRef.current,
           start: "top top",
           end: "+=400%",
@@ -308,18 +331,7 @@ const handleMouseLeave = () => {
   menuIconRef={menuIconRef}
   resumeButtonRef={resumeButtonRef}
   onAboutClick={() => setShowAboutModal(true)}
-  onProjectClick={() => {
-    if (contactSceneRef.current) {
-      
-      const sectionTop = contactSceneRef.current.getBoundingClientRect().top + window.scrollY;
-      const offset = window.innerHeight * 1; 
-      
-      window.scrollTo({
-        top: sectionTop + offset, 
-        behavior: "smooth"
-      });
-    }
-  }}
+  onProjectClick={scrollToProjects}
 />
 
 

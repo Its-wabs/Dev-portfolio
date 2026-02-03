@@ -45,7 +45,7 @@ const VisualRecords = () => {
     if (!isDragging || !scrollContainerRef.current) return;
     e.preventDefault();
     const x = e.pageX - (scrollContainerRef.current.offsetLeft || 0);
-    const walk = (x - startX) * 1.5; // Scroll speed multiplier
+    const walk = (x - startX) * 1.5; 
     scrollContainerRef.current.scrollLeft = scrollLeft - walk;
   };
 
@@ -110,7 +110,7 @@ const VisualRecords = () => {
             return (
               <div
                 key={i}
-                // Outer wrapper handles the blur logic
+                //  the blur logic
                 className={`flex-shrink-0 transition-all duration-700 ease-out pointer-events-auto
                   ${isOtherHovered ? "blur-[2px] opacity-30 scale-[0.98]" : "blur-0 opacity-100 scale-100"}
                 `}

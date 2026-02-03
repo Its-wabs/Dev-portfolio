@@ -45,14 +45,14 @@ const Stack = forwardRef<HTMLDivElement>((_props, ref) => {
         ease: "power2.inOut" 
       }, "<");
 
-    //   Reduce contrast and "Standby" state
+    //   Reduce contrast 
     tl.to(".experience-indicator", {
       opacity: 0.5, 
       duration: 1,
       ease: "power2.out"
     });
 
-    //THE IDLE PULSE - Infinite but very subtle
+    //THE IDLE PULSE 
     gsap.to(".experience-indicator__node", {
       scale: 1.3,
       opacity: 0.7,

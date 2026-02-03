@@ -37,7 +37,7 @@ const FloatingStack = () => {
     Composite.add(world, [...walls, centerBox]);
 
     const allItems = gsap.utils.toArray<HTMLDivElement>(".main-item");
-    itemsRef.current = []; // Clear previous refs on re-run
+    itemsRef.current = []; 
 
     allItems.forEach((el) => {
       const rectWidth = el.offsetWidth || 120;
@@ -60,7 +60,7 @@ const FloatingStack = () => {
 
     const mouse = Mouse.create(sceneRef.current!);
 
-    // FIXED MOUSE HANDLER
+    // MOUSE HANDLER
     const handleGlobalMouseMove = (e: MouseEvent) => {
       const rect = sceneRef.current?.getBoundingClientRect();
       if (rect) {
@@ -102,7 +102,7 @@ const FloatingStack = () => {
     const runner = Runner.create();
     Runner.run(runner, engine);
 
-    // SETUP TICKER WITH CLEANUP
+    
     let requestId: number;
     const update = () => {
       itemsRef.current.forEach(({ body, element }) => {
