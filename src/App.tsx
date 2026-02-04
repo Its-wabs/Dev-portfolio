@@ -352,7 +352,7 @@ const handleMouseLeave = () => {
           <div className="fixed inset-0 -z-10 bg-shared-stack" />
           <div ref={techSceneRef} className="relative h-screen overflow-hidden">
 
-            <div className="absolute top-16 md:top-24 left-1/2 -translate-x-1/2 z-[100] flex flex-col items-center gap-2 w-full">
+            <div className="absolute top-24 md:top-28 left-1/2 -translate-x-1/2 z-[100] flex flex-col items-center gap-2 w-full">
              <button
   ref={physicsBtnRef}
   onClick={toggleMode}
@@ -360,7 +360,7 @@ const handleMouseLeave = () => {
   onMouseLeave={handleMouseLeave}
   disabled={isTransitioning}
   style={{ transformStyle: "preserve-3d" }} // Required for 3D tilt
-  className="px-6 py-2 md:px-8 md:py-3 bg-black text-white font-bold text-[10px] md:text-xs uppercase tracking-[0.2em] shadow-2xl disabled:opacity-50 transition-colors duration-300 hover:bg-[#63938C] hover:text-black will-change-transform scale-90 md:scale-100"
+  className="px-6 py-3 md:px-8 md:py-3 bg-black text-white font-bold text-[10px] md:text-xs uppercase tracking-[0.2em] shadow-2xl disabled:opacity-50 transition-colors duration-300 hover:bg-[#63938C] hover:text-black will-change-transform scale-95 md:scale-100"
 >
   <span style={{ transform: "translateZ(20px)", display: "block" }}>
     {isPlayMode ? "Back to Info" : "Enable Physics"}
