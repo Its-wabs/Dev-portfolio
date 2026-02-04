@@ -30,6 +30,7 @@ export default function App() {
   const techSceneRef = useRef<HTMLDivElement>(null);
   const contactSceneRef = useRef<HTMLDivElement>(null);
   const contactRef = useRef<HTMLDivElement>(null);
+  
 
   // Refs and State for the Warp Effect 
   const [isPlayMode, setIsPlayMode] = useState(false);
