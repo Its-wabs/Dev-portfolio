@@ -36,11 +36,9 @@ const Hero = () => {
         
         <div className="font-montserrat font-extrabold text-4xl sm:text-3xl md:text-3xl lg:text-7xl leading-[1.05] tracking-[0.1em] uppercase flex flex-col items-center">
           <RevealText tag="h1" className="justify-center" delay={4.8}>
-            Full-Stack Engineer
+            Creative Engineer
           </RevealText>
-          <RevealText tag="h1" className="justify-center text-[#EBE5D0]" delay={5.0}>
-            UI & UX Designer
-          </RevealText>
+          
         </div>
 
        

@@ -42,21 +42,26 @@ const AboutModal = ({ isOpen, onClose }: AboutModalProps) => {
   //  Entrance Animation
   useGSAP(() => {
     if (isOpen && contentRef.current) {
-      gsap.fromTo(contentRef.current, 
-        { 
-          opacity: 0, 
-          scale: 0.95, 
-          filter: "blur(10px)" 
-        }, 
-        { 
-          opacity: 1, 
-          scale: 1, 
-          filter: "blur(0px)",
-          duration: 1, 
-          ease: "power4.out" 
-        }
-      );
-    }
+    
+    const isMobile = window.innerWidth < 768;
+
+    gsap.fromTo(contentRef.current, 
+      { 
+        opacity: 0, 
+        y: isMobile ? 20 : 0, 
+        scale: isMobile ? 1 : 0.95, 
+        filter: isMobile ? "none" : "blur(10px)" 
+      }, 
+      { 
+        opacity: 1, 
+        y: 0,
+        scale: 1, 
+        filter: "blur(0px)",
+        duration: isMobile ? 0.6 : 1, 
+        ease: "power4.out" 
+      }
+    );
+  }
   }, [isOpen]);
 
   const principles = [
@@ -124,7 +129,7 @@ const AboutModal = ({ isOpen, onClose }: AboutModalProps) => {
                     
                     <div className="mt-4 lg:mt-0 lg:text-right font-mono text-[0.7rem] sm:text-[0.8rem] md:text-[11px] uppercase tracking-widest leading-relaxed space-y-1">
                         <p>Based in Algeria</p>
-                        <p>Status: Available for Craft</p>
+                        <p>Status: Available for Work</p>
                         <p className="mt-3 md:mt-4 text-[#63938C]">2026_edition</p>
                     </div>
                 </header>
@@ -139,7 +144,7 @@ const AboutModal = ({ isOpen, onClose }: AboutModalProps) => {
                             My journey started with a pencil, not a keyboard. The world of illustration taught me how to see light and color interacts with surfaces, and how composition guides the eye. 
                         </p>
                         <p>
-                            Transitioning into engineering wasn't a pivot, but an expansion. Now, I use TypeScript and React as my brushes to build high-performance systems that don't just work, but feel right. I treat every project like an art piece: clean, optimized, and built to last.
+                            Now I combine strong engineering knowledge with years of artistic practice to build high-performance systems that don’t just function, but feel right. Every project is treated as a human experience, designed with care and built to last.
                         </p>
                     </div>
                 </section>

@@ -85,9 +85,11 @@ const Contact = () => {
       ref={containerRef} 
       className="relative w-full h-full flex flex-col justify-between overflow-hidden hero bg-[#151414]"
     >
-      <h2 className="contact-bg-text absolute inset-0 flex items-center justify-center text-[24vw] font-black text-white select-none pointer-events-none uppercase leading-none z-0">
-        Connect
-      </h2>
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-none overflow-hidden">
+    <span className="text-[12rem] md:text-[20rem] lg:text-[28rem] font-black text-black/[0.02] select-none tracking-tighter leading-none">
+      ///
+    </span>
+  </div>
 
       <div className="flex-grow flex flex-col items-center justify-center z-10 w-full px-6 text-center">
         
@@ -102,7 +104,7 @@ const Contact = () => {
         {/*  Description */}
         <p className="contact-description max-w-md text-[11px] md:text-xs font-mono uppercase tracking-[0.2em] text-white/50 leading-relaxed mb-10">
           Currently available for project collaborations or a simple chat. 
-          Reach out via email or LinkedIn—I’d love to hear your ideas.
+          Reach out via email or LinkedIn, I’d love to hear your ideas.
         </p>
 
         <a 

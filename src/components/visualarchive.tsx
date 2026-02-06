@@ -16,18 +16,18 @@ const VisualRecords = () => {
   const [scrollLeft, setScrollLeft] = useState(0);
 
   const mainRecords = [
-    { title: "Shy Vampire", purpose: "Personal_Study", img: "/img/shy-vamp.jpg", ratio: "aspect-video" },
-    { title: "Molly The Scarecrow", purpose: "Personal DnD campaign", img: "/img/scarecrow.jpg", ratio: "aspect-[3/4]" },
-    { title: "Chad Patrick", purpose: "Oil_Study", img: "/img/partick.jpg", ratio: "aspect-[3/4]" },
-    { title: "Mascot", purpose: "Contest winning", img: "/img/ccontest.jpg", ratio: "aspect-[3/4]" },
-    { title: "Deserte", purpose: "Oil study", img: "/img/apple.jpg", ratio: "aspect-[5/3]" },
+    { title: "Shy Vampire", purpose: "Personal_Study", img: "/img/shy-vamp.webp", ratio: "aspect-video" },
+    { title: "Molly The Scarecrow", purpose: "Personal DnD campaign", img: "/img/scarecrow.webp", ratio: "aspect-[3/4]" },
+    { title: "Chad Patrick", purpose: "Oil_Study", img: "/img/partick.webp", ratio: "aspect-[3/4]" },
+    { title: "Mascot", purpose: "Contest winning", img: "/img/ccontest.webp", ratio: "aspect-[3/4]" },
+    { title: "Deserte", purpose: "Oil study", img: "/img/apple.webp", ratio: "aspect-[5/3]" },
   ];
 
   const experiments = [
-    { title: "Exp_01", type: "Crit or hit", img: "/img/crit.jpg" },
-    { title: "Exp_02", type: "Knight's journey", img: "/img/knights.jpg"  },
-    { title: "Exp_03", type: "Dream big", img: "/img/dream.jpg"  },
-    { title: "Exp_04", type: "Save the bees", img: "/img/bees.jpg"  },
+    { title: "Exp_01", type: "Crit or hit", img: "/img/crit.webp" },
+    { title: "Exp_02", type: "Knight's journey", img: "/img/knights.webp"  },
+    { title: "Exp_03", type: "Dream big", img: "/img/dream.webp"  },
+    { title: "Exp_04", type: "Save the bees", img: "/img/bees.webp"  },
   ];
 
   // DRAG TO SCROLL LOGIC 
@@ -112,8 +112,10 @@ const VisualRecords = () => {
                 key={i}
                 //  the blur logic
                 className={`flex-shrink-0 transition-all duration-700 ease-out pointer-events-auto
-                  ${isOtherHovered ? "blur-[2px] opacity-30 scale-[0.98]" : "blur-0 opacity-100 scale-100"}
-                `}
+      ${isOtherHovered 
+        ? "md:blur-[2px] opacity-30 scale-[0.98]" 
+        : "blur-0 opacity-100 scale-100"}
+    `}
                 onMouseEnter={() => setHoveredIndex(i)}
                 onMouseLeave={() => setHoveredIndex(null)}
               >
@@ -159,7 +161,7 @@ const VisualRecords = () => {
 
         <div 
           className={`overflow-hidden transition-all duration-1000 ease-in-out
-            ${showExperiments ? "max-h-[1200px] opacity-100" : "max-h-0 opacity-0"}`}
+            ${showExperiments ? "max-h opacity-100" : "max-h-0 opacity-0"}`}
         >
           
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-px bg-black/10 border border-black/10">
