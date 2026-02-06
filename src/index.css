@@ -27,26 +27,53 @@ body {
 
 @layer utilities {
 
-    .hero, .about, .projects, .bg-shared-stack, .bg-modal {
-    min-height: 100vh;
+    .hero {
+   
+      min-height: 100vh;
+    background-image: url("/img/hero-bg.webp");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    
-    background-attachment: scroll; 
+  
+  
   }
+  
+   .about {
 
+    min-height: 100vh;
   
+    background-image: url("/img/about-bg.webp");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
   
-  .hero { background-image: url("/img/hero-bg.webp"); }
-  .about { background-image: url("/img/about-bg.webp"); }
-  .projects { background-image: url("/img/projects-bg.webp"); }
-  .bg-shared-stack { background-image: url("/img/about-bg.webp"); }
-  .bg-modal { background-image: url("/img/bgmodal.webp"); }
+  }
+    .projects {
+
+    min-height: 100vh;
+  
+    background-image: url("/img/projects-bg.webp");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  
+  }
+.bg-shared-stack {
+  background-image: url("/img/about-bg.webp");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.bg-modal {
+  background-image: url("/img/bgmodal.webp");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
 
   .hero,
-.about
-{
+.about{
   overflow: hidden;
 }
 
@@ -65,25 +92,20 @@ body {
   width: 100%;
   height: 100%;
  }
-.object {
-    position: absolute;
-    width: max-content;
-    
-    font-size: 1.25rem; 
-    font-weight: 500;
-    background-color: #000;
-    color: #fff;
-    padding: 0.75rem 1.5rem;
-    border-radius: 10rem;
-    cursor: grab;
-    user-select: none;
-    pointer-events: auto;
-    z-index: 11;
-   
-    transform: translateZ(0); 
-    will-change: transform;
-  }
-
+ .object {
+  position : absolute;
+  width : max-content;
+  font-size: 2rem;
+  font-weight: 500;
+  background-color: #000;
+  color: #fff;
+  padding : 1rem 2rem;
+  border-radius: 10rem;
+  cursor: grab;
+  user-select: none;
+  pointer-events: auto;
+  z-index: 11;
+ }
  .object:active {
   cursor: grabbing;
  }
