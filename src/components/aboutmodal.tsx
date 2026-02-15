@@ -12,56 +12,75 @@ interface AboutModalProps {
 
 const AboutModal = ({ isOpen, onClose }: AboutModalProps) => {
   const contentRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null); 
 
+  // Lock body scroll when open
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "unset";
     }
-
     return () => {
       document.body.style.overflow = "unset";
     };
   }, [isOpen]);
   
-  //  Exit Animation
+  //   EXIT ANIMATION
   const handleExit = () => {
     if (!contentRef.current) return;
     
-    gsap.to(contentRef.current, {
-      opacity: 0,
-      scale: 0.95, 
-      filter: "blur(10px)",
-      duration: 0.6,
-      ease: "power4.in",
-      onComplete: onClose
-    });
-  };
-
-  //  Entrance Animation
-  useGSAP(() => {
-    if (isOpen && contentRef.current) {
-    
     const isMobile = window.innerWidth < 768;
 
-    gsap.fromTo(contentRef.current, 
-      { 
-        opacity: 0, 
-        y: isMobile ? 20 : 0, 
-        scale: isMobile ? 1 : 0.95, 
-        filter: isMobile ? "none" : "blur(10px)" 
-      }, 
-      { 
-        opacity: 1, 
-        y: 0,
-        scale: 1, 
-        filter: "blur(0px)",
-        duration: isMobile ? 0.6 : 1, 
-        ease: "power4.out" 
-      }
-    );
-  }
+    if (isMobile) {
+      // MOBILE: Fast, cheap fade-out. No blur, no scaling.
+      gsap.to(contentRef.current, {
+        opacity: 0,
+        y: 20, 
+        duration: 0.3, 
+        ease: "power2.in",
+        onComplete: onClose
+      });
+    } else {
+      // DESKTOP
+      gsap.to(contentRef.current, {
+        opacity: 0,
+        scale: 0.95, 
+        filter: "blur(10px)",
+        duration: 0.6,
+        ease: "power4.in",
+        onComplete: onClose
+      });
+    }
+  };
+
+  // ENTRANCE ANIMATION
+  useGSAP(() => {
+    if (isOpen && contentRef.current) {
+      const isMobile = window.innerWidth < 768;
+      
+      // Reset state immediately before animating in
+      gsap.set(contentRef.current, { 
+        scrollTop: 0 
+      });
+
+      gsap.fromTo(contentRef.current, 
+        { 
+          opacity: 0, 
+          y: isMobile ? 50 : 0, 
+          scale: isMobile ? 1 : 0.95, 
+          filter: isMobile ? "none" : "blur(10px)" 
+        }, 
+        { 
+          opacity: 1, 
+          y: 0,
+          scale: 1, 
+          filter: "blur(0px)",
+          duration: isMobile ? 0.5 : 1, 
+          ease: "power4.out" 
+        }
+      );
+    }
   }, [isOpen]);
 
   const principles = [
@@ -101,13 +120,13 @@ const AboutModal = ({ isOpen, onClose }: AboutModalProps) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-[9999] bg-modal text-[#0a0a0a] isolate">
+    <div ref={containerRef} className="fixed inset-0 z-[9999] bg-modal text-[#0a0a0a] isolate">
         <BackToLanding onClose={handleExit} />
         
-        {/*  Content Wrapper */}
+        {/* Content Wrapper */}
         <div 
             ref={contentRef} 
-            className="h-full w-full overflow-y-auto font-sans selection:bg-[#63938C] selection:text-white"
+            className="h-full w-full overflow-y-auto font-sans selection:bg-[#63938C] selection:text-white will-change-transform"
             style={{ overscrollBehavior: "contain" }}
         >
            
@@ -136,7 +155,6 @@ const AboutModal = ({ isOpen, onClose }: AboutModalProps) => {
 
                 {/* BIO SECTION  */}
                 <section className="flex mb-20 md:mb-32">
-                    
                     <div className="md:col-span-7 lg:col-span-8 text-extrabold sm:text-lg md:text-xl leading-relaxed text-black/80 space-y-4 md:space-y-6">
                         <p>
                             My journey started with a pencil, not a keyboard. The world of illustration taught me how to see light and color interacts with surfaces, and how composition guides the eye. 
@@ -147,92 +165,92 @@ const AboutModal = ({ isOpen, onClose }: AboutModalProps) => {
                     </div>
                 </section>
 
-          {/* PRINCIPLES */}
-          <section className="mb-32">
-            <div className="flex items-center gap-4 mb-12">
-              <h2 className="text-sm font-mono uppercase tracking-[0.4em] font-bold">Execution_Principles</h2>
-              <div className="h-[1px] flex-grow bg-black/10" />
-            </div>
-            
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-[1px] bg-black/10 border border-black/10">
-              {principles.map((p, i) => (
-                <div key={i} className="bg-[#ebe5d0] p-8 lg:p-10 hover:bg-white transition-colors duration-500 group flex flex-col h-full">
-                  <span className="font-mono text-[10px] text-[#63938C] block mb-6">0{i+1} //</span>
-                  <h3 className="text-xl font-bold uppercase mb-4">{p.title}</h3>
-                  <p className="text-sm leading-relaxed text-black/60 group-hover:text-black transition-colors mt-auto">
-                    {p.desc}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </section>
-
-          {/* SYNTHESIZED DOMAINS */}
-          <section className="mb-32">
-            <div className="flex items-center gap-4 mb-12">
-              <h2 className="text-sm font-mono uppercase tracking-[0.4em] font-bold">Synthesized Domains</h2>
-              <div className="h-[1px] flex-grow bg-black/10" />
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-black/5 border border-black/5">
-              {domains.map((domain, i) => (
-                <div key={i} className="bg-[#f4f1e6] p-10 lg:p-14 flex flex-col justify-between group hover:bg-white transition-colors duration-500">
-                  <div>
-                    <span className="font-mono text-[9px] uppercase tracking-[0.3em] text-[#63938C] mb-6 block">
-                      Domain_0{i+1} // {domain.label}
-                    </span>
-                    <h3 className="text-2xl lg:text-3xl font-black uppercase tracking-tighter mb-8 leading-none">
-                      {domain.title}
-                    </h3>
-                  </div>
-                  
-                  <div className="space-y-6">
-                    <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 sm:items-start">
-                      <span className="font-mono text-[9px] text-black/30 mt-1 min-w-[80px]">INFLUENCE</span>
-                      <p className="text-sm text-black/70 leading-relaxed uppercase tracking-tight font-medium">
-                        {domain.influence}
-                      </p>
+                {/* PRINCIPLES */}
+                <section className="mb-32">
+                    <div className="flex items-center gap-4 mb-12">
+                    <h2 className="text-sm font-mono uppercase tracking-[0.4em] font-bold">Execution_Principles</h2>
+                    <div className="h-[1px] flex-grow bg-black/10" />
                     </div>
-                    <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 sm:items-start border-t border-black/5 pt-4">
-                      <span className="font-mono text-[9px] text-[#63938C] mt-1 min-w-[80px]">ENG_VALUE</span>
-                      <p className="text-sm text-black/90 leading-relaxed uppercase tracking-tight font-bold">
-                        {domain.output}
-                      </p>
+                    
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-[1px] bg-black/10 border border-black/10">
+                    {principles.map((p, i) => (
+                        <div key={i} className="bg-[#ebe5d0] p-8 lg:p-10 hover:bg-white transition-colors duration-500 group flex flex-col h-full">
+                        <span className="font-mono text-[10px] text-[#63938C] block mb-6">0{i+1} //</span>
+                        <h3 className="text-xl font-bold uppercase mb-4">{p.title}</h3>
+                        <p className="text-sm leading-relaxed text-black/60 group-hover:text-black transition-colors mt-auto">
+                            {p.desc}
+                        </p>
+                        </div>
+                    ))}
                     </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </section>
+                </section>
 
-          {/* ART */}
-          <section className="mb-32">
-            <VisualRecords/>
-          </section>
+                {/* SYNTHESIZED DOMAINS */}
+                <section className="mb-32">
+                    <div className="flex items-center gap-4 mb-12">
+                    <h2 className="text-sm font-mono uppercase tracking-[0.4em] font-bold">Synthesized Domains</h2>
+                    <div className="h-[1px] flex-grow bg-black/10" />
+                    </div>
 
-          {/* FOOTER */}
-          <footer className="border-t-2 border-black pt-12 flex flex-col md:flex-row justify-between items-end gap-12">
-            <div>
-              <h2 className="text-4xl md:text-5xl font-black uppercase tracking-tighter mb-4">Let's have a chat</h2>
-              <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-black/40 mb-8">
-                Available for Freelance & Partnerships
-              </p>
-              <div className="flex gap-6 font-mono text-xs uppercase tracking-widest">
-                <a href="mailto:your.email@example.com?subject=Portfolio Inquiry" className="hover:text-[#63938C] transition-colors underline underline-offset-4">Email</a>
-                <a href="https://www.linkedin.com/in/itswabs" target="empty" className="hover:text-[#63938C] transition-colors underline underline-offset-4">LinkedIn</a>
-                <a href="https://x.com/its_wabs" target="empty" className="hover:text-[#63938C] transition-colors underline underline-offset-4">X / Twitter</a>
-              </div>
-            </div>
-            <div className="text-right">
-              <div className="text-6xl md:text-8xl font-black opacity-5 select-none leading-none">WABS</div>
-              <p className="font-mono text-[9px] uppercase tracking-widest text-black/20 mt-4">
-                Built on Creativity & Pure Logic // 2026 ©
-              </p>
-            </div>
-          </footer>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-black/5 border border-black/5">
+                    {domains.map((domain, i) => (
+                        <div key={i} className="bg-[#f4f1e6] p-10 lg:p-14 flex flex-col justify-between group hover:bg-white transition-colors duration-500">
+                        <div>
+                            <span className="font-mono text-[9px] uppercase tracking-[0.3em] text-[#63938C] mb-6 block">
+                            Domain_0{i+1} // {domain.label}
+                            </span>
+                            <h3 className="text-2xl lg:text-3xl font-black uppercase tracking-tighter mb-8 leading-none">
+                            {domain.title}
+                            </h3>
+                        </div>
+                        
+                        <div className="space-y-6">
+                            <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 sm:items-start">
+                            <span className="font-mono text-[9px] text-black/30 mt-1 min-w-[80px]">INFLUENCE</span>
+                            <p className="text-sm text-black/70 leading-relaxed uppercase tracking-tight font-medium">
+                                {domain.influence}
+                            </p>
+                            </div>
+                            <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 sm:items-start border-t border-black/5 pt-4">
+                            <span className="font-mono text-[9px] text-[#63938C] mt-1 min-w-[80px]">ENG_VALUE</span>
+                            <p className="text-sm text-black/90 leading-relaxed uppercase tracking-tight font-bold">
+                                {domain.output}
+                            </p>
+                            </div>
+                        </div>
+                        </div>
+                    ))}
+                    </div>
+                </section>
 
+                {/* ART */}
+                <section className="mb-32">
+                    <VisualRecords/>
+                </section>
+
+                {/* FOOTER */}
+                <footer className="border-t-2 border-black pt-12 flex flex-col md:flex-row justify-between items-end gap-12">
+                    <div>
+                    <h2 className="text-4xl md:text-5xl font-black uppercase tracking-tighter mb-4">Let's have a chat</h2>
+                    <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-black/40 mb-8">
+                        Available for Freelance & Partnerships
+                    </p>
+                    <div className="flex gap-6 font-mono text-xs uppercase tracking-widest">
+                        <a href="mailto:your.email@example.com?subject=Portfolio Inquiry" className="hover:text-[#63938C] transition-colors underline underline-offset-4">Email</a>
+                        <a href="https://www.linkedin.com/in/itswabs" target="empty" className="hover:text-[#63938C] transition-colors underline underline-offset-4">LinkedIn</a>
+                        <a href="https://x.com/its_wabs" target="empty" className="hover:text-[#63938C] transition-colors underline underline-offset-4">X / Twitter</a>
+                    </div>
+                    </div>
+                    <div className="text-right">
+                    <div className="text-6xl md:text-8xl font-black opacity-5 select-none leading-none">WABS</div>
+                    <p className="font-mono text-[9px] uppercase tracking-widest text-black/20 mt-4">
+                        Built on Creativity & Pure Logic // 2026 ©
+                    </p>
+                    </div>
+                </footer>
+
+            </div>
         </div>
-      </div>
     </div>
   );
 };
