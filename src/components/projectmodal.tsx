@@ -1,3 +1,5 @@
+
+// this is will be replaced with case study later
 "use client";
 import { useEffect, useRef, useState } from "react";
 import { useGSAP } from "@gsap/react";

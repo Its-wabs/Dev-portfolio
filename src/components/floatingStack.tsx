@@ -12,63 +12,103 @@ const FloatingStack = () => {
   const mainStack = ["Next.Js", "React", "Prisma", "Supabase", "TypeScript", "GSAP", "Tailwind"];
 
   useGSAP(() => {
-    const width = sceneRef.current?.clientWidth || window.innerWidth;
-    const height = sceneRef.current?.clientHeight || window.innerHeight;
+    if (!sceneRef.current) return;
+
+    const width = sceneRef.current.clientWidth;
+    const height = sceneRef.current.clientHeight;
+    const isMobile = width < 768;
 
     const { Engine, Runner, Bodies, Composite, MouseConstraint, Mouse, Events, Body, Vector } = Matter;
     const engine = Engine.create();
     const world = engine.world;
     
+    // Initial State
     engine.gravity.y = 0; 
     engine.gravity.x = 0;
 
-    const verticalPadding = 120;
-    const horizontalPadding = 100;
-    const wallOptions = { isStatic: true, render: { visible: false }, friction: 0, restitution: 1 };
+    const verticalPadding = isMobile ? 60 : 120; 
+    const horizontalPadding = isMobile ? 20 : 100;
+    const wallOptions = { isStatic: true, render: { visible: false }, friction: 0.2, restitution: 0.5 };
+
+    // Walls
 
     const walls = [
-      Bodies.rectangle(width / 2, verticalPadding - 50, width, 100, wallOptions),
-      Bodies.rectangle(width / 2, height - verticalPadding + 50, width, 100, wallOptions),
-      Bodies.rectangle(horizontalPadding - 50, height / 2, 100, height, wallOptions),
-      Bodies.rectangle(width - horizontalPadding + 50, height / 2, 100, height, wallOptions)
+      Bodies.rectangle(width / 2, -50, width, 100, wallOptions), 
+      Bodies.rectangle(width / 2, height + 50, width, 100, wallOptions), 
+      Bodies.rectangle(-50, height / 2, 100, height, wallOptions), 
+      Bodies.rectangle(width + 50, height / 2, 100, height, wallOptions) 
     ];
 
-    const centerBox = Bodies.rectangle(width / 2, height / 2, 400, 150, { isStatic: true, render: { visible: false } });
-    Composite.add(world, [...walls, centerBox]);
+    // Only add center obstacle on Desktop to keep mobile clean
+    if (!isMobile) {
+      const centerBox = Bodies.rectangle(width / 2, height / 2, 400, 150, { isStatic: true, render: { visible: false } });
+      Composite.add(world, [centerBox]);
+    }
+    
+    Composite.add(world, walls);
 
     const allItems = gsap.utils.toArray<HTMLDivElement>(".main-item");
     itemsRef.current = []; 
 
     allItems.forEach((el) => {
-      const rectWidth = el.offsetWidth || 120;
-      const rectHeight = el.offsetHeight || 40;
+      const rectWidth = el.offsetWidth;
+      const rectHeight = el.offsetHeight;
+      
+      
       const startX = Math.random() * (width - horizontalPadding * 2) + horizontalPadding;
-      const startY = Math.random() * (height - verticalPadding * 2) + verticalPadding;
+      const startY = isMobile 
+        ? Math.random() * (height * 0.3) + 100 
+        : Math.random() * (height - verticalPadding * 2) + verticalPadding;
 
       const body = Bodies.rectangle(startX, startY, rectWidth, rectHeight, {
-        chamfer: { radius: 20 },
-        restitution: 0.8,
-        friction: 0,
-        frictionAir: 0.03,
+        chamfer: { radius: rectHeight / 2 },
+        restitution: 0.6,
+        friction: 0.1,
+        frictionAir: isMobile ? 0.04 : 0.03, 
         density: 0.01,
       });
 
-      Body.setVelocity(body, { x: (Math.random() - 0.5) * 4, y: (Math.random() - 0.5) * 4 });
+      
+      Body.setVelocity(body, { 
+        x: (Math.random() - 0.5) * (isMobile ? 2 : 4), 
+        y: (Math.random() - 0.5) * (isMobile ? 2 : 4) 
+      });
+      
       itemsRef.current.push({ body, element: el });
       Composite.add(world, body);
     });
 
-    const mouse = Mouse.create(sceneRef.current!);
+    // MOBILE PERFORMANCE 
+    if (isMobile) {
+      // Trigger fall after 3 seconds
+      gsap.delayedCall(3, () => {
+        engine.gravity.y = 1.5; 
+        
+        
+        itemsRef.current.forEach(({ body }) => {
+          Body.applyForce(body, body.position, { 
+            x: (Math.random() - 0.5) * 0.005, 
+            y: 0 
+          });
+        });
+      });
+    }
 
-    // MOUSE HANDLER
-    const handleGlobalMouseMove = (e: MouseEvent) => {
+    const mouse = Mouse.create(sceneRef.current!);
+    
+    // Improved mouse handling for touch/mobile
+    const handleGlobalMouseMove = (e: MouseEvent | TouchEvent) => {
       const rect = sceneRef.current?.getBoundingClientRect();
       if (rect) {
-        mouse.position.x = e.clientX - rect.left;
-        mouse.position.y = e.clientY - rect.top;
+        const clientX = 'touches' in e ? e.touches[0].clientX : e.clientX;
+        const clientY = 'touches' in e ? e.touches[0].clientY : e.clientY;
+        mouse.position.x = clientX - rect.left;
+        mouse.position.y = clientY - rect.top;
       }
     };
+    
     window.addEventListener("mousemove", handleGlobalMouseMove);
+    window.addEventListener("touchmove", handleGlobalMouseMove, { passive: false });
 
     const mouseConstraint = MouseConstraint.create(engine, {
       mouse: mouse,
@@ -83,7 +123,7 @@ const FloatingStack = () => {
       itemsRef.current.forEach(({ body }, index) => {
         if (mouseConstraint.body !== body) {
           const dist = Vector.magnitude(Vector.sub(body.position, mousePos));
-          const repelRadius = 250; 
+          const repelRadius = isMobile ? 150 : 250; 
 
           if (dist < repelRadius) {
             const forceMag = (1 - dist / repelRadius) * 0.001 * body.mass;
@@ -91,8 +131,11 @@ const FloatingStack = () => {
             Body.applyForce(body, body.position, { x: dir.x * forceMag, y: dir.y * forceMag });
           }
 
-          const forceX = Math.sin(time + index * 10) * 0.00005 * body.mass;
-          const forceY = Math.cos(time + index * 15) * 0.00005 * body.mass;
+          // Gentle ambient sway (only strongly active when gravity is 0)
+          const ambientForce = engine.gravity.y === 0 ? 0.00005 : 0.00001;
+          const forceX = Math.sin(time + index * 10) * ambientForce * body.mass;
+          const forceY = Math.cos(time + index * 15) * ambientForce * body.mass;
+          
           Body.applyForce(body, body.position, { x: forceX, y: forceY });
           Body.setAngularVelocity(body, body.angularVelocity * 0.98);
         }
@@ -102,7 +145,6 @@ const FloatingStack = () => {
     const runner = Runner.create();
     Runner.run(runner, engine);
 
-    
     let requestId: number;
     const update = () => {
       itemsRef.current.forEach(({ body, element }) => {
@@ -118,6 +160,7 @@ const FloatingStack = () => {
 
     return () => {
       window.removeEventListener("mousemove", handleGlobalMouseMove);
+      window.removeEventListener("touchmove", handleGlobalMouseMove);
       cancelAnimationFrame(requestId);
       Runner.stop(runner);
       Engine.clear(engine);
@@ -133,7 +176,16 @@ const FloatingStack = () => {
       {mainStack.map((name) => (
         <div
           key={name}
-          className="main-item absolute top-0 left-0 cursor-grab active:cursor-grabbing select-none px-6 py-2 rounded-full border shadow-2xl whitespace-nowrap bg-black text-white border-white/20 font-bold z-20 pointer-events-auto"
+          className="main-item absolute top-0 left-0 cursor-grab active:cursor-grabbing select-none 
+          px-6 py-3 md:px-12 md:py-6 
+          rounded-full 
+          bg-[#EBE5D0] text-[#151414] 
+          border-[2px] md:border-[3px] border-[#151414] 
+          text-2xl md:text-7xl font-black uppercase tracking-tighter
+          shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] md:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]
+          hover:bg-[#63938C] hover:text-white hover:scale-105 
+          transition-colors duration-300
+          z-20 pointer-events-auto will-change-transform"
         >
           {name}
         </div>

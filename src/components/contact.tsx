@@ -3,9 +3,9 @@
 import  { useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger"; // ADD THIS IMPORT
+import { ScrollTrigger } from "gsap/ScrollTrigger"; 
 
-// REGISTER THE PLUGIN
+
 gsap.registerPlugin(ScrollTrigger);
 
 const Contact = () => {

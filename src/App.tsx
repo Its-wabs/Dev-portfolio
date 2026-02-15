@@ -8,7 +8,6 @@ import Hero from "./components/hero";
 import About from "./components/about";
 import NavBar from "./components/navbar";
 import PreLoad from "./components/pre-load";
-import TechStack from "./components/techstack";
 import Projects from "./components/projects";
 import Contact from "./components/contact";
 import FloatingStack from "./components/floatingStack";
@@ -17,8 +16,27 @@ import BackToTop from "./components/backToTop";
 import AboutModal from "./components/aboutmodal";
 import ProjectModal from "./components/projectmodal";
 import { useGSAP } from "@gsap/react";
+import SecondaryStack from "./components/secondary-stack";
 
 gsap.registerPlugin(ScrollTrigger);
+
+// Centralized color themes
+const NAV_THEMES = {
+  dark: {
+    logo: "#EBE5D0",
+    icon: "#ffffff",
+    iconBg: "transparent",
+    accentBg: "#63938C",
+    accentText: "#000",
+  },
+  light: {
+    logo: "#151414",
+    icon: "#151414",
+    iconBg: "rgba(0,0,0,0.05)",
+    accentBg: "#151414",
+    accentText: "#ffffff",
+  },
+};
 
 export default function App() {
   const sceneRef = useRef<HTMLDivElement>(null);
@@ -39,7 +57,7 @@ export default function App() {
   const [showProjectModal, setShowProjectModal] = useState(false);
   const physicsBtnRef = useRef<HTMLButtonElement>(null);
 
-  // Floating button logic
+ 
   useGSAP(() => {
     gsap.to(physicsBtnRef.current, {
       y: -6,
@@ -105,10 +123,20 @@ export default function App() {
     }
   };
 
+  // Helper function to apply nav theme
+  const applyNavTheme = (theme: keyof typeof NAV_THEMES) => {
+    const colors = NAV_THEMES[theme];
+    return {
+      "--nav-logo-color": colors.logo,
+      "--nav-icon-color": colors.icon,
+      "--nav-accent-bg": colors.accentBg,
+      "--nav-accent-text": colors.accentText,
+    };
+  };
+
   useEffect(() => {
     if (!sceneRef.current || !aboutRef.current) return;
 
-    // Initialize MatchMedia
     const mm = gsap.matchMedia();
 
     const showBackToTop = () => {
@@ -122,24 +150,24 @@ export default function App() {
     showBackToTop();
     window.addEventListener("scroll", showBackToTop);
 
-    // Initial Nav State
-    gsap.set(".nav-icon", { color: "#ffffff", backgroundColor: "transparent" });
-    gsap.set(".resume-button", { backgroundColor: "#63938C", color: "#000" });
-    gsap.set(document.documentElement, {
-      "--nav-accent-bg": "#63938C",
-      "--nav-accent-text": "#000",
-      "--nav-icon-color": "#ffffff",
+    // Set initial nav theme (dark)
+    gsap.set(".nav-icon", { 
+      color: NAV_THEMES.dark.icon, 
+      backgroundColor: NAV_THEMES.dark.iconBg 
     });
+    gsap.set(".resume-button", { 
+      backgroundColor: NAV_THEMES.dark.accentBg, 
+      color: NAV_THEMES.dark.accentText 
+    });
+    gsap.set(document.documentElement, applyNavTheme("dark"));
 
-    
     mm.add({
       isMobile: "(max-width: 768px)",
       isDesktop: "(min-width: 769px)"
     }, (context) => {
-      
       const { isMobile } = context.conditions as { isMobile: boolean };
 
-      // 1. Hero to About Timeline
+      // 1. Hero to About Timeline (Dark → Light)
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: sceneRef.current,
@@ -163,16 +191,23 @@ export default function App() {
         { yPercent: 0, scale: 1, opacity: 1, filter: "none", ease: "power3.out" }
       );
 
-      tl.to(".nav-icon", { color: "#151414", backgroundColor: "rgba(0,0,0,0.05)", ease: "power3.out" }, 0.5);
-      tl.to(".resume-button", { backgroundColor: "#151414", color: "#fff", ease: "power3.out" }, 0.5);
+      // Animate to light theme
+      tl.to(".nav-icon", { 
+        color: NAV_THEMES.light.icon, 
+        backgroundColor: NAV_THEMES.light.iconBg, 
+        ease: "power3.out" 
+      }, 0.5);
+      tl.to(".resume-button", { 
+        backgroundColor: NAV_THEMES.light.accentBg, 
+        color: NAV_THEMES.light.accentText, 
+        ease: "power3.out" 
+      }, 0.5);
       tl.to(document.documentElement, {
-        "--nav-accent-bg": "#151414",
-        "--nav-accent-text": "#ffffff",
-        "--nav-icon-color": "#151414",
+        ...applyNavTheme("light"),
         ease: "power3.out",
       }, 0.5);
 
-      // 2. Tech Stack Timeline
+      // 2. Tech Stack Timeline (stays light)
       const scene2 = gsap.timeline({
         scrollTrigger: {
           trigger: techSceneRef.current,
@@ -190,7 +225,7 @@ export default function App() {
         { opacity: 1, scale: 1, ease: "power3.out" }
       );
 
-      // 3. Projects + Contact Timeline
+      // 3. Projects + Contact Timeline (Light → Dark)
       if (contactSceneRef.current && contactRef.current) {
         const masterTl = gsap.timeline({
           scrollTrigger: {
@@ -220,10 +255,19 @@ export default function App() {
           "+=0.2"
         );
 
-        masterTl.to(".nav-icon", { color: "#ffffff", backgroundColor: "transparent", ease: "power3.out" }, "<0.2");
-        masterTl.to(".resume-button", { backgroundColor: "#63938C", color: "#000", ease: "power3.out" }, "<");
+        // Animate back to dark theme
+        masterTl.to(".nav-icon", { 
+          color: NAV_THEMES.dark.icon, 
+          backgroundColor: NAV_THEMES.dark.iconBg, 
+          ease: "power3.out" 
+        }, "<0.2");
+        masterTl.to(".resume-button", { 
+          backgroundColor: NAV_THEMES.dark.accentBg, 
+          color: NAV_THEMES.dark.accentText, 
+          ease: "power3.out" 
+        }, "<");
         masterTl.to(document.documentElement, {
-          "--nav-accent-bg": "#63938C", "--nav-accent-text": "#000", "--nav-icon-color": "#ffffff",
+          ...applyNavTheme("dark"),
           ease: "power3.out",
         }, "<");
       }
@@ -255,7 +299,7 @@ export default function App() {
         <BackToTop ref={backToTopRef} />
 
         <div ref={sceneRef} className="relative h-screen overflow-hidden">
-          <Hero />
+          <Hero onProjectClick={scrollToProjects} />
           <div ref={aboutRef} className="absolute inset-0 z-10">
             {!showAboutModal && <About onOpenModal={() => setShowAboutModal(true)} />}
           </div>
@@ -286,7 +330,7 @@ export default function App() {
             <div ref={contentWrapperRef} className={`relative w-full h-full ${isTransitioning ? 'pointer-events-none' : ''}`}>
               {isPlayMode ? (
                 <>
-                  <div className="absolute inset-0 z-10"><TechStack /></div>
+                  <div className="absolute inset-0 z-10"><SecondaryStack  /></div>
                   <div className="absolute inset-0 z-20 pointer-events-none"><FloatingStack /></div>
                 </>
               ) : (

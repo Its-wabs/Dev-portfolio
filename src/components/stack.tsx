@@ -50,10 +50,7 @@ const Stack = forwardRef<HTMLDivElement>((_props, ref) => {
 
   return (
     <section ref={ref} className="absolute inset-0 h-full w-full flex flex-col justify-center">
-      {/* Main Container adjustments:
-          - Added 'pt-40' (top padding) on mobile to clear the "Enable Physics" button (top-24).
-          - 'pb-10' to ensure the indicator isn't cut off at the bottom.
-      */}
+      {/* Main Container */}
       <div ref={containerRef} className="max-w-5xl w-full mx-auto px-6 pt-40 md:pt-12 pb-10">
         
         {/* Header */}
@@ -66,10 +63,7 @@ const Stack = forwardRef<HTMLDivElement>((_props, ref) => {
           </div>
         </div>
 
-        {/* Grid 
-            - Changed to 'grid-cols-2' on mobile for an editorial, compact feel.
-            - Adjusted gap for tighter mobile look.
-        */}
+        {/* Grid  */}
         <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-2 md:gap-4">
           {mainStack.map((item, index) => (
             <div 
@@ -92,15 +86,13 @@ const Stack = forwardRef<HTMLDivElement>((_props, ref) => {
             </div>
           ))}
 
-          {/* Hidden on smallest phones to prevent layout overflow, shown on tablets up */}
+         
           <div className="stack-item hidden sm:flex border border-dashed border-black/10 items-center justify-center p-4">
             <span className="text-[8px] md:text-[10px] font-mono text-black/30 uppercase tracking-[0.3em]">Scanning...</span>
           </div>
         </div>
 
-        {/* Indicator 
-            - Added 'mt-8' to push it away from the grid.
-        */}
+        {/* Indicator*/}
         <div className="experience-indicator mt-8 md:mt-12">
           <span className="experience-indicator__label text-[8px] md:text-[10px]">System_Experience_Active</span>
           <div className="experience-indicator__icon">

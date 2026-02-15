@@ -37,7 +37,6 @@ const projectsButtonRef = useRef<HTMLAnchorElement | null>(null);
    const openResume = () => {
 
     const pdfUrl = '/resume.pdf';
-    // Open in new tab
     window.open(pdfUrl, '_blank', 'noopener,noreferrer');
     
    
@@ -150,7 +149,7 @@ const projectsButtonRef = useRef<HTMLAnchorElement | null>(null);
         projectsButtonRef.current = projectsButton;
       }
 
-      // Animate menu items sliding out
+      // Animate menu items 
       if (aboutButtonRef.current && projectsButtonRef.current) {
         tl.to([aboutButtonRef.current, projectsButtonRef.current], {
           x: 0,
@@ -235,7 +234,7 @@ const projectsButtonRef = useRef<HTMLAnchorElement | null>(null);
               <span className="relative">Resume</span>
             </a>
 
-            {/* Menu/X Icon */}
+            {/* Menu Icon */}
             <i
               ref={menuIconRef}
               className="nav-icon ri-menu-line flex h-10 w-10 items-center justify-center rounded-full cursor-pointer transition-colors"

@@ -49,23 +49,22 @@ const Projects = () => {
     });
   };
 
-
   // Play/Pause logic based on hover
   useEffect(() => {
     videoRefs.current.forEach((video, index) => {
       if (!video) return;
       if (hoveredIndex === index) {
-        video.play().catch(() => {}); // Catch prevents errors if user hasn't interacted yet
+        video.play().catch(() => {});
       } else {
         video.pause();
-        video.currentTime = 0; // Optional: Reset video to start when leaving
+        video.currentTime = 0;
       }
     });
   }, [hoveredIndex]);
   
 
   return (
-  <div className="relative w-full h-full projects bg-neutral-100">
+    <div className="relative w-full h-full projects bg-neutral-100">
       {projectData.map((project, index) => (
         <div
           key={project.id}
@@ -75,15 +74,13 @@ const Projects = () => {
             transform: index === 0 ? "translateY(80%)" : "translateY(100%)",
           }}
         >
-          {/* THE FOLDER CARD */}
-          <div className="relative w-[95%] md:w-[90%] h-[90vh] bg-white border-t border-x border-black/10 shadow-[0_-20px_50px_-10px_rgba(0,0,0,0.1)] overflow-hidden flex flex-col md:flex-row">
+          {/* THE FOLDER CARD  */}
+          <div className="relative w-[95%] md:w-[92%] h-[90vh] bg-white border-t border-x border-black/10 shadow-[0_-20px_50px_-10px_rgba(0,0,0,0.1)] overflow-hidden flex flex-col md:flex-row">
             
-            {/* LEFT SIDE: CONTENT 
-                Changed: Added h-1/2 for mobile to force half-screen height 
-            */}
-            <div className="w-full md:w-[55%] h-1/2 md:h-full p-6 md:p-16 flex flex-col justify-between border-b md:border-b-0 md:border-r border-black/5">
+            {/* CONTENT  */}
+            <div className="w-full md:w-[28%] h-1/2 md:h-full p-6 md:p-12 lg:p-16 flex flex-col justify-between border-b md:border-b-0 md:border-r border-black/5">
               
-              {/* Top: Archive ID */}
+              {/* Archive ID */}
               <div>
                 <span className="text-[10px] font-mono uppercase tracking-[0.3em] text-black/40 block mb-1">
                   Archive_Log
@@ -91,62 +88,58 @@ const Projects = () => {
                 <span className="text-3xl md:text-4xl font-black text-black">.{project.id}</span>
               </div>
 
-              {/* Middle: Text Content */}
+              {/*  Text Content*/}
               <div className="max-w-md">
-                <h3 className="text-4xl md:text-7xl font-black uppercase tracking-tighter mb-4 md:mb-6 text-black leading-[0.85]">
+                <h3 className="text-4xl md:text-5xl lg:text-6xl font-black uppercase tracking-tighter mb-3 md:mb-4 text-black leading-[0.85]">
                   {project.title}
                 </h3>
                 
-                {/* Mobile Fix: Hidden description on mobile to save space */}
-                <p className="hidden md:block text-lg text-black/60 mb-8 leading-relaxed italic font-medium">
+                {/* Description which is Hidden on mobile */}
+                <p className="hidden md:block text-base lg:text-lg text-black/60 mb-6 lg:mb-8 leading-relaxed italic font-medium">
                   {project.description}
                 </p>
                 
-                {/* Tech Stack: Reduced margin on mobile */}
-                <div className="flex flex-wrap gap-2 mb-6 md:mb-10">
+                {/* Tech Stack  */}
+                <div className="flex flex-wrap gap-2 mb-6 lg:mb-8">
                   {project.tech.map((t) => (
-                    <span key={t} className="px-2 py-1 md:px-3 md:py-1 border border-black/10 text-[8px] md:text-[9px] font-mono uppercase text-black/50 bg-black/[0.02]">
+                    <span key={t} className="px-2 py-1 md:px-2.5 md:py-1 border border-black/10 text-[15px] md:text-[10px] lg:text-[13px] font-mono uppercase text-black/50 bg-black/[0.02]">
                       {t}
                     </span>
                   ))}
                 </div>
 
-                {/* GitHub Button 
-                    Added: mb-6 to create space from the System_Status line
-                */}
+                {/* GitHub Button */}
                 <div className="mb-6 md:mb-0">
                   <a 
                     href={project.link}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="group flex items-center gap-3 w-fit px-5 py-3 md:px-6 md:py-3 bg-black text-white rounded-full transition-all hover:bg-neutral-800 active:scale-95"
+                    className="group flex items-center gap-2.5 w-fit px-4 py-2.5 md:px-5 md:py-2.5 bg-black text-white rounded-full transition-all hover:bg-neutral-800 active:scale-95"
                   >
-                    <Github size={16} />
-                    <span className="text-[10px] md:text-xs font-bold uppercase tracking-widest">Open Github</span>
-                    <ArrowUpRight size={14} className="opacity-50 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                    <Github size={14} />
+                    <span className="text-[10px] md:text-[11px] font-bold uppercase tracking-widest">Open Github</span>
+                    <ArrowUpRight size={12} className="opacity-50 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                   </a>
                 </div>
               </div>
 
-              {/* Bottom Label: Added padding-bottom for mobile breathing room */}
+              {/* Bottom Label */}
               <div className="text-[8px] md:text-[9px] font-mono text-black/40 uppercase pb-2 md:pb-0">
                 System_Status: Stable // Source_Available: True
               </div>
             </div>
 
-            {/* RIGHT SIDE: SHOWCASE LINK 
-                Changed: h-1/2 for mobile to occupy the bottom half of the card
-            */}
+            {/* SHOWCASE */}
             <a 
               href={project.demo}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full md:w-[45%] h-1/2 md:h-full relative overflow-hidden group/frame cursor-none"
+              className="w-full md:w-[72%] h-1/2 md:h-full relative overflow-hidden group/frame cursor-none"
               onMouseMove={handleMouseMove}
               onMouseEnter={() => setHoveredIndex(index)}
               onMouseLeave={() => setHoveredIndex(null)}
             >
-              {/* Custom Cursor Overlay (Hidden on Mobile) */}
+              {/* Cursor Overlay  */}
               {hoveredIndex === index && (
                 <div className="hidden md:block fixed pointer-events-none z-[9999]"
                   style={{ left: cursorPos.x, top: cursorPos.y, transform: 'translate(-50%, -50%)' }}
@@ -160,12 +153,14 @@ const Projects = () => {
 
               {/* MEDIA CONTAINER */}
               <div className="absolute inset-0 w-full h-full bg-neutral-200 overflow-hidden">
+                {/* Preview Image (static) */}
                 <img 
                   src={project.preview} 
                   alt={project.title}
-                  className={`absolute inset-0 w-full h-full object-cover transition-all duration-700 ease-out group-hover/frame:scale-110 group-hover/frame:blur-sm ${hoveredIndex === index ? 'opacity-0' : 'opacity-100'}`}
+                  className={`absolute inset-0 w-full h-full object-cover transition-all duration-700 ease-out group-hover/frame:scale-105 ${hoveredIndex === index ? 'opacity-0' : 'opacity-100'}`}
                 />
 
+                {/* Active Media  */}
                 {project.active.endsWith('.mp4') ? (
                   <video
                     ref={(el) => (videoRefs.current[index] = el)}
@@ -173,20 +168,18 @@ const Projects = () => {
                     muted
                     loop
                     playsInline
-                    className={`absolute inset-0 w-full h-full object-cover transition-all duration-700 ease-out group-hover/frame:scale-110 ${hoveredIndex === index ? 'opacity-100' : 'opacity-0'}`}
+                    className={`absolute inset-0 w-full h-full object-cover transition-all duration-700 ease-out group-hover/frame:scale-105 ${hoveredIndex === index ? 'opacity-100' : 'opacity-0'}`}
                   />
                 ) : (
                   <img 
                     src={project.active} 
                     alt={project.title}
-                    className={`absolute inset-0 w-full h-full object-cover transition-all duration-700 ease-out group-hover/frame:scale-110 ${hoveredIndex === index ? 'opacity-100' : 'opacity-0'}`}
+                    className={`absolute inset-0 w-full h-full object-cover transition-all duration-700 ease-out group-hover/frame:scale-105 ${hoveredIndex === index ? 'opacity-100' : 'opacity-0'}`}
                   />
                 )}
-
-                {/* Overlays */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent pointer-events-none" />
-                {/* Thinner border for mobile frame */}
-                <div className="absolute inset-0 border-[10px] md:border-[20px] border-white pointer-events-none z-10" />
+                
+                {/*  frame border  */}
+                <div className="absolute inset-0 border-[8px] md:border-[12px] border-white pointer-events-none z-10" />
               </div>
             </a>
 

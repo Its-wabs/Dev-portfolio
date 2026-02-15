@@ -135,11 +135,9 @@ const AboutModal = ({ isOpen, onClose }: AboutModalProps) => {
                 </header>
 
                 {/* BIO SECTION  */}
-                <section className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12 mb-20 md:mb-32">
-                    <div className="md:col-span-5 lg:col-span-4 italic font-serif text-xl sm:text-2xl md:text-3xl border-l-2 border-[#63938C] pl-4 md:pl-6 leading-snug md:leading-tight">
-                        "I found out that App systems and blank canvases share the same DNA: they both require a vision for order."
-                    </div>
-                    <div className="md:col-span-7 lg:col-span-8 text-base sm:text-lg md:text-xl leading-relaxed text-black/80 space-y-4 md:space-y-6">
+                <section className="flex mb-20 md:mb-32">
+                    
+                    <div className="md:col-span-7 lg:col-span-8 text-extrabold sm:text-lg md:text-xl leading-relaxed text-black/80 space-y-4 md:space-y-6">
                         <p>
                             My journey started with a pencil, not a keyboard. The world of illustration taught me how to see light and color interacts with surfaces, and how composition guides the eye. 
                         </p>

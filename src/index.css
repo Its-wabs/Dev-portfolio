@@ -306,6 +306,11 @@ body {
   
 }
 
+.stroke-text {
+  -webkit-text-stroke: 2px #EBE5D0; /* Adjust color to match theme */
+  color: transparent;
+}
+
 @keyframes star-pulse {
   0%, 100% { 
     transform: scale(1) rotate(135deg); 

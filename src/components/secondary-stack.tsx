@@ -5,7 +5,7 @@ import Matter from "matter-js";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 
-const TechStack = () => {
+const SecondaryStack = () => {
   const sceneRef = useRef<HTMLDivElement>(null);
   const itemsRef = useRef<{ body: Matter.Body; element: HTMLDivElement }[]>([]);
 
@@ -115,7 +115,16 @@ const TechStack = () => {
       {secondaryStack.map((name) => (
         <div
           key={name}
-          className="secondary-item absolute top-0 left-0 cursor-grab active:cursor-grabbing select-none px-6 py-2 rounded-full border shadow-sm whitespace-nowrap bg-white/90 backdrop-blur-md text-gray-500 border-gray-200 text-sm font-medium z-10 pointer-events-auto"
+          className="secondary-item absolute top-0 left-0 cursor-grab active:cursor-grabbing select-none 
+          px-8 py-4 md:px-12 md:py-6 
+          rounded-full 
+          bg-[#94A3B8] text-[#151414] 
+          border-[2px] border-[#151414] 
+          text-xl md:text-3xl font-black uppercase tracking-tighter
+          shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] 
+          hover:bg-[#64748B] hover:text-white hover:scale-105 hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]
+          
+          z-20 pointer-events-auto will-change-transform"
         >
           {name}
         </div>
@@ -124,4 +133,4 @@ const TechStack = () => {
   );
 };
 
-export default TechStack;
+export default SecondaryStack;

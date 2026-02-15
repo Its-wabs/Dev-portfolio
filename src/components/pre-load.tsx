@@ -36,7 +36,7 @@ const PreLoad = () => {
                 onComplete: () => {
                     if (loadedCount === totalImages) {
                         // Give it a tiny delay at 100% for the user to read it
-                        setTimeout(() => setImagesLoaded(true), 200);
+                        setTimeout(() => setImagesLoaded(true), 500);
                     }
                 }
             });
@@ -46,7 +46,7 @@ const PreLoad = () => {
             const img = new Image();
             img.src = src;
             img.onload = updateProgress;
-            img.onerror = updateProgress; // Don't hang on broken images
+            img.onerror = updateProgress; 
         });
     }, []);
 
@@ -56,7 +56,7 @@ const PreLoad = () => {
         const tl = gsap.timeline();
 
         tl
-            // Initial burst (Small dot)
+            // Initial burst 
             .to(revealerRef.current, { 
                 scale: 0.1, 
                 duration: 0.6, 
@@ -79,21 +79,21 @@ const PreLoad = () => {
                 ease: "power3.out"
             }, "-=0.2") 
 
-            // 4. Continue expansion
+            // Continue expansion
             .to(revealerRef.current, { 
                 scale: 0.4, 
                 duration: 0.6, 
                 ease: "power3.out" 
-            }, "+=0.2") // Added a tiny pause so user can actually read "Hello"
+            }, "+=0.2") 
 
-            // 5. Final Scale to cover everything
+            // Final Scale to cover everything
             .to(revealerRef.current, { 
                 scale: 1.5, 
                 duration: 1.2, 
                 ease: "power4.inOut" 
             })
             
-            // 6. FINAL EXIT
+            //  FINAL EXIT
             .to(preloaderRef.current, {
                 clipPath: "polygon(0% 0%, 100% 0%, 100% 0%, 0% 0%)",
                 duration: 1.1,
@@ -115,7 +115,7 @@ const PreLoad = () => {
                 className="preloader-revealer absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[100vmax] h-[100vmax] bg-[#63938C] scale-0 z-10 origin-center opacity-0 mix-blend-exclusion"
             />
 
-            {/* Counter (Visible while loading) */}
+            {/* Counter */}
             {!imagesLoaded && (
                 <div className="z-20 flex flex-col items-center">
                     <span className="font-mono text-[12vw] md:text-[8vw] font-black text-[#63938C] leading-none tabular-nums">

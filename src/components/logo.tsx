@@ -1,32 +1,37 @@
+"use client";
 import clsx from "clsx";
 
 interface LogoProps {
-  id : string;
-  title : string;
-
+  id: string;
+  title: string;
 }
 
-const Logo = ({ id, title} : LogoProps) => {
+const Logo = ({ id, title }: LogoProps) => {
   return (
     <button
       id={id}
       className={clsx(
-        "group relative z-10 w-fit cursor-pointer overflow-hidden font-general uppercase items-center justify-center font-black text-1xl sm:text-4xl md:text-3xl lg:text-[1rem] text-[#cda432]",
-        
+        "group relative z-10 flex items-center gap-1 cursor-pointer overflow-hidden py-1"
       )}
+      style={{
+        color: "var(--nav-logo-color, #EBE5D0)" 
+      }}
     >
      
-
-      <span className="relative inline-flex overflow-hidden font-general text-xs uppercase">
-        <div className="translate-y-0 skew-y-0 transition duration-500 group-hover:translate-y-[-160%] group-hover:skew-y-12">
+      <span className="relative flex overflow-hidden font-black text-lg md:text-xl tracking-tighter uppercase transition-colors duration-500">
+        {/* Top Layer */}
+        <div className="flex transition-transform duration-[600ms] ease-[cubic-bezier(0.76,0,0.24,1)] group-hover:-translate-y-full">
           {title}
         </div>
-        <div className="absolute translate-y-[164%] skew-y-12 transition duration-500 group-hover:translate-y-0 group-hover:skew-y-0">
+        {/* Bottom Layer */}
+        <div 
+          className="absolute inset-0 flex translate-y-full transition-transform duration-[600ms] ease-[cubic-bezier(0.76,0,0.24,1)] group-hover:translate-y-0"
+          style={{ color: "var(--nav-accent-bg)" }}
+        >
           {title}
         </div>
       </span>
-
-      
+   
     </button>
   );
 };
