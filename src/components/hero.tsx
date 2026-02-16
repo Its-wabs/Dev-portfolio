@@ -153,10 +153,11 @@ const Hero = forwardRef<HTMLDivElement, HeroProps>(({ onProjectClick }) => {
                     <span className="relative inline-flex rounded-full h-2 w-2 bg-[#63938C]"></span>
                 </span>
                 <span className="font-mono text-[10px] uppercase tracking-widest text-[#63938C]">Available</span>
-            </div>
-            <span className="font-mono text-[9px] text-white/40 uppercase tracking-tighter text-right">
+                 <span className="font-mono text-[10px] text-white/40 uppercase tracking-tighter text-right">
                 ALGERIA / {time}
             </span>
+            </div>
+           
         </div>
       </div>
     </section>

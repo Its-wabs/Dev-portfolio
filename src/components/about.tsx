@@ -43,7 +43,7 @@ const About = ({ onOpenModal }: { onOpenModal: () => void }) => {
        
         <div className="p-4 md:p-8">
           <p className="text-[#000] uppercase font-semibold leading-snug md:leading-relaxed mb-6 text-xl sm:text-2xl md:text-3xl lg:text-4xl">
-            Hi, i’m wabs a creative full stack engineer , who love to turn messy systems into visually pleasing human experiences
+            Hi, i’m wabs a Design engineer , who love to turn messy systems into visually pleasing human experiences
           </p>
         </div>
 

@@ -9,7 +9,7 @@ const SecondaryStack = () => {
   const sceneRef = useRef<HTMLDivElement>(null);
   const itemsRef = useRef<{ body: Matter.Body; element: HTMLDivElement }[]>([]);
 
-  const secondaryStack = ["HTML", "CSS", "JavaScript", "Node.js", "SQL", "Zod", "REST APIs", "Git", "Vercel", "GSAP"];
+  const secondaryStack = ["HTML", "CSS", "JavaScript", "Node.js", "SQL", "Zod", "REST APIs", "Git", "Vercel", "Motion"];
 
   useGSAP(() => {
     if (!sceneRef.current) return;

@@ -35,8 +35,8 @@ const PreLoad = () => {
                 },
                 onComplete: () => {
                     if (loadedCount === totalImages) {
-                        // Give it a tiny delay at 100% for the user to read it
-                        setTimeout(() => setImagesLoaded(true), 500);
+                        // Give it a tiny delay at 100% 
+                        setTimeout(() => setImagesLoaded(true), 350);
                     }
                 }
             });
@@ -55,9 +55,9 @@ const PreLoad = () => {
 
         const tl = gsap.timeline();
 
-        tl
-            // Initial burst 
-            .to(revealerRef.current, { 
+        // Initial burst 
+
+        tl.to(revealerRef.current, { 
                 scale: 0.1, 
                 duration: 0.6, 
                 opacity: 1,
@@ -107,7 +107,7 @@ const PreLoad = () => {
         <div 
             ref={preloaderRef} 
             className="preloader fixed inset-0 bg-[#0a0a0a] z-[999] overflow-hidden flex flex-col items-center justify-center"
-            style={{ clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)" }}
+           
         >
             {/* The Reveal Square */}
             <div 
@@ -135,9 +135,7 @@ const PreLoad = () => {
                 <h1 className="font-montserrat font-black text-[10vw] md:text-[6vw] leading-none text-[#d0e5eb] uppercase tracking-tighter">
                     hello !
                 </h1>
-                <p className="font-mono text-[8px] md:text-[10px] uppercase tracking-[0.8em] text-[#EBE5D0]/40 mt-4 whitespace-nowrap">
-                    Visual_Engine_Live
-                </p>
+               
             </div>
         </div>
     );
