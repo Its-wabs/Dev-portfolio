@@ -90,7 +90,7 @@ const AboutModal = ({ isOpen, onClose }: AboutModalProps) => {
     {
       label: "The Surface",
       title: "Visual Grammar",
-      influence: "Applying illustration principles so weight, light, and balance are properly distributed across UI components.",
+      influence: "Applying illustration principles so color, typography and balance are properly distributed across UI components.",
       output: "Interfaces that feel intuitive, human, and visually appealing."
     },
     {
@@ -143,10 +143,10 @@ const AboutModal = ({ isOpen, onClose }: AboutModalProps) => {
                 <section className="flex mb-20 md:mb-32">
                     <div className="md:col-span-7 lg:col-span-8 text-extrabold sm:text-lg md:text-xl leading-relaxed text-black/80 space-y-4 md:space-y-6">
                         <p>
-                            I don’t separate aesthetics from engineering. To me, they’ve always been the same discipline. My journey started with a pencil; illustration taught me how light and rhythm guide the eye.
+                            I don’t separate aesthetics from engineering. To me, they’ve always been the same discipline. My journey started with a pencil, illustration taught me how light and color guide the eye.
                         </p>
                         <p>
-                            Now, I apply that same artistic rigor to code. I build high-performance systems that don’t just function—they feel right.
+                            Now, I apply that same artistic precision to code. I build high-performance systems that don’t just function but also feel right.
                         </p>
                     </div>
                 </section>
