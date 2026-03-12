@@ -14,7 +14,6 @@ const AboutModal = ({ isOpen, onClose }: AboutModalProps) => {
   const contentRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null); 
 
-  // Lock body scroll when open
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = "hidden";
@@ -26,14 +25,10 @@ const AboutModal = ({ isOpen, onClose }: AboutModalProps) => {
     };
   }, [isOpen]);
   
-  //   EXIT ANIMATION
   const handleExit = () => {
     if (!contentRef.current) return;
-    
     const isMobile = window.innerWidth < 768;
-
     if (isMobile) {
-      // MOBILE: Fast, cheap fade-out. No blur, no scaling.
       gsap.to(contentRef.current, {
         opacity: 0,
         y: 20, 
@@ -42,7 +37,6 @@ const AboutModal = ({ isOpen, onClose }: AboutModalProps) => {
         onComplete: onClose
       });
     } else {
-      // DESKTOP
       gsap.to(contentRef.current, {
         opacity: 0,
         scale: 0.95, 
@@ -54,16 +48,10 @@ const AboutModal = ({ isOpen, onClose }: AboutModalProps) => {
     }
   };
 
-  // ENTRANCE ANIMATION
   useGSAP(() => {
     if (isOpen && contentRef.current) {
       const isMobile = window.innerWidth < 768;
-      
-      // Reset state immediately before animating in
-      gsap.set(contentRef.current, { 
-        scrollTop: 0 
-      });
-
+      gsap.set(contentRef.current, { scrollTop: 0 });
       gsap.fromTo(contentRef.current, 
         { 
           opacity: 0, 
@@ -83,37 +71,39 @@ const AboutModal = ({ isOpen, onClose }: AboutModalProps) => {
     }
   }, [isOpen]);
 
+  // NEW NARRATIVE DATA: CALCULATED CHAOS
   const principles = [
-    { title: "Systemic Harmony", desc: "Code should be as elegant as the UI it powers." },
-    { title: "Human-Centric Logic", desc: "User experience dictates the architecture, not the other way around." },
-    { title: "Scalable Craft", desc: "Building for 100 users with the precision required for 10 million." },
-    { title: "Iterative Polish", desc: "The last 10% of detail provides 90% of the emotional impact." },
+    { title: "Artistic Instinct", desc: "I see interfaces as compositions. If the spacing is off, the rhythm of the entire system is broken." },
+    { title: "Anti-Indifference", desc: "I hate 'heavy' software. If a system technically works but feels bad to use, it is unfinished." },
+    { title: "Intentional Motion", desc: "Animation isn't decoration. It’s a tool for feedback, trust, and keeping the user grounded." },
+    { title: "The Last 10%", desc: "The gap between functioning and feeling is where the real engineering happens. I live in that gap." },
   ];
 
+  // NEW NARRATIVE DATA: STRUCTURED EXPRESSION
   const domains = [
     {
-      label: "Visual Grammar",
-      title: "Illustration & Concept Art",
-      influence: "Visual hierarchy, composition, restraint",
-      output: "Clean UI structure, spacing discipline, animation timing"
+      label: "The Blueprint",
+      title: "State Design",
+      influence: "Mapping every failure point before writing a single line of production code.",
+      output: "Resilient systems that anticipate friction instead of just reacting to it."
     },
     {
-      label: "Logic Mapping",
-      title: "Narrative & Worldbuilding",
-      influence: "Systems thinking, cause → effect loops",
-      output: "Feature planning, state modeling, UX flows"
+      label: "The Surface",
+      title: "Visual Grammar",
+      influence: "Applying illustration principles so weight, light, and balance are properly distributed across UI components.",
+      output: "Interfaces that feel intuitive, human, and visually appealing."
     },
     {
-      label: "Temporal Design",
-      title: "Motion & Interaction",
-      influence: "Temporal logic, sequencing, feedback loops",
-      output: "Scroll orchestration, performance-aware animation"
+      label: "The Pulse",
+      title: "Motion Systems",
+      influence: "Choreographing transitions and micro-interactions to maintain continuity.",
+      output: "A feeling of flow where the user never has to guess what the system is doing."
     },
     {
-      label: "Product Strategy",
-      title: "Micro-SaaS Exploration",
-      influence: "Constraint-driven problem solving",
-      output: "MVP scoping, tradeoff decisions, architecture pragmatism"
+      label: "The Foundation",
+      title: "Component Thinking",
+      influence: "Building a library of reusable, adaptable components that can be composed in infinite ways.",
+      output: "Scalable design systems that grow with the product without losing coherence."
     }
   ];
 
@@ -123,16 +113,13 @@ const AboutModal = ({ isOpen, onClose }: AboutModalProps) => {
     <div ref={containerRef} className="fixed inset-0 z-[9999] bg-modal text-[#0a0a0a] isolate">
         <BackToLanding onClose={handleExit} />
         
-        {/* Content Wrapper */}
         <div 
             ref={contentRef} 
             className="h-full w-full overflow-y-auto font-sans selection:bg-[#63938C] selection:text-white will-change-transform"
             style={{ overscrollBehavior: "contain" }}
         >
-           
             <div className="relative w-full max-w-[90rem] mx-auto px-4 sm:px-6 md:px-10 lg:px-20 xl:px-32 py-16 md:py-24 lg:py-32">
                 
-                {/* HEADER  */}
                 <header className="flex flex-col lg:flex-row justify-between items-start border-b border-black pb-8 md:pb-12 mb-12 md:mb-20 gap-6 md:gap-0">
                     <div className="max-w-2xl lg:max-w-3xl">
                         <span className="font-mono text-[0.65rem] sm:text-[0.7rem] tracking-[0.3em] md:tracking-[0.5em] uppercase text-black/40 mb-2 md:mb-4 block">
@@ -153,22 +140,21 @@ const AboutModal = ({ isOpen, onClose }: AboutModalProps) => {
                     </div>
                 </header>
 
-                {/* BIO SECTION  */}
                 <section className="flex mb-20 md:mb-32">
                     <div className="md:col-span-7 lg:col-span-8 text-extrabold sm:text-lg md:text-xl leading-relaxed text-black/80 space-y-4 md:space-y-6">
                         <p>
-                            My journey started with a pencil, not a keyboard. The world of illustration taught me how to see light and color interacts with surfaces, and how composition guides the eye. 
+                            I don’t separate aesthetics from engineering. To me, they’ve always been the same discipline. My journey started with a pencil; illustration taught me how light and rhythm guide the eye.
                         </p>
                         <p>
-                            Now I combine strong engineering knowledge with years of artistic practice to build high-performance systems that don’t just function, but feel right. Every project is treated as a human experience, designed with care and built to last.
+                            Now, I apply that same artistic rigor to code. I build high-performance systems that don’t just function—they feel right.
                         </p>
                     </div>
                 </section>
 
-                {/* PRINCIPLES */}
+                {/* PRINCIPLES SECTION */}
                 <section className="mb-32">
                     <div className="flex items-center gap-4 mb-12">
-                    <h2 className="text-sm font-mono uppercase tracking-[0.4em] font-bold">Execution_Principles</h2>
+                    <h2 className="text-sm font-mono uppercase tracking-[0.4em] font-bold">Calculated_Chaos</h2>
                     <div className="h-[1px] flex-grow bg-black/10" />
                     </div>
                     
@@ -188,7 +174,7 @@ const AboutModal = ({ isOpen, onClose }: AboutModalProps) => {
                 {/* SYNTHESIZED DOMAINS */}
                 <section className="mb-32">
                     <div className="flex items-center gap-4 mb-12">
-                    <h2 className="text-sm font-mono uppercase tracking-[0.4em] font-bold">Synthesized Domains</h2>
+                    <h2 className="text-sm font-mono uppercase tracking-[0.4em] font-bold">Structured_Expression</h2>
                     <div className="h-[1px] flex-grow bg-black/10" />
                     </div>
 
@@ -197,7 +183,7 @@ const AboutModal = ({ isOpen, onClose }: AboutModalProps) => {
                         <div key={i} className="bg-[#f4f1e6] p-10 lg:p-14 flex flex-col justify-between group hover:bg-white transition-colors duration-500">
                         <div>
                             <span className="font-mono text-[9px] uppercase tracking-[0.3em] text-[#63938C] mb-6 block">
-                            Domain_0{i+1} // {domain.label}
+                            Process_0{i+1} // {domain.label}
                             </span>
                             <h3 className="text-2xl lg:text-3xl font-black uppercase tracking-tighter mb-8 leading-none">
                             {domain.title}
@@ -206,13 +192,13 @@ const AboutModal = ({ isOpen, onClose }: AboutModalProps) => {
                         
                         <div className="space-y-6">
                             <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 sm:items-start">
-                            <span className="font-mono text-[9px] text-black/30 mt-1 min-w-[80px]">INFLUENCE</span>
+                            <span className="font-mono text-[9px] text-black/30 mt-1 min-w-[80px]">STRATEGY</span>
                             <p className="text-sm text-black/70 leading-relaxed uppercase tracking-tight font-medium">
                                 {domain.influence}
                             </p>
                             </div>
                             <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 sm:items-start border-t border-black/5 pt-4">
-                            <span className="font-mono text-[9px] text-[#63938C] mt-1 min-w-[80px]">ENG_VALUE</span>
+                            <span className="font-mono text-[9px] text-[#63938C] mt-1 min-w-[80px]">OUTCOME</span>
                             <p className="text-sm text-black/90 leading-relaxed uppercase tracking-tight font-bold">
                                 {domain.output}
                             </p>
@@ -223,12 +209,10 @@ const AboutModal = ({ isOpen, onClose }: AboutModalProps) => {
                     </div>
                 </section>
 
-                {/* ART */}
                 <section className="mb-32">
                     <VisualRecords/>
                 </section>
 
-                {/* FOOTER */}
                 <footer className="border-t-2 border-black pt-12 flex flex-col md:flex-row justify-between items-end gap-12">
                     <div>
                     <h2 className="text-4xl md:text-5xl font-black uppercase tracking-tighter mb-4">Let's have a chat</h2>

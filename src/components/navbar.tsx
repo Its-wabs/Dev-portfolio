@@ -36,7 +36,7 @@ const projectsButtonRef = useRef<HTMLAnchorElement | null>(null);
 
    const openResume = () => {
 
-    const pdfUrl = '/resume.pdf';
+    const pdfUrl = '/wabs-resume.pdf';
     window.open(pdfUrl, '_blank', 'noopener,noreferrer');
     
    
