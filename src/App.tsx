@@ -308,7 +308,7 @@ export default function App() {
         <div className="relative">
           <div className="fixed inset-0 -z-10 bg-shared-stack" />
           <div ref={techSceneRef} className="relative h-screen overflow-hidden">
-            <div className="absolute top-24 md:top-28 left-1/2 -translate-x-1/2 z-[100] flex flex-col items-center gap-2 w-full">
+            <div className="absolute top-24 md:top-[8vh] left-1/2 -translate-x-1/2 z-[100] flex flex-col items-center gap-2 w-full">
               <button
                 ref={physicsBtnRef}
                 onClick={toggleMode}
