@@ -147,7 +147,7 @@ const Hero = forwardRef<HTMLDivElement, HeroProps>(({ onProjectClick }) => {
             <a href="https://github.com/Its-wabs/" target="_blank" rel="noreferrer" className="hover:text-[#63938C] transition-all hover:scale-125 duration-300"><FaGithub size={18} /></a>
         </div>
 
-        <div className="flex flex-col items-end gap-1 mb-1">
+        <div className="hidden md:flex flex-col md:items-end gap-1 mb-1">
             <div className="flex items-center gap-2">
                 <span className="relative flex h-2 w-2">
                     <span className="relative inline-flex rounded-full h-2 w-2 bg-[#63938C]"></span>
