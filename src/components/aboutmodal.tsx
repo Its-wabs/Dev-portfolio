@@ -13,7 +13,6 @@ interface AboutModalProps {
 const AboutModal = ({ isOpen, onClose }: AboutModalProps) => {
   const contentRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null); 
-  const wipeRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (isOpen) {
@@ -26,72 +25,49 @@ const AboutModal = ({ isOpen, onClose }: AboutModalProps) => {
     };
   }, [isOpen]);
   
- const handleExit = () => {
+  const handleExit = () => {
     if (!contentRef.current) return;
     const isMobile = window.innerWidth < 768;
-    
-    const tl = gsap.timeline({ onComplete: onClose });
-    
-    tl.to(contentRef.current, {
-      opacity: 0,
-      y: isMobile ? 30 : 0,
-      scale: isMobile ? 1 : 0.98,
-      duration: 0.4,
-      ease: "power2.in"
-    });
-    
-    // Quick wipe back for a "closing" feel
-    tl.to(wipeRef.current, {
-      scaleY: 1,
-      transformOrigin: "bottom",
-      duration: 0.3,
-      ease: "power2.inOut"
-    }, "-=0.2");
+    if (isMobile) {
+      gsap.to(contentRef.current, {
+        opacity: 0,
+        y: 20, 
+        duration: 0.3, 
+        ease: "power2.in",
+        onComplete: onClose
+      });
+    } else {
+      gsap.to(contentRef.current, {
+        opacity: 0,
+        scale: 0.95, 
+        filter: "blur(10px)",
+        duration: 0.6,
+        ease: "power4.in",
+        onComplete: onClose
+      });
+    }
   };
 
- useGSAP(() => {
+  useGSAP(() => {
     if (isOpen && contentRef.current) {
       const isMobile = window.innerWidth < 768;
-      
-      const tl = gsap.timeline();
-
-      // 1. Reset states
-      gsap.set([".stagger-item", ".principle-card"], { opacity: 0, y: 20 });
-      gsap.set(wipeRef.current, { scaleY: 1, transformOrigin: "top" });
-
-      // 2. The Wipe (The "Buffer")
-      // This covers the screen while images/layout settle
-      tl.to(wipeRef.current, {
-        scaleY: 0,
-        duration: isMobile ? 0.6 : 1,
-        ease: "expo.inOut",
-      });
-
-      // 3. The Content Reveal
-      tl.fromTo(contentRef.current, 
-        { opacity: 0, scale: isMobile ? 1 : 0.98 },
-        { opacity: 1, scale: 1, duration: 0.5, ease: "power2.out" },
-        "-=0.4"
+      gsap.set(contentRef.current, { scrollTop: 0 });
+      gsap.fromTo(contentRef.current, 
+        { 
+          opacity: 0, 
+          y: isMobile ? 50 : 0, 
+          scale: isMobile ? 1 : 0.95, 
+          filter: isMobile ? "none" : "blur(10px)" 
+        }, 
+        { 
+          opacity: 1, 
+          y: 0,
+          scale: 1, 
+          filter: "blur(0px)",
+          duration: isMobile ? 0.5 : 1, 
+          ease: "power4.out" 
+        }
       );
-
-      // 4. Staggered Text (Distraction Technique)
-      // We animate the text in "waves" so the user is busy reading 
-      // while the VisualRecords section loads.
-      tl.to(".stagger-item", {
-        opacity: 1,
-        y: 0,
-        stagger: 0.1,
-        duration: 0.6,
-        ease: "power3.out"
-      }, "-=0.2");
-
-      tl.to(".principle-card", {
-        opacity: 1,
-        y: 0,
-        stagger: 0.05,
-        duration: 0.5,
-        ease: "power2.out"
-      }, "-=0.3");
     }
   }, [isOpen]);
 
@@ -134,12 +110,7 @@ const AboutModal = ({ isOpen, onClose }: AboutModalProps) => {
   if (!isOpen) return null;
 
   return (
-    <div ref={containerRef} className="fixed inset-0 z-[9999] bg-modal text-[#0a0a0a] isolate">
-      {/* THE BUFFER WIPE */}
-        <div 
-          ref={wipeRef} 
-          className="fixed inset-0 z-[10000] bg-[#63938C] pointer-events-none" 
-        />
+    <div ref={containerRef} className="fixed inset-0 z-[9999] bg-modal bg-[#dac26d] text-[#0a0a0a] isolate">
         <BackToLanding onClose={handleExit} />
         
         <div 
