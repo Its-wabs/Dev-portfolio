@@ -326,7 +326,8 @@ export default function App() {
         <div className="relative">
           <div className="fixed inset-0 -z-10 bg-shared-stack" />
           <div ref={techSceneRef} className="relative h-screen overflow-hidden">
-            <div ref={magnetAreaRef} className="absolute  md:bottom-[8vh] left-1/2 -translate-x-1/2 z-[100] flex flex-col items-center gap-2 w-full">
+            <div ref={magnetAreaRef} className="absolute top-[8dvh] bottom-auto md:bottom-[12dvh] md:top-auto left-0 z-[100] flex flex-col justify-center items-center gap-2 w-full">
+              
               <button
                 ref={physicsBtnRef}
                 onClick={toggleMode}
