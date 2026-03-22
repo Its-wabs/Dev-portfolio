@@ -51,7 +51,7 @@ const Stack = forwardRef<HTMLDivElement>((_props, ref) => {
   return (
     <section ref={ref} className="absolute inset-0 h-full w-full flex flex-col justify-center">
       {/* Main Container */}
-      <div ref={containerRef} className="max-w-5xl w-full mx-auto px-6 pt-40 md:pt-12 pb-10">
+      <div ref={containerRef} className="max-w-5xl w-full mx-auto px-6  pb-10">
         
         {/* Header */}
         <div className="mb-6 md:mb-8 text-left">
@@ -93,6 +93,7 @@ const Stack = forwardRef<HTMLDivElement>((_props, ref) => {
         </div>
 
         {/* Indicator*/}
+        {/*}
         <div className="experience-indicator mt-8 md:mt-12">
           <span className="experience-indicator__label text-[8px] md:text-[10px]">System_Experience_Active</span>
           <div className="experience-indicator__icon">
@@ -103,6 +104,7 @@ const Stack = forwardRef<HTMLDivElement>((_props, ref) => {
             <div className="experience-indicator__node" />
           </div>
         </div>
+        {*/}
       </div>
     </section>
   );

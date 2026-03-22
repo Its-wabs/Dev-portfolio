@@ -17,6 +17,16 @@ const PreLoad = () => {
         "/img/projects-bg.png",
         "/img/bgmodal.png"
     ];
+    useEffect(() => {
+        document.body.style.overflow = "hidden";
+        document.documentElement.style.overflow = "hidden"; 
+        
+        return () => {
+         
+            document.body.style.overflow = "";
+            document.documentElement.style.overflow = "";
+        };
+    }, []);
 
     useEffect(() => {
         let loadedCount = 0;
@@ -98,6 +108,10 @@ const PreLoad = () => {
                 clipPath: "polygon(0% 0%, 100% 0%, 100% 0%, 0% 0%)",
                 duration: 1.1,
                 ease: "power4.inOut",
+                onComplete : () => {
+                    document.body.style.overflow = "";
+                    document.documentElement.style.overflow = "";
+                }
             }, "-=0.2");
 
         return () => { tl.kill(); };

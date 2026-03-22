@@ -47,6 +47,7 @@ export default function App() {
   const techSceneRef = useRef<HTMLDivElement>(null);
   const contactSceneRef = useRef<HTMLDivElement>(null);
   const contactRef = useRef<HTMLDivElement>(null);
+  const magnetAreaRef = useRef<HTMLDivElement>(null);
 
   const [isPlayMode, setIsPlayMode] = useState(false);
   const [isTransitioning, setIsTransitioning] = useState(false);
@@ -59,32 +60,49 @@ export default function App() {
 
  
   useGSAP(() => {
-    gsap.to(physicsBtnRef.current, {
+    const mm = gsap.matchMedia();
+    mm.add("(min-width : 768px)", () => {
+      gsap.to(physicsBtnRef.current, {
       y: -6,
       duration: 2,
       repeat: -1,
       yoyo: true,
       ease: "power1.inOut",
     });
-  }, { scope: physicsBtnRef });
 
+    });
+
+    return () => mm.revert();
+    
+  }, { scope: physicsBtnRef });
+ 
   const handleMouseMove = (e: React.MouseEvent<HTMLButtonElement>) => {
+
+    if(window.innerWidth < 768) return;
+
     const btn = physicsBtnRef.current;
-    if (!btn) return;
-    const rect = btn.getBoundingClientRect();
+    const container = magnetAreaRef.current;
+    if (!btn || !container) return;
+    const rect = container.getBoundingClientRect();
+
     const x = e.clientX - rect.left - rect.width / 2;
     const y = e.clientY - rect.top - rect.height / 2;
+
     gsap.to(btn, {
-      x: x * 0.2,
-      y: y * 0.2,
+      x: x * 0.35,
+      y: y * 0.35,
       rotationX: -y * 0.1,
       rotationY: x * 0.1,
       duration: 0.4,
       ease: "power2.out",
+      overwrite: "auto"
     });
   };
 
   const handleMouseLeave = () => {
+
+    if (window.innerWidth < 768) return;
+
     gsap.to(physicsBtnRef.current, {
       x: 0, y: 0, rotationX: 0, rotationY: 0,
       duration: 0.7, ease: "elastic.out(1, 0.5)",
@@ -308,7 +326,7 @@ export default function App() {
         <div className="relative">
           <div className="fixed inset-0 -z-10 bg-shared-stack" />
           <div ref={techSceneRef} className="relative h-screen overflow-hidden">
-            <div className="absolute top-24 md:top-[8vh] left-1/2 -translate-x-1/2 z-[100] flex flex-col items-center gap-2 w-full">
+            <div ref={magnetAreaRef} className="absolute  md:bottom-[8vh] left-1/2 -translate-x-1/2 z-[100] flex flex-col items-center gap-2 w-full">
               <button
                 ref={physicsBtnRef}
                 onClick={toggleMode}

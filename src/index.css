@@ -127,6 +127,27 @@ body {
     scrollbar-width: none;
   }
 
+ 
+::-webkit-scrollbar {
+  width: 6px; 
+}
+
+
+::-webkit-scrollbar-track {
+  background: transparent; 
+}
+
+
+::-webkit-scrollbar-thumb {
+  background: #63938C; 
+  border-radius: 0px;
+  transition: background 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #60c5b6; 
+}
+
   /*preloader styles*/
 
   
