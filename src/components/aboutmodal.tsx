@@ -71,39 +71,39 @@ const AboutModal = ({ isOpen, onClose }: AboutModalProps) => {
     }
   }, [isOpen]);
 
-  // NEW NARRATIVE DATA: CALCULATED CHAOS
+  // CALCULATED CHAOS
   const principles = [
-    { title: "Artistic Instinct", desc: "I see interfaces as compositions. If the spacing is off, the rhythm of the entire system is broken." },
-    { title: "Anti-Indifference", desc: "I hate 'heavy' software. If a system technically works but feels bad to use, it is unfinished." },
-    { title: "Intentional Motion", desc: "Animation isn't decoration. It’s a tool for feedback, trust, and keeping the user grounded." },
-    { title: "The Last 10%", desc: "The gap between functioning and feeling is where the real engineering happens. I live in that gap." },
+    { title: "The Artist's Constraint", desc: "I still sketch layouts on paper before touching Figma. My art background is always there guiding me through out the decisions I make." },
+    { title: "Plan Everything, Then Improvise", desc: "I spend days on Figma, then change 40% while coding. Structure enables chaos, not prevents it." },
+    { title: "The Humility Device", desc: "Smooth on MacBook ≠ smooth for users. I keep an old Android around to kill my ego. Empathy through testing, not assumption." },
+    { title: "Steal Like an Artist, Build Like an Engineer", desc: "I study habito studio for weeks, then build my own version with different tech. Inspiration ≠ imitation." },
   ];
 
-  // NEW NARRATIVE DATA: STRUCTURED EXPRESSION
+  // STRUCTURED EXPRESSION
   const domains = [
     {
-      label: "The Blueprint",
-      title: "State Design",
-      influence: "Mapping every failure point before writing a single line of production code.",
-      output: "Resilient systems that anticipate friction instead of just reacting to it."
+      label: "The Obsession",
+      title: "Architecture Paranoia",
+      influence: "I spend 2 days on folder architecture before writing features. My brain won't let me build on bad foundations.",
+      output: "Projects that scale without turning into spaghetti. Clean imports, reusable scenes, no props drilling through 4 components."
     },
     {
-      label: "The Surface",
-      title: "Visual Grammar",
-      influence: "Applying illustration principles so color, typography and balance are properly distributed across UI components.",
+      label: "The Artist Phase",
+      title: "Composition Over Components",
+      influence: "I see layouts as drawings. Applying illustration principles so color, typography and balance are properly distributed across UI components.",
       output: "Interfaces that feel intuitive, human, and visually appealing."
     },
     {
-      label: "The Pulse",
-      title: "Motion Systems",
-      influence: "Choreographing transitions and micro-interactions to maintain continuity.",
-      output: "A feeling of flow where the user never has to guess what the system is doing."
+      label: "The Restraint",
+      title: "Animation Graveyard",
+      influence: "GSAP makes everything possible. That's dangerous. I start with 15 animations. I cut it down to 3. I delete more than I keep. Constraint keeps me from over-animating every hover state.",
+      output: "Interfaces that move with purpose. Every animation earns its place. A good balance between choreography and clarity."
     },
     {
-      label: "The Foundation",
-      title: "Component Thinking",
-      influence: "Building a library of reusable, adaptable components that can be composed in infinite ways.",
-      output: "Scalable design systems that grow with the product without losing coherence."
+      label: "The System",
+      title: "Pattern Over Repetition",
+      influence: "useImperativeHandle > props drilling. Forward refs > className chaos. Every component is built to be reused. Button system, not 12 different buttons.",
+      output: "Add features without breaking design. New pages use existing patterns, so consistency becomes effortless, not enforced."
     }
   ];
 
@@ -127,7 +127,7 @@ const AboutModal = ({ isOpen, onClose }: AboutModalProps) => {
                         </span>
                         
                         <h1 className="text-[2.5rem] xs:text-[3rem] sm:text-5xl md:text-7xl lg:text-8xl xl:text-9xl font-black uppercase tracking-tighter leading-[0.9] md:leading-[0.85]">
-                            Full Stack <br className="hidden sm:block" />
+                            Design <br className="hidden sm:block" />
                             <span className="text-[#63938C]">Engineer</span> 
                             <br className="hidden xs:block" /> & Artist.
                         </h1>

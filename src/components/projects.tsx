@@ -7,23 +7,25 @@ const projectData = [
   {
     id: "01",
     title: "Bimo Website",
-    description: "A high-fidelity brand experience reimagining the iconic biscuit's digital presence. Exploring kinetic typography and complex scroll-driven physics.",
-    tech: ["Next.js", "GSAP", "Matter.js", "Tailwind"],
-    link: "#",
-    demo: "#",
-    preview: "/img/bimo-hero.webp", 
-    active: "/img/bimo-hero.webp",
-    isComingSoon: true    
+    description: "A high-fidelity brand experience reimagining the iconic Bimo digital presence. Exploring Bilingual experience and complex scroll-driven animations.",
+    tech: ["Next.js", "GSAP", "Tailwind"],
+    link: "https://github.com/Its-wabs/bimo-redesign",
+    demo: "https://bimo-redesign.vercel.app/",
+    preview: "/img/bimo-hero.png", 
+    active: "/videos/bimo.webm",
+    isComingSoon: false 
   },
   {
     id: "02",
-    title: "AuthPlay",
-    description: "An authentication playground to understand manual auth flows, sessions, and OAuth trade-offs through experimentation.",
-    tech: ["Next.js", "Prisma", "NextAuth", "Supabase", "PostgreSQL"],
-    link: "https://github.com/Its-wabs/auth-playground",
-    demo: "https://authplay-v1.vercel.app/",
-    preview: "/img/authplay.webp", 
-    active: "/img/projects/fikra-demo.gif" 
+    title: "EDG STUDIO",
+    description: "A development agency based in Algeria",
+    tech: ["Next.js", "GSAP", "Tailwind"],
+    link: "https://github.com/Its-wabs/edg-website",
+    demo: "https://edg-website.vercel.app/",
+    preview: "/img/edg.webp", 
+    active: "/videos/edg.webm",
+    isComingSoon : true
+    
   },
   {
     id: "03",
@@ -33,7 +35,7 @@ const projectData = [
     link: "https://github.com/Its-wabs/Dev-portfolio",
     demo: "https://itswabs.vercel.app/",
     preview: "/img/dev.webp", 
-    active: "/img/projects/fikra-demo.gif" 
+    active: "/videos/wabs.webm" 
   },
 ];
 
@@ -144,7 +146,7 @@ const Projects = () => {
                   style={{ left: cursorPos.x, top: cursorPos.y, transform: 'translate(-50%, -50%)' }}
                 >
                   <div className={`px-4 py-2 rounded-full flex items-center gap-2 shadow-2xl backdrop-blur-md border transition-all duration-300 
-                    ${project.isComingSoon ? 'bg-black/90 text-white border-white/10' : 'bg-white/90 text-black border-black/10'}`}>
+                    ${project.isComingSoon ? 'bg-black/90 text-white border-white/10' : 'bg-white text-black border-black/10'}`}>
                     <span className="text-[10px] font-bold uppercase tracking-widest whitespace-nowrap">
                       {project.isComingSoon ? "Coming Soon" : "Open Demo"}
                     </span>
