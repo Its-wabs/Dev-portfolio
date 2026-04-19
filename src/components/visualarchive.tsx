@@ -10,7 +10,7 @@ const VisualRecords = () => {
   const stripRef = useRef<HTMLDivElement>(null);
   
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
-  const [showExperiments, setShowExperiments] = useState(true);
+  //const [showExperiments, setShowExperiments] = useState(true);
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
   const [scrollLeft, setScrollLeft] = useState(0);
@@ -21,15 +21,16 @@ const VisualRecords = () => {
     { title: "Chad Patrick", purpose: "Oil_Study", img: "/img/partick.webp", ratio: "aspect-[3/4]" },
     { title: "Mascot", purpose: "Contest winning", img: "/img/ccontest.webp", ratio: "aspect-[3/4]" },
     { title: "Deserte", purpose: "Oil study", img: "/img/apple.webp", ratio: "aspect-[5/3]" },
+    
   ];
-
+/*
   const experiments = [
     { title: "Exp_01", type: "Crit or hit", img: "/img/crit.webp" },
     { title: "Exp_02", type: "Knight's journey", img: "/img/knights.webp"  },
     { title: "Exp_03", type: "Dream big", img: "/img/dream.webp"  },
     { title: "Exp_04", type: "Save the bees", img: "/img/bees.webp"  },
   ];
-
+*/
   // DRAG TO SCROLL LOGIC 
   const handleMouseDown = (e: React.MouseEvent) => {
     setIsDragging(true);
@@ -98,7 +99,7 @@ const VisualRecords = () => {
         onMouseLeave={handleMouseLeaveOrUp}
         onMouseUp={handleMouseLeaveOrUp}
         onMouseMove={handleMouseMove}
-        className={`overflow-x-auto select-none pb-12 transition-all no-scrollbar
+        className={`overflow-x-auto select-none pb-5 transition-all no-scrollbar
           ${isDragging ? "cursor-grabbing scale-[0.995]" : "cursor-grab"}`}
         style={{ scrollBehavior: isDragging ? "auto" : "smooth" }}
       >
@@ -147,7 +148,7 @@ const VisualRecords = () => {
         </div>
       </div>
 
-      {/* EXPLORATION LOGS */}
+      {/*}
       <div className="mt-12">
         <button 
           onClick={() => setShowExperiments(!showExperiments)}
@@ -203,6 +204,7 @@ const VisualRecords = () => {
           </div>
         </div>
       </div>
+      {*/}
     </section>
   );
 };

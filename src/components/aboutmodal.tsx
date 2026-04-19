@@ -10,233 +10,314 @@ interface AboutModalProps {
   onClose: () => void;
 }
 
+// Carousel items:
+const carouselItems = [
+  { title: "Crochet",       label: "Every sc matters, iykyk",                      img: "/img/crochet1.webp"    },
+  { title: "Bookbinding",   label: "You can't skip steps",                          img: "/img/bookbinding.webp" },
+  { title: "Baking",        label: "Always brings the best ideas.",                 img: "/img/cake.webp"        },
+  { title: "Posters",       label: "Always experimenting different mediums",        img: "/img/dream.webp"       },
+  { title: "Crochet",       label: "More cute crochet",                             img: "/img/crochet2.webp"    },
+  { title: "Pottery",       label: "Feeds creativity and patience",                 img: "/img/pottery.webp"     },
+  { title: "Poster design", label: "Always experimenting different mediums",        img: "/img/knights.webp"     },
+];
+
+// Right-now items
+const rightNowItems = [
+  {
+    label: "Wabs Lab",
+    sub: "Open-source GSAP animation library - Awwwards submission roadmap",
+    status: "Active",
+  },
+  {
+    label: "EDG Studio",
+    sub: "Wrapping up a premium dev agency site - conversion-aware motion, no bloat",
+    status: "Finishing",
+  },
+  {
+    label: "Teaching",
+    sub: "Computer security measures and project study lectures - learning more with each lesson",
+    status: "Ongoing",
+  },
+  {
+    label: "99 Names of Allah",
+    sub: "A scrollytelling project - the one I keep saving for when I'm ready",
+    status: "Planned",
+  },
+  {
+    label: "A short story",
+    sub: "Procrastinating on it since January. I'll go back it eventually.",
+    status: "WIP",
+  },
+];
+
+const statusColor: Record<string, string> = {
+  Active:    "bg-[#63938C] text-white",
+  Finishing: "bg-[#0a0a0a] text-[#f5dd87]",
+  Ongoing:   "bg-[#f5dd87] border border-black/20 text-black",
+  Planned:   "bg-black/8 text-black/50",
+  WIP:       "bg-black/8 text-black/50",
+};
+
 const AboutModal = ({ isOpen, onClose }: AboutModalProps) => {
-  const contentRef = useRef<HTMLDivElement>(null);
-  const containerRef = useRef<HTMLDivElement>(null); 
+  const contentRef   = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const trackRef     = useRef<HTMLDivElement>(null);
+  const tweenRef     = useRef<gsap.core.Tween | null>(null);
 
   useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "unset";
-    }
-    return () => {
-      document.body.style.overflow = "unset";
-    };
+    document.body.style.overflow = isOpen ? "hidden" : "unset";
+    return () => { document.body.style.overflow = "unset"; };
   }, [isOpen]);
-  
+
   const handleExit = () => {
     if (!contentRef.current) return;
     const isMobile = window.innerWidth < 768;
-    if (isMobile) {
-      gsap.to(contentRef.current, {
-        opacity: 0,
-        y: 20, 
-        duration: 0.3, 
-        ease: "power2.in",
-        onComplete: onClose
-      });
-    } else {
-      gsap.to(contentRef.current, {
-        opacity: 0,
-        scale: 0.95, 
-        filter: "blur(10px)",
-        duration: 0.6,
-        ease: "power4.in",
-        onComplete: onClose
-      });
-    }
+    gsap.to(contentRef.current, {
+      opacity: 0,
+      y:       isMobile ? 20  : 0,
+      scale:   isMobile ? 1   : 0.95,
+      filter:  isMobile ? "none" : "blur(10px)",
+      duration: 0.4,
+      ease: "power2.in",
+      onComplete: onClose,
+    });
   };
 
   useGSAP(() => {
-    if (isOpen && contentRef.current) {
-      const isMobile = window.innerWidth < 768;
-      gsap.set(contentRef.current, { scrollTop: 0 });
-      gsap.fromTo(contentRef.current, 
-        { 
-          opacity: 0, 
-          y: isMobile ? 50 : 0, 
-          scale: isMobile ? 1 : 0.95, 
-          filter: isMobile ? "none" : "blur(10px)" 
-        }, 
-        { 
-          opacity: 1, 
-          y: 0,
-          scale: 1, 
-          filter: "blur(0px)",
-          duration: isMobile ? 0.5 : 1, 
-          ease: "power4.out" 
-        }
-      );
+    if (!isOpen || !contentRef.current) return;
+    const isMobile = window.innerWidth < 768;
+
+    gsap.set(contentRef.current, { scrollTop: 0 });
+
+    gsap.fromTo(
+      contentRef.current,
+      { opacity: 0, y: isMobile ? 50 : 0, scale: isMobile ? 1 : 0.95, filter: isMobile ? "none" : "blur(10px)" },
+      { opacity: 1, y: 0, scale: 1, filter: "blur(0px)", duration: isMobile ? 0.5 : 1, ease: "power4.out" }
+    );
+
+    if (trackRef.current) {
+      tweenRef.current?.kill();
+      gsap.set(trackRef.current, { x: 0 });
+      tweenRef.current = gsap.to(trackRef.current, {
+        x: () => -(trackRef.current!.scrollWidth / 2),
+        repeat: -1,
+        duration: 28,
+        ease: "none",
+      });
     }
   }, [isOpen]);
 
-  // CALCULATED CHAOS
-  const principles = [
-    { title: "The Artist's Constraint", desc: "I still sketch layouts on paper before touching Figma. My art background is always there guiding me through out the decisions I make." },
-    { title: "Plan Everything, Then Improvise", desc: "I spend days on Figma, then change 40% while coding. Structure enables chaos, not prevents it." },
-    { title: "The Humility Device", desc: "Smooth on MacBook ≠ smooth for users. I keep an old Android around to kill my ego. Empathy through testing, not assumption." },
-    { title: "Steal Like an Artist, Build Like an Engineer", desc: "I study habito studio for weeks, then build my own version with different tech. Inspiration ≠ imitation." },
-  ];
-
-  // STRUCTURED EXPRESSION
-  const domains = [
-    {
-      label: "The Obsession",
-      title: "Architecture Paranoia",
-      influence: "I spend 2 days on folder architecture before writing features. My brain won't let me build on bad foundations.",
-      output: "Projects that scale without turning into spaghetti. Clean imports, reusable scenes, no props drilling through 4 components."
-    },
-    {
-      label: "The Artist Phase",
-      title: "Composition Over Components",
-      influence: "I see layouts as drawings. Applying illustration principles so color, typography and balance are properly distributed across UI components.",
-      output: "Interfaces that feel intuitive, human, and visually appealing."
-    },
-    {
-      label: "The Restraint",
-      title: "Animation Graveyard",
-      influence: "GSAP makes everything possible. That's dangerous. I start with 15 animations. I cut it down to 3. I delete more than I keep. Constraint keeps me from over-animating every hover state.",
-      output: "Interfaces that move with purpose. Every animation earns its place. A good balance between choreography and clarity."
-    },
-    {
-      label: "The System",
-      title: "Pattern Over Repetition",
-      influence: "useImperativeHandle > props drilling. Forward refs > className chaos. Every component is built to be reused. Button system, not 12 different buttons.",
-      output: "Add features without breaking design. New pages use existing patterns, so consistency becomes effortless, not enforced."
-    }
-  ];
-
   if (!isOpen) return null;
 
+  const loopItems = [...carouselItems, ...carouselItems];
+
   return (
-    <div ref={containerRef} className="fixed inset-0 z-[9999] bg-modal bg-[#dac26d] text-[#0a0a0a] isolate">
-        <BackToLanding onClose={handleExit} />
-        
-        <div 
-            ref={contentRef} 
-            className="h-full w-full overflow-y-auto font-sans selection:bg-[#63938C] selection:text-white will-change-transform"
-            style={{ overscrollBehavior: "contain" }}
-        >
-            <div className="relative w-full max-w-[90rem] mx-auto px-4 sm:px-6 md:px-10 lg:px-20 xl:px-32 py-16 md:py-24 lg:py-32">
-                
-                <header className="flex flex-col lg:flex-row justify-between items-start border-b border-black pb-8 md:pb-12 mb-12 md:mb-20 gap-6 md:gap-0">
-                    <div className="max-w-2xl lg:max-w-3xl">
-                        <span className="font-mono text-[0.65rem] sm:text-[0.7rem] tracking-[0.3em] md:tracking-[0.5em] uppercase text-black/40 mb-2 md:mb-4 block">
-                            File_002 // Deep_Dive
-                        </span>
-                        
-                        <h1 className="text-[2.5rem] xs:text-[3rem] sm:text-5xl md:text-7xl lg:text-8xl xl:text-9xl font-black uppercase tracking-tighter leading-[0.9] md:leading-[0.85]">
-                            Design <br className="hidden sm:block" />
-                            <span className="text-[#63938C]">Engineer</span> 
-                            <br className="hidden xs:block" /> & Artist.
-                        </h1>
-                    </div>
-                    
-                    <div className="mt-4 lg:mt-0 lg:text-right font-mono text-[0.7rem] sm:text-[0.8rem] md:text-[11px] uppercase tracking-widest leading-relaxed space-y-1">
-                        <p>Based in Algeria</p>
-                        <p>Status: Available for Work</p>
-                        <p className="mt-3 md:mt-4 text-[#63938C]">2026_edition</p>
-                    </div>
-                </header>
+    <div
+      ref={containerRef}
+      className="fixed inset-0 z-[9999] bg-modal bg-[#f5dd87] text-[#0a0a0a] isolate"
+    >
+      <BackToLanding onClose={handleExit} />
 
-                <section className="flex mb-20 md:mb-32">
-                    <div className="md:col-span-7 lg:col-span-8 text-extrabold sm:text-lg md:text-xl leading-relaxed text-black/80 space-y-4 md:space-y-6">
-                        <p>
-                            I don’t separate aesthetics from engineering. To me, they’ve always been the same discipline. My journey started with a pencil, illustration taught me how light and color guide the eye.
-                        </p>
-                        <p>
-                            Now, I apply that same artistic precision to code. I build high-performance systems that don’t just function but also feel right.
-                        </p>
-                    </div>
-                </section>
+      <div
+        ref={contentRef}
+        className="h-full w-full overflow-y-auto font-sans selection:bg-[#63938C] selection:text-white will-change-transform"
+        style={{ overscrollBehavior: "contain" }}
+      >
+        <div className="relative w-full max-w-[90rem] mx-auto px-4 sm:px-6 md:px-10 lg:px-20 xl:px-32 py-16 md:py-24 lg:py-32">
 
-                {/* PRINCIPLES SECTION */}
-                <section className="mb-32">
-                    <div className="flex items-center gap-4 mb-12">
-                    <h2 className="text-sm font-mono uppercase tracking-[0.4em] font-bold">Calculated_Chaos</h2>
-                    <div className="h-[1px] flex-grow bg-black/10" />
-                    </div>
-                    
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-[1px] bg-black/10 border border-black/10">
-                    {principles.map((p, i) => (
-                        <div key={i} className="bg-[#ebe5d0] p-8 lg:p-10 hover:bg-white transition-colors duration-500 group flex flex-col h-full">
-                        <span className="font-mono text-[10px] text-[#63938C] block mb-6">0{i+1} //</span>
-                        <h3 className="text-xl font-bold uppercase mb-4">{p.title}</h3>
-                        <p className="text-sm leading-relaxed text-black/60 group-hover:text-black transition-colors mt-auto">
-                            {p.desc}
-                        </p>
-                        </div>
-                    ))}
-                    </div>
-                </section>
-
-                {/* SYNTHESIZED DOMAINS */}
-                <section className="mb-32">
-                    <div className="flex items-center gap-4 mb-12">
-                    <h2 className="text-sm font-mono uppercase tracking-[0.4em] font-bold">Structured_Expression</h2>
-                    <div className="h-[1px] flex-grow bg-black/10" />
-                    </div>
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-black/5 border border-black/5">
-                    {domains.map((domain, i) => (
-                        <div key={i} className="bg-[#f4f1e6] p-10 lg:p-14 flex flex-col justify-between group hover:bg-white transition-colors duration-500">
-                        <div>
-                            <span className="font-mono text-[9px] uppercase tracking-[0.3em] text-[#63938C] mb-6 block">
-                            Process_0{i+1} // {domain.label}
-                            </span>
-                            <h3 className="text-2xl lg:text-3xl font-black uppercase tracking-tighter mb-8 leading-none">
-                            {domain.title}
-                            </h3>
-                        </div>
-                        
-                        <div className="space-y-6">
-                            <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 sm:items-start">
-                            <span className="font-mono text-[9px] text-black/30 mt-1 min-w-[80px]">STRATEGY</span>
-                            <p className="text-sm text-black/70 leading-relaxed uppercase tracking-tight font-medium">
-                                {domain.influence}
-                            </p>
-                            </div>
-                            <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 sm:items-start border-t border-black/5 pt-4">
-                            <span className="font-mono text-[9px] text-[#63938C] mt-1 min-w-[80px]">OUTCOME</span>
-                            <p className="text-sm text-black/90 leading-relaxed uppercase tracking-tight font-bold">
-                                {domain.output}
-                            </p>
-                            </div>
-                        </div>
-                        </div>
-                    ))}
-                    </div>
-                </section>
-
-                <section className="mb-32">
-                    <VisualRecords/>
-                </section>
-
-                <footer className="border-t-2 border-black pt-12 flex flex-col md:flex-row justify-between items-end gap-12">
-                    <div>
-                    <h2 className="text-4xl md:text-5xl font-black uppercase tracking-tighter mb-4">Let's have a chat</h2>
-                    <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-black/40 mb-8">
-                        Available for Freelance & Partnerships
-                    </p>
-                    <div className="flex gap-6 font-mono text-xs uppercase tracking-widest">
-                        <a href="mailto:your.email@example.com?subject=Portfolio Inquiry" className="hover:text-[#63938C] transition-colors underline underline-offset-4">Email</a>
-                        <a href="https://www.linkedin.com/in/itswabs" target="empty" className="hover:text-[#63938C] transition-colors underline underline-offset-4">LinkedIn</a>
-                        <a href="https://x.com/its_wabs" target="empty" className="hover:text-[#63938C] transition-colors underline underline-offset-4">X / Twitter</a>
-                    </div>
-                    </div>
-                    <div className="text-right">
-                    <div className="text-6xl md:text-8xl font-black opacity-5 select-none leading-none">WABS</div>
-                    <p className="font-mono text-[9px] uppercase tracking-widest text-black/20 mt-4">
-                        Built on Creativity & Pure Logic // 2026 ©
-                    </p>
-                    </div>
-                </footer>
-
+          {/* HEADER */}
+          <header className="mb-28 text-center relative">
+            <div className="flex justify-center items-center gap-3 mb-10">
+              <div className="w-2 h-2 rounded-full bg-[#63938C] animate-pulse" />
+              <span className="font-mono text-[10px] tracking-[0.3em] uppercase text-black/40">
+                Available for work
+              </span>
             </div>
+
+            <div className="flex items-center gap-4 max-w-xs mx-auto mb-10">
+              <div className="h-[1px] flex-1 bg-black/15" />
+              <span className="font-mono text-[9px] tracking-[0.2em] text-black/30 uppercase">Est. 2020</span>
+              <div className="h-[1px] flex-1 bg-black/15" />
+            </div>
+
+            <h1 className="text-5xl md:text-8xl lg:text-[9rem] font-zen font-black tracking-tighter leading-none uppercase">
+              How I got here
+            </h1>
+
+            <p className="mt-6 font-mono text-[11px] tracking-[0.3em] uppercase text-black/30">
+              Wabs — Algeria
+            </p>
+          </header>
+
+          {/* SECTION 01: ORIGIN */}
+          <section className="mb-32">
+            <SectionLabel number="01" title="It started with CS" />
+            <div className="max-w-2xl mx-auto">
+              <p className="text-lg md:text-xl leading-relaxed text-black/70 text-justify hyphens-auto">
+                I never seen myself as an engineer. It really started back when I enrolled
+                into computer science because I wanted to{" "}
+                <em className="not-italic font-semibold text-black">build something nice.</em>{" "}
+                I didn't think much of it then, but that's basically how painting became my thing.
+              </p>
+            </div>
+          </section>
+
+          {/* SECTION 02: THEN ART HAPPENED */}
+          <section className="mb-32">
+            <SectionLabel number="02" title="Then_Art_Happened" />
+            <div className="max-w-2xl mx-auto mb-16">
+              <p className="text-lg md:text-xl leading-relaxed text-black/70 text-justify hyphens-auto">
+                So I picked up painting while I am studying CS. Shared my work online,
+                and slowly found my way into 2D illustration and freelance.
+                It reminded me how much I love making things from scratch.
+              </p>
+            </div>
+            <VisualRecords />
+          </section>
+
+          {/* SECTION 03: THE CROSSROADS */}
+          <section className="mb-32">
+            <SectionLabel number="03" title="The Crossroads" />
+            <div className="max-w-2xl mx-auto space-y-6 mb-16">
+              <p className="text-lg md:text-xl leading-relaxed text-black/70 text-justify hyphens-auto">
+                By 2023 after I graduated I was tired of doing both at the same time so
+                I let go of engineering and gave the 2D illustration career all my energy.
+                Although I started getting traction and success in that, I started losing
+                my passion for it all, it felt more like a chore than a passion.
+                I wasn't making things from scratch anymore, I was{" "}
+                <em className="not-italic font-semibold text-black">filling white space.</em>
+              </p>
+              <p className="text-lg md:text-xl leading-relaxed text-black/70 text-justify hyphens-auto">
+                I didn't want to switch careers again. I wanted to stop choosing.
+                So I walked away from the illustration freelance, sat back down with
+                code, and started my design engineer journey.
+              </p>
+            </div>
+
+            {/* HOBBY CAROUSEL */}
+            <div className="overflow-hidden -mx-4 sm:-mx-6 md:-mx-10 lg:-mx-20 xl:-mx-32">
+              <div
+                ref={trackRef}
+                className="flex gap-4 w-max py-2"
+                style={{ willChange: "transform" }}
+              >
+                {loopItems.map((item, i) => (
+                  <div
+                    key={i}
+                    className="relative flex-shrink-0 w-52 h-64 md:w-64 md:h-80 overflow-hidden border border-black/10 bg-black/5 group"
+                  >
+                    <img
+                      src={item.img}
+                      alt={item.title}
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      onError={(e) => {
+                        (e.currentTarget as HTMLImageElement).style.display = "none";
+                      }}
+                    />
+                    <div className="absolute inset-0 flex items-center justify-center bg-black/5 pointer-events-none">
+                      <span className="font-mono text-[10px] tracking-[0.2em] uppercase text-black/20">
+                        {item.title}
+                      </span>
+                    </div>
+                    <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/60 to-transparent">
+                      <p className="font-zen font-black text-white text-sm uppercase tracking-tight leading-none">
+                        {item.title}
+                      </p>
+                      <p className="font-mono text-[10px] tracking-[0.15em] text-white/60 mt-1 uppercase">
+                        {item.label}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          {/* SECTION 04: RIGHT NOW */}
+          <section className="mb-32">
+            <SectionLabel number="04" title="Right_Now" />
+            <div className="max-w-2xl mx-auto mb-16">
+              <p className="text-lg md:text-xl leading-relaxed text-black/70 text-justify hyphens-auto">
+                Now I'm deep into design engineering, doing what I love the most : exploring
+                how systems, accessibility, and creativity fit together. Still the same person
+                who loves figuring things out and making things look and feel better, just with
+                a clearer purpose and slightly better tools.
+              </p>
+            </div>
+
+            {/* right-now list */}
+            <ul className="max-w-3xl mx-auto divide-y divide-black/10 border-t border-black/10">
+              {rightNowItems.map((item) => (
+                <li
+                  key={item.label}
+                  className="flex flex-col sm:flex-row sm:items-center gap-3 py-5"
+                >
+                  <div className="flex-1">
+                    <p className="font-bold text-base md:text-lg tracking-tight">
+                      {item.label}
+                    </p>
+                    <p className="font-mono text-xs text-black/50 mt-0.5 leading-relaxed">
+                      {item.sub}
+                    </p>
+                  </div>
+                  <span
+                    className={`self-start sm:self-center flex-shrink-0 font-mono text-[10px] tracking-[0.2em] uppercase px-3 py-1.5 rounded-full ${statusColor[item.status]}`}
+                  >
+                    {item.status}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </section>
+
+          {/* FOOTER */}
+          <footer className="border-t-2 border-black pt-12 flex flex-col md:flex-row justify-between items-end gap-12">
+            <div>
+              <h2 className="text-4xl md:text-5xl font-black uppercase tracking-tighter mb-4">
+                Let's work together
+              </h2>
+              <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-black/40 mb-8">
+                Available for Freelance &amp; Partnerships
+              </p>
+              <div className="flex gap-6 font-mono text-xs uppercase tracking-widest">
+                <a href="mailto:hello@wabs.design" className="hover:text-[#63938C] transition-colors underline underline-offset-4">
+                  Email
+                </a>
+                <a href="https://www.linkedin.com/in/itswabs" target="_blank" rel="noreferrer" className="hover:text-[#63938C] transition-colors underline underline-offset-4">
+                  LinkedIn
+                </a>
+                <a href="https://x.com/its_wabs" target="_blank" rel="noreferrer" className="hover:text-[#63938C] transition-colors underline underline-offset-4">
+                  X / Twitter
+                </a>
+              </div>
+            </div>
+            <div className="text-right">
+              <div className="text-6xl md:text-8xl font-black opacity-5 select-none leading-none">
+                WABS
+              </div>
+              <p className="font-mono text-[9px] uppercase tracking-widest text-black/20 mt-4">
+                Built on Creativity &amp; Pure Logic // 2026 ©
+              </p>
+            </div>
+          </footer>
+
         </div>
+      </div>
     </div>
   );
 };
+
+// Section label sub-component
+const SectionLabel = ({ number, title }: { number: string; title: string }) => (
+  <div className="flex items-center gap-4 mb-10 md:mb-14">
+    <h2 className="text-sm font-mono uppercase tracking-[0.4em] font-bold whitespace-nowrap">
+      {title}
+    </h2>
+    <div className="h-[1px] flex-grow bg-black/10" />
+    <span className="font-zen font-black text-5xl md:text-7xl leading-none text-black/5 select-none tabular-nums">
+      {number}
+    </span>
+  </div>
+);
 
 export default AboutModal;
