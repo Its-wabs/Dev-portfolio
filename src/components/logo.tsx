@@ -11,7 +11,7 @@ const Logo = ({ id, title }: LogoProps) => {
     <button
       id={id}
       className={clsx(
-        "group relative z-10 flex items-center gap-1 cursor-pointer overflow-hidden py-1"
+        "group relative z-10 flex items-center gap-1 cursor-pointer  py-1"
       )}
       style={{
         color: "var(--nav-logo-color, #EBE5D0)" 
