@@ -12,11 +12,29 @@ const PreLoad = () => {
     const [imagesLoaded, setImagesLoaded] = useState(false);
 
     const imageSources = [
-        "/img/hero-bg.png",
-        "/img/about-bg.png",
-        "/img/projects-bg.png",
-        "/img/bgmodal.png"
-    ];
+    "/img/about-bg.webp",
+    "/img/apple.webp",
+    "/img/authplay.webp",
+    "/img/bees.webp",
+    "/img/bgmodal.webp",
+    "/img/bimo-hero.png",
+    "/img/bookbinding.webp",
+    "/img/cake.webp",
+    "/img/ccontest.webp",
+    "/img/crit.webp",
+    "/img/crochet1.webp",
+    "/img/crochet2.webp",
+    "/img/dev.webp",
+    "/img/dream.webp",
+    "/img/edg.webp",
+    "/img/hero-bg.webp",
+    "/img/knights.webp",
+    "/img/partick.webp",
+    "/img/pottery.webp",
+    "/img/projects-bg.webp",
+    "/img/scarecrow.webp",
+    "/img/shy-vamp.webp"
+];
     useEffect(() => {
         document.body.style.overflow = "hidden";
         document.documentElement.style.overflow = "hidden"; 
