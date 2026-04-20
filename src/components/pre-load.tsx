@@ -8,39 +8,25 @@ const PreLoad = () => {
     const revealerRef = useRef<HTMLDivElement>(null);
     const textContainerRef = useRef<HTMLDivElement>(null);
     
+    // Using a ref to track the actual animated value for GSAP
+    const animatedProgress = useRef({ val: 0 });
     const [progress, setProgress] = useState(0);
     const [imagesLoaded, setImagesLoaded] = useState(false);
 
     const imageSources = [
-    "/img/about-bg.webp",
-    "/img/apple.webp",
-    "/img/authplay.webp",
-    "/img/bees.webp",
-    "/img/bgmodal.webp",
-    "/img/bimo-hero.png",
-    "/img/bookbinding.webp",
-    "/img/cake.webp",
-    "/img/ccontest.webp",
-    "/img/crit.webp",
-    "/img/crochet1.webp",
-    "/img/crochet2.webp",
-    "/img/dev.webp",
-    "/img/dream.webp",
-    "/img/edg.webp",
-    "/img/hero-bg.webp",
-    "/img/knights.webp",
-    "/img/partick.webp",
-    "/img/pottery.webp",
-    "/img/projects-bg.webp",
-    "/img/scarecrow.webp",
-    "/img/shy-vamp.webp"
-];
+        "/img/hero-bg.webp",
+        "/img/projects-bg.webp",
+        "/img/about-bg.webp",
+        "/img/bgmodal.webp",
+        "/img/bimo-hero.png",
+        "/img/edg.webp",
+    ];
+
     useEffect(() => {
         document.body.style.overflow = "hidden";
         document.documentElement.style.overflow = "hidden"; 
         
         return () => {
-         
             document.body.style.overflow = "";
             document.documentElement.style.overflow = "";
         };
@@ -52,19 +38,20 @@ const PreLoad = () => {
 
         const updateProgress = () => {
             loadedCount++;
-            const percentage = Math.round((loadedCount / totalImages) * 100);
+            const targetPercentage = Math.round((loadedCount / totalImages) * 100);
             
-            
-            gsap.to({ val: progress }, {
-                val: percentage,
-                duration: 0.5,
-                onUpdate: function() {
-                    setProgress(Math.floor(this.targets()[0].val));
+            // Tween the ref object instead of creating a new one from state
+            gsap.to(animatedProgress.current, {
+                val: targetPercentage,
+                duration: 0.6,
+                ease: "power1.out",
+                onUpdate: () => {
+                    
+                    setProgress(Math.floor(animatedProgress.current.val));
                 },
                 onComplete: () => {
                     if (loadedCount === totalImages) {
-                        // Give it a tiny delay at 100% 
-                        setTimeout(() => setImagesLoaded(true), 350);
+                        setTimeout(() => setImagesLoaded(true), 400);
                     }
                 }
             });
@@ -78,12 +65,10 @@ const PreLoad = () => {
         });
     }, []);
 
-   useEffect(() => {
+    useEffect(() => {
         if (!imagesLoaded) return;
 
         const tl = gsap.timeline();
-
-        // Initial burst 
 
         tl.to(revealerRef.current, { 
                 scale: 0.1, 
@@ -91,37 +76,27 @@ const PreLoad = () => {
                 opacity: 1,
                 ease: "power2.out" 
             }, 0.5)
-
-            //  Expand to second phase
             .to(revealerRef.current, { 
                 scale: 0.25, 
                 duration: 0.8, 
                 ease: "expo.out" 
             })
-
-            
             .to(textContainerRef.current, {
                 opacity: 1,
                 y: 0,
                 duration: 0.5,
                 ease: "power3.out"
             }, "-=0.2") 
-
-            // Continue expansion
             .to(revealerRef.current, { 
                 scale: 0.4, 
                 duration: 0.6, 
                 ease: "power3.out" 
             }, "+=0.2") 
-
-            // Final Scale to cover everything
             .to(revealerRef.current, { 
                 scale: 1.5, 
                 duration: 1.2, 
                 ease: "power4.inOut" 
             })
-            
-            //  FINAL EXIT
             .to(preloaderRef.current, {
                 clipPath: "polygon(0% 0%, 100% 0%, 100% 0%, 0% 0%)",
                 duration: 1.1,
@@ -139,15 +114,12 @@ const PreLoad = () => {
         <div 
             ref={preloaderRef} 
             className="preloader fixed inset-0 bg-[#0a0a0a] z-[999] overflow-hidden flex flex-col items-center justify-center"
-           
         >
-            {/* The Reveal Square */}
             <div 
                 ref={revealerRef}
                 className="preloader-revealer absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[100vmax] h-[100vmax] bg-[#63938C] scale-0 z-10 origin-center opacity-0 mix-blend-exclusion"
             />
 
-            {/* Counter */}
             {!imagesLoaded && (
                 <div className="z-20 flex flex-col items-center">
                     <span className="font-mono text-[12vw] md:text-[8vw] font-black text-[#63938C] leading-none tabular-nums">
@@ -159,7 +131,6 @@ const PreLoad = () => {
                 </div>
             )}
             
-            {/* Hello Message (Visible after loading) */}
             <div 
                 ref={textContainerRef}
                 className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 pointer-events-none select-none flex flex-col items-center justify-center text-center ${!imagesLoaded ? 'invisible' : 'visible'}`}
@@ -167,7 +138,6 @@ const PreLoad = () => {
                 <h1 className="font-montserrat font-black text-[10vw] md:text-[6vw] leading-none text-[#d0e5eb] uppercase tracking-tighter">
                     hello !
                 </h1>
-               
             </div>
         </div>
     );
