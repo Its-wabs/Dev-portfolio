@@ -21,10 +21,10 @@ const projectData = [
     description: "A development agency based in Algeria",
     tech: ["Next.js", "GSAP", "Tailwind"],
     link: "https://github.com/Its-wabs/edg-website",
-    demo: "https://edg-website.vercel.app/",
+    demo: "https://edg-informatique.com/",
     preview: "/img/edg.webp", 
     active: "/videos/edg.webm",
-    isComingSoon : true
+    isComingSoon : false
     
   },
   {
